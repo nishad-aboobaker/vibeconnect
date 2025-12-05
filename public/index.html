@@ -3,25 +3,88 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VibeConnect - Anonymous Video Chat</title>
+    <title>VibeConnect - Anonymous Chat</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
-    <div class="container">
-      <h1>VibeConnect</h1>
-      <p>Anonymous Video Chat</p>
-
-      <div class="video-container">
-        <video id="localVideo" autoplay muted></video>
-        <video id="remoteVideo" autoplay></video>
+    <!-- Landing View -->
+    <div id="landingView" class="view">
+      <div class="landing-container">
+        <h1>VibeConnect</h1>
+        <p class="tagline">Connect Anonymously, Chat Freely</p>
+        
+        <div class="mode-selection">
+          <button id="textChatBtn" class="mode-btn text-mode">
+            <span class="icon">💬</span>
+            <span class="mode-title">Text Chat</span>
+            <span class="mode-desc">Anonymous messaging</span>
+          </button>
+          
+          <button id="videoChatBtn" class="mode-btn video-mode">
+            <span class="icon">📹</span>
+            <span class="mode-title">Video Chat</span>
+            <span class="mode-desc">Face-to-face connection</span>
+          </button>
+        </div>
       </div>
+    </div>
 
-      <div class="controls">
-        <button id="startBtn">Start Chat</button>
-        <button id="stopBtn" disabled>Stop Chat</button>
+    <!-- Text Chat View -->
+    <div id="textChatView" class="view" style="display: none;">
+      <div class="chat-container">
+        <div class="chat-header">
+          <h2>Text Chat</h2>
+          <button id="textBackBtn" class="back-btn">← Back</button>
+        </div>
+        
+        <div id="textStatus" class="status">Click "Start" to begin chatting</div>
+        
+        <div id="messageContainer" class="message-container"></div>
+        
+        <div class="chat-controls">
+          <div class="input-group">
+            <input 
+              id="messageInput" 
+              type="text" 
+              placeholder="Type a message..." 
+              disabled
+            />
+            <button id="sendBtn" class="send-btn" disabled>Send</button>
+          </div>
+          <div class="action-buttons">
+            <button id="textStartBtn" class="action-btn start-btn">Start Chat</button>
+            <button id="textStopBtn" class="action-btn stop-btn" disabled>Stop Chat</button>
+          </div>
+        </div>
       </div>
+    </div>
 
-      <div id="status">Click "Start Chat" to begin</div>
+    <!-- Video Chat View -->
+    <div id="videoChatView" class="view" style="display: none;">
+      <div class="video-chat-container">
+        <div class="chat-header">
+          <h2>Video Chat</h2>
+          <button id="videoBackBtn" class="back-btn">← Back</button>
+        </div>
+        
+        <div class="video-container">
+          <div class="video-wrapper">
+            <video id="localVideo" autoplay muted></video>
+            <span class="video-label">You</span>
+          </div>
+          <div class="video-wrapper">
+            <video id="remoteVideo" autoplay></video>
+            <span class="video-label">Partner</span>
+          </div>
+        </div>
+
+        <div class="controls">
+          <button id="startBtn" class="action-btn start-btn">Start Chat</button>
+          <button id="stopBtn" class="action-btn stop-btn" disabled>Stop Chat</button>
+        </div>
+
+        <div id="status" class="status">Click "Start Chat" to begin</div>
+      </div>
     </div>
 
     <script src="script.js"></script>
