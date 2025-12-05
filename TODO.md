@@ -1,0 +1,8 @@
+- [x] Create package.json for Node.js dependencies (express, ws)
+- [x] Create server.js for backend (Express server, WebSocket server, matchmaking queue, signaling logic)
+- [x] Create public/index.html for frontend UI (video elements, start/stop buttons)
+- [x] Create public/style.css for basic styling
+- [x] Create public/script.js for frontend logic (random ID, getUserMedia, WebRTC, WebSocket signaling)
+- [ ] Install dependencies with npm install
+- [ ] Run the server with node server.js
+- [ ] Test video chat functionality in browser at localhost:3000

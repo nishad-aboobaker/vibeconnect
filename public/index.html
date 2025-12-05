@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VibeConnect - Anonymous Video Chat</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>VibeConnect</h1>
+      <p>Anonymous Video Chat</p>
+
+      <div class="video-container">
+        <video id="localVideo" autoplay muted></video>
+        <video id="remoteVideo" autoplay></video>
+      </div>
+
+      <div class="controls">
+        <button id="startBtn">Start Chat</button>
+        <button id="stopBtn" disabled>Stop Chat</button>
+      </div>
+
+      <div id="status">Click "Start Chat" to begin</div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
