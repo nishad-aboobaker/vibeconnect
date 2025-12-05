@@ -491,3 +491,39 @@
 {"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:33:17.181Z"}
 {"level":"info","message":"Received from y9wnelazcqb: identify","timestamp":"2025-12-05T15:33:17.185Z"}
 {"level":"info","message":"User y9wnelazcqb identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:33:17.186Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:37.703Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:38.831Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:34:38.869Z"}
+{"level":"info","message":"Received from gc5o2vok3w: identify","timestamp":"2025-12-05T15:34:38.873Z"}
+{"level":"info","message":"User gc5o2vok3w identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:34:38.873Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:39.855Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:34:39.885Z"}
+{"level":"info","message":"Received from eqlx5uexwu: identify","timestamp":"2025-12-05T15:34:39.889Z"}
+{"level":"info","message":"User eqlx5uexwu identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:34:39.890Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:40.562Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:34:40.591Z"}
+{"level":"info","message":"Received from 3ifwpqyy0dl: identify","timestamp":"2025-12-05T15:34:40.595Z"}
+{"level":"info","message":"User 3ifwpqyy0dl identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:34:40.595Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:40.727Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:34:40.763Z"}
+{"level":"info","message":"Received from bfk86zxg71a: identify","timestamp":"2025-12-05T15:34:40.765Z"}
+{"level":"info","message":"User bfk86zxg71a identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:34:40.766Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:40.892Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:34:40.923Z"}
+{"level":"info","message":"Received from 9h7i30uxx9h: identify","timestamp":"2025-12-05T15:34:40.926Z"}
+{"level":"info","message":"User 9h7i30uxx9h identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:34:40.926Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:34:41.051Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:34:41.093Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:34:41.226Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:10.820Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:13.509Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:14.245Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:14.621Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:14.810Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:14.997Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.185Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.356Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.543Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.730Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.927Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:16.118Z"}
