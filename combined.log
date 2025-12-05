@@ -580,3 +580,51 @@
 {"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:42:51.619Z"}
 {"level":"info","message":"Received from rtaqcjk11l: identify","timestamp":"2025-12-05T15:42:51.622Z"}
 {"level":"info","message":"User rtaqcjk11l identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:42:51.623Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-05T15:57:54.616Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:57:57.939Z"}
+{"level":"info","message":"Received from 1m03oqkl2pz: identify","timestamp":"2025-12-05T15:57:57.954Z"}
+{"level":"info","message":"User 1m03oqkl2pz identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:57:57.956Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:58:00.239Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:58:00.283Z"}
+{"level":"info","message":"Received from qij7x6s5qn8: identify","timestamp":"2025-12-05T15:58:00.287Z"}
+{"level":"info","message":"User qij7x6s5qn8 identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:58:00.287Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:01:01.435Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:01:01.475Z"}
+{"level":"info","message":"Received from wxnm79qzhv: identify","timestamp":"2025-12-05T16:01:01.480Z"}
+{"level":"info","message":"User wxnm79qzhv identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:01:01.481Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:01:02.886Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:01:02.923Z"}
+{"level":"info","message":"Received from 16mlteqdahw: identify","timestamp":"2025-12-05T16:01:02.927Z"}
+{"level":"info","message":"User 16mlteqdahw identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:01:02.927Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:01:03.441Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:01:03.475Z"}
+{"level":"info","message":"Received from k29o9c6ecbk: identify","timestamp":"2025-12-05T16:01:03.478Z"}
+{"level":"info","message":"User k29o9c6ecbk identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:01:03.478Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:01:20.683Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:01:20.714Z"}
+{"level":"info","message":"Received from ihcsdhpozj: identify","timestamp":"2025-12-05T16:01:20.719Z"}
+{"level":"info","message":"User ihcsdhpozj identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:01:20.720Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-05T16:01:48.849Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:01:49.072Z"}
+{"level":"info","message":"Received from wyuy0012mhe: identify","timestamp":"2025-12-05T16:01:49.165Z"}
+{"level":"info","message":"User wyuy0012mhe identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:01:49.166Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:04:11.037Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:04:11.087Z"}
+{"level":"info","message":"Received from 33lawn019dj: identify","timestamp":"2025-12-05T16:04:11.093Z"}
+{"level":"info","message":"User 33lawn019dj identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:04:11.095Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:04:12.166Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:04:12.203Z"}
+{"level":"info","message":"Received from q4o20ucmhkk: identify","timestamp":"2025-12-05T16:04:12.206Z"}
+{"level":"info","message":"User q4o20ucmhkk identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:04:12.206Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:04:12.599Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:04:12.638Z"}
+{"level":"info","message":"Received from vc7dq20wdt9: identify","timestamp":"2025-12-05T16:04:12.642Z"}
+{"level":"info","message":"User vc7dq20wdt9 identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:04:12.642Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:04:12.941Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:04:12.976Z"}
+{"level":"info","message":"Received from mlbe6ngutah: identify","timestamp":"2025-12-05T16:04:12.980Z"}
+{"level":"info","message":"User mlbe6ngutah identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:04:12.981Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T16:04:13.158Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T16:04:13.192Z"}
+{"level":"info","message":"Received from qu2aw2pha1h: identify","timestamp":"2025-12-05T16:04:13.195Z"}
+{"level":"info","message":"User qu2aw2pha1h identified with fingerprint: g5t4c6","timestamp":"2025-12-05T16:04:13.196Z"}

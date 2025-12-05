@@ -64,7 +64,8 @@ let pairs = new Map();
 let userModes = new Map();
 
 // Track total users
-let totalUsers = 0;
+// Track total users - Now using wss.clients.size
+// let totalUsers = 0; // Removed manual tracking
 
 // Store reports
 let reports = [];
@@ -302,7 +303,7 @@ server.on("upgrade", (request, socket, head) => {
 
 wss.on("connection", (ws) => {
   logger.info(`New WebSocket connection from IP: ${ws.ip}`);
-  totalUsers++;
+  // totalUsers++; // Removed manual tracking
   broadcastUserCount();
 
   ws.on("message", (message) => {
@@ -367,7 +368,7 @@ wss.on("connection", (ws) => {
         break;
       }
     }
-    totalUsers--;
+    // totalUsers--; // Removed manual tracking
     broadcastUserCount();
     logger.info(`WebSocket connection closed from IP: ${ws.ip}`);
   });
@@ -601,12 +602,29 @@ function handleDisconnect(userId) {
 }
 
 function broadcastUserCount() {
-  totalUsers = connections.size;
-  const message = JSON.stringify({ type: "user-count", count: totalUsers });
+  try {
+    logger.info("Entering broadcastUserCount");
+    // Use wss.clients to get the accurate count of ALL connected sockets
+    if (!wss || !wss.clients) {
+      logger.error("wss or wss.clients is undefined");
+      return;
+    }
 
-  connections.forEach((ws) => {
-    ws.send(message);
-  });
+    const count = wss.clients.size;
+    const message = JSON.stringify({ type: "user-count", count: count });
+
+    logger.info(`Broadcasting user count: ${count}`);
+
+    // Broadcast to ALL connected clients, not just those in chat modes
+    wss.clients.forEach((client) => {
+      if (client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
+  } catch (error) {
+    logger.error(`Error in broadcastUserCount: ${error.message}`);
+    console.error(error);
+  }
 }
 
 function handleTyping(data) {
