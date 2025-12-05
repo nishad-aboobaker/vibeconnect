@@ -37,8 +37,12 @@ p {
 
 video {
   width: 45%;
+  min-height: 300px;
+  aspect-ratio: 4/3;
+  background-color: #000;
   border: 2px solid #ccc;
   border-radius: 5px;
+  object-fit: cover;
 }
 
 .controls {
