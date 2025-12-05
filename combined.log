@@ -527,3 +527,56 @@
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.730Z"}
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:15.927Z"}
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-05T15:35:16.118Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-05T15:42:06.679Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:42:13.134Z"}
+{"level":"info","message":"Received from blt92y65xwf: identify","timestamp":"2025-12-05T15:42:13.155Z"}
+{"level":"info","message":"User blt92y65xwf identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:42:13.156Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:42:26.090Z"}
+{"level":"info","message":"Received from esukqlngdcm: identify","timestamp":"2025-12-05T15:42:26.094Z"}
+{"level":"info","message":"User esukqlngdcm identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:42:26.095Z"}
+{"level":"info","message":"Received from blt92y65xwf: join-text","timestamp":"2025-12-05T15:42:35.328Z"}
+{"level":"info","message":"User blt92y65xwf joining text chat","timestamp":"2025-12-05T15:42:35.328Z"}
+{"level":"info","message":"User blt92y65xwf added to text chat queue","timestamp":"2025-12-05T15:42:35.331Z"}
+{"level":"info","message":"Received from esukqlngdcm: join-text","timestamp":"2025-12-05T15:42:36.649Z"}
+{"level":"info","message":"User esukqlngdcm joining text chat","timestamp":"2025-12-05T15:42:36.650Z"}
+{"level":"info","message":"Paired text chat users: esukqlngdcm and blt92y65xwf","timestamp":"2025-12-05T15:42:36.651Z"}
+{"level":"info","message":"Received from esukqlngdcm: typing-start","timestamp":"2025-12-05T15:42:39.457Z"}
+{"level":"info","message":"Received from esukqlngdcm: typing-start","timestamp":"2025-12-05T15:42:39.615Z"}
+{"level":"info","message":"Received from esukqlngdcm: typing-start","timestamp":"2025-12-05T15:42:39.779Z"}
+{"level":"info","message":"Received from esukqlngdcm: typing-start","timestamp":"2025-12-05T15:42:39.924Z"}
+{"level":"info","message":"Received from esukqlngdcm: text-message","timestamp":"2025-12-05T15:42:40.501Z"}
+{"level":"info","message":"Text message from esukqlngdcm to blt92y65xwf: hiii...","timestamp":"2025-12-05T15:42:40.503Z"}
+{"level":"info","message":"Received from esukqlngdcm: typing-stop","timestamp":"2025-12-05T15:42:41.932Z"}
+{"level":"info","message":"Received from esukqlngdcm: disconnect","timestamp":"2025-12-05T15:42:42.695Z"}
+{"level":"info","message":"User esukqlngdcm disconnecting","timestamp":"2025-12-05T15:42:42.696Z"}
+{"level":"info","message":"Put blt92y65xwf back in text chat queue","timestamp":"2025-12-05T15:42:42.697Z"}
+{"level":"info","message":"User esukqlngdcm disconnected and cleaned up","timestamp":"2025-12-05T15:42:42.698Z"}
+{"level":"info","message":"Received from esukqlngdcm: join-text","timestamp":"2025-12-05T15:42:43.006Z"}
+{"level":"info","message":"User esukqlngdcm joining text chat","timestamp":"2025-12-05T15:42:43.007Z"}
+{"level":"info","message":"Paired text chat users: esukqlngdcm and blt92y65xwf","timestamp":"2025-12-05T15:42:43.008Z"}
+{"level":"info","message":"Received from esukqlngdcm: disconnect","timestamp":"2025-12-05T15:42:43.673Z"}
+{"level":"info","message":"User esukqlngdcm disconnecting","timestamp":"2025-12-05T15:42:43.674Z"}
+{"level":"info","message":"Put blt92y65xwf back in text chat queue","timestamp":"2025-12-05T15:42:43.675Z"}
+{"level":"info","message":"User esukqlngdcm disconnected and cleaned up","timestamp":"2025-12-05T15:42:43.675Z"}
+{"level":"info","message":"Received from esukqlngdcm: join-text","timestamp":"2025-12-05T15:42:43.973Z"}
+{"level":"info","message":"User esukqlngdcm joining text chat","timestamp":"2025-12-05T15:42:43.974Z"}
+{"level":"info","message":"Paired text chat users: esukqlngdcm and blt92y65xwf","timestamp":"2025-12-05T15:42:43.975Z"}
+{"level":"info","message":"Received from esukqlngdcm: disconnect","timestamp":"2025-12-05T15:42:44.678Z"}
+{"level":"info","message":"User esukqlngdcm disconnecting","timestamp":"2025-12-05T15:42:44.678Z"}
+{"level":"info","message":"Put blt92y65xwf back in text chat queue","timestamp":"2025-12-05T15:42:44.679Z"}
+{"level":"info","message":"User esukqlngdcm disconnected and cleaned up","timestamp":"2025-12-05T15:42:44.679Z"}
+{"level":"info","message":"Received from esukqlngdcm: join-text","timestamp":"2025-12-05T15:42:44.979Z"}
+{"level":"info","message":"User esukqlngdcm joining text chat","timestamp":"2025-12-05T15:42:44.979Z"}
+{"level":"info","message":"Paired text chat users: esukqlngdcm and blt92y65xwf","timestamp":"2025-12-05T15:42:44.980Z"}
+{"level":"info","message":"Received from esukqlngdcm: disconnect","timestamp":"2025-12-05T15:42:46.374Z"}
+{"level":"info","message":"User esukqlngdcm disconnecting","timestamp":"2025-12-05T15:42:46.374Z"}
+{"level":"info","message":"Put blt92y65xwf back in text chat queue","timestamp":"2025-12-05T15:42:46.375Z"}
+{"level":"info","message":"User esukqlngdcm disconnected and cleaned up","timestamp":"2025-12-05T15:42:46.376Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:42:48.652Z"}
+{"level":"info","message":"User blt92y65xwf disconnecting","timestamp":"2025-12-05T15:42:51.572Z"}
+{"level":"info","message":"Removed blt92y65xwf from text chat queue","timestamp":"2025-12-05T15:42:51.573Z"}
+{"level":"info","message":"User blt92y65xwf disconnected and cleaned up","timestamp":"2025-12-05T15:42:51.574Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-05T15:42:51.575Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-05T15:42:51.619Z"}
+{"level":"info","message":"Received from rtaqcjk11l: identify","timestamp":"2025-12-05T15:42:51.622Z"}
+{"level":"info","message":"User rtaqcjk11l identified with fingerprint: g5t4c6","timestamp":"2025-12-05T15:42:51.623Z"}
