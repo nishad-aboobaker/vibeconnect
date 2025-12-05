@@ -1,6 +1,30 @@
 // Generate random user ID
 const userId = Math.random().toString(36).substring(2, 15);
 
+// Security: Generate browser fingerprint
+function generateFingerprint() {
+  const data = [
+    navigator.userAgent,
+    navigator.language,
+    screen.width + 'x' + screen.height,
+    screen.colorDepth,
+    new Date().getTimezoneOffset(),
+    navigator.hardwareConcurrency || 0,
+    navigator.platform
+  ].join('|');
+
+  // Simple hash function
+  let hash = 0;
+  for (let i = 0; i < data.length; i++) {
+    const char = data.charCodeAt(i);
+    hash = ((hash << 5) - hash) + char;
+    hash = hash & hash; // Convert to 32-bit integer
+  }
+  return Math.abs(hash).toString(36);
+}
+
+const fingerprint = generateFingerprint();
+
 // WebSocket connection - automatically detect environment
 const getWebSocketUrl = () => {
   // Check if we're in production (deployed)
@@ -44,6 +68,15 @@ const stopBtn = document.getElementById("stopBtn");
 const videoStatus = document.getElementById("status");
 const videoBackBtn = document.getElementById("videoBackBtn");
 
+// New feature elements
+const textNextBtn = document.getElementById("textNextBtn");
+const textReportBtn = document.getElementById("textReportBtn");
+const nextBtn = document.getElementById("nextBtn");
+const reportBtn = document.getElementById("reportBtn");
+const userCount = document.getElementById("userCount");
+const muteBtn = document.getElementById("muteBtn");
+const typingIndicator = document.getElementById("typingIndicator");
+
 // WebRTC variables
 let localStream;
 let peerConnection;
@@ -55,6 +88,10 @@ let iceCandidatesBuffer = [];
 const rtcConfig = {
   iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
 };
+
+// Feature state
+let isMuted = localStorage.getItem('isMuted') === 'true';
+let typingTimeout = null;
 
 // ===== Event Listeners =====
 // Landing page
@@ -77,9 +114,27 @@ startBtn.addEventListener("click", startVideoChat);
 stopBtn.addEventListener("click", stopVideoChat);
 videoBackBtn.addEventListener("click", returnToLanding);
 
+// New feature listeners
+textNextBtn.addEventListener("click", skipPartner);
+textReportBtn.addEventListener("click", reportUser);
+nextBtn.addEventListener("click", skipPartner);
+reportBtn.addEventListener("click", reportUser);
+muteBtn.addEventListener("click", toggleMute);
+messageInput.addEventListener("input", handleTyping);
+
+// Initialize mute state
+updateMuteButton();
+
 // ===== WebSocket Event Handlers =====
 ws.onopen = () => {
   console.log("Connected to server");
+
+  // Security: Send fingerprint for tracking
+  ws.send(JSON.stringify({
+    type: "identify",
+    userId,
+    fingerprint
+  }));
 };
 
 ws.onmessage = (event) => {
@@ -96,14 +151,24 @@ ws.onmessage = (event) => {
       break;
     case "paired":
       partnerId = data.partnerId;
+
+      // Play notification sound
+      playNotificationSound();
+
       if (currentMode === "text") {
         textStatus.textContent = "Connected! You can now chat.";
         messageInput.disabled = false;
         sendBtn.disabled = false;
         messageInput.focus();
+        // Enable Next and Report buttons
+        textNextBtn.disabled = false;
+        textReportBtn.disabled = false;
       } else if (currentMode === "video") {
         isOfferer = data.isOfferer;
         videoStatus.textContent = "Connected! Starting video...";
+        // Enable Next and Report buttons
+        nextBtn.disabled = false;
+        reportBtn.disabled = false;
         startWebRTC();
       }
       break;
@@ -121,6 +186,41 @@ ws.onmessage = (event) => {
       break;
     case "partner-disconnected":
       handlePartnerDisconnect();
+      break;
+    case "user-count":
+      userCount.textContent = `🟢 ${data.count} users online`;
+      break;
+    case "typing-start":
+      if (currentMode === "text") {
+        typingIndicator.style.display = "flex";
+      }
+      break;
+    case "typing-stop":
+      if (currentMode === "text") {
+        typingIndicator.style.display = "none";
+      }
+      break;
+    case "error":
+      // Security: Handle error messages from server
+      console.error("Server error:", data.message);
+      if (currentMode === "text") {
+        textStatus.textContent = `Error: ${data.message}`;
+        textStatus.style.color = "#ff6b6b";
+        setTimeout(() => {
+          textStatus.style.color = "";
+        }, 3000);
+      } else if (currentMode === "video") {
+        videoStatus.textContent = `Error: ${data.message}`;
+        videoStatus.style.color = "#ff6b6b";
+        setTimeout(() => {
+          videoStatus.style.color = "";
+        }, 3000);
+      }
+      break;
+    case "warning":
+      // Security: Handle warning messages from server
+      console.warn("Server warning:", data.message);
+      alert(`⚠️ Warning: ${data.message}`);
       break;
   }
 };
@@ -168,6 +268,135 @@ function returnToLanding() {
   showLandingView();
 }
 
+// ===== New Feature Functions =====
+function skipPartner() {
+  console.log("Skipping to next partner...");
+
+  // Update status immediately
+  if (currentMode === "text") {
+    textStatus.textContent = "Skipping... Finding new partner...";
+    // Disable buttons to prevent double-clicks
+    textNextBtn.disabled = true;
+    textReportBtn.disabled = true;
+  } else if (currentMode === "video") {
+    videoStatus.textContent = "Skipping... Finding new partner...";
+    nextBtn.disabled = true;
+    reportBtn.disabled = true;
+  }
+
+  // Disconnect current partner
+  if (partnerId) {
+    ws.send(JSON.stringify({ type: "disconnect", userId }));
+    partnerId = null;
+  }
+
+  // Small delay to ensure server processes disconnect before rejoin
+  setTimeout(() => {
+    if (currentMode === "text") {
+      // Clear messages
+      messageContainer.innerHTML = "";
+      ws.send(JSON.stringify({ type: "join-text", userId }));
+    } else if (currentMode === "video") {
+      ws.send(JSON.stringify({ type: "join-video", userId }));
+    }
+  }, 300);
+}
+
+function reportUser() {
+  if (!partnerId) return;
+
+  const reason = prompt("Report reason:\n1. Inappropriate content\n2. Spam\n3. Harassment\n4. Other\n\nEnter number (1-4):");
+
+  if (reason) {
+    const reasons = ["inappropriate", "spam", "harassment", "other"];
+    const reportReason = reasons[parseInt(reason) - 1] || "other";
+
+    ws.send(JSON.stringify({
+      type: "report-user",
+      userId,
+      reportedId: partnerId,
+      reason: reportReason
+    }));
+
+    console.log("User reported:", reportReason);
+
+    // Update UI to show reported status
+    if (currentMode === "text") {
+      textStatus.textContent = "User reported. Disconnecting...";
+      textStatus.style.color = "#ff6b6b";
+    } else if (currentMode === "video") {
+      videoStatus.textContent = "User reported. Disconnecting...";
+      videoStatus.style.color = "#ff6b6b";
+    }
+
+    // Disconnect after a short delay to allow user to see the message
+    setTimeout(() => {
+      if (currentMode === "text") {
+        textStatus.style.color = ""; // Reset color
+        stopTextChat();
+      } else if (currentMode === "video") {
+        videoStatus.style.color = ""; // Reset color
+        stopVideoChat();
+      }
+    }, 1500);
+  }
+}
+
+function handleTyping() {
+  if (!partnerId || currentMode !== "text") return;
+
+  // Send typing-start
+  ws.send(JSON.stringify({
+    type: "typing-start",
+    userId,
+    targetId: partnerId
+  }));
+
+  // Clear previous timeout
+  clearTimeout(typingTimeout);
+
+  // Send typing-stop after 2 seconds of no typing
+  typingTimeout = setTimeout(() => {
+    ws.send(JSON.stringify({
+      type: "typing-stop",
+      userId,
+      targetId: partnerId
+    }));
+  }, 2000);
+}
+
+function playNotificationSound() {
+  if (isMuted) return;
+
+  // Create audio context and play beep
+  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  const oscillator = audioContext.createOscillator();
+  const gainNode = audioContext.createGain();
+
+  oscillator.connect(gainNode);
+  gainNode.connect(audioContext.destination);
+
+  oscillator.frequency.value = 800;
+  oscillator.type = 'sine';
+
+  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+
+  oscillator.start(audioContext.currentTime);
+  oscillator.stop(audioContext.currentTime + 0.5);
+}
+
+function toggleMute() {
+  isMuted = !isMuted;
+  localStorage.setItem('isMuted', isMuted);
+  updateMuteButton();
+}
+
+function updateMuteButton() {
+  muteBtn.textContent = isMuted ? '🔇' : '🔊';
+  muteBtn.classList.toggle('muted', isMuted);
+}
+
 // ===== Text Chat Functions =====
 function startTextChat() {
   console.log("Starting text chat...");
@@ -201,6 +430,11 @@ function stopTextChat() {
   textStopBtn.disabled = true;
   textStatus.textContent = "Chat stopped. Click \"Start Chat\" to begin again.";
   partnerId = null;
+
+  // Disable feature buttons
+  textNextBtn.disabled = true;
+  textReportBtn.disabled = true;
+  typingIndicator.style.display = "none";
 
   console.log("Text chat stopped");
 }
@@ -240,7 +474,11 @@ function handleTextMessage(data) {
 function displayMessage(message, isSent) {
   const messageDiv = document.createElement("div");
   messageDiv.className = `message ${isSent ? "sent" : "received"}`;
+
+  // Security: Sanitize message to prevent XSS
+  // Use textContent instead of innerHTML to prevent script execution
   messageDiv.textContent = message;
+
   messageContainer.appendChild(messageDiv);
 
   // Scroll to bottom
@@ -354,6 +592,10 @@ function stopVideoChat() {
   partnerId = null;
   isOfferer = false;
   iceCandidatesBuffer = [];
+
+  // Disable feature buttons
+  nextBtn.disabled = true;
+  reportBtn.disabled = true;
 
   console.log("Video chat stopped and cleaned up");
 }
