@@ -1,8 +1,19 @@
 // Generate random user ID
 const userId = Math.random().toString(36).substring(2, 15);
 
-// WebSocket connection
-const ws = new WebSocket("ws://localhost:3000");
+// WebSocket connection - automatically detect environment
+const getWebSocketUrl = () => {
+  // Check if we're in production (deployed)
+  if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
+    // Use environment variable or default WebSocket server URL
+    // You need to set this to your deployed WebSocket server URL
+    return 'wss://vibeconnect-4crg.onrender.com/'; // REPLACE THIS with your WebSocket server URL
+  }
+  // Local development
+  return 'ws://localhost:3000';
+};
+
+const ws = new WebSocket(getWebSocketUrl());
 
 // Current mode
 let currentMode = null; // 'text' or 'video'
