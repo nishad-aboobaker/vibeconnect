@@ -894,3 +894,25 @@ video {
     transform: rotate(360deg);
   }
 }
+
+@media (max-width: 768px) {
+  html, body {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  #textChatView {
+    height: 100%;
+  }
+
+  .chat-container {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .message-container {
+    flex-grow: 1;
+    height: auto;
+  }
+}
