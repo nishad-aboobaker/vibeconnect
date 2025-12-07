@@ -57,6 +57,7 @@ const remoteVideo = document.getElementById("remoteVideo");
 // const stopBtn = document.getElementById("stopBtn"); // Removed
 const videoStatus = document.getElementById("status");
 const videoBackBtn = document.getElementById("videoBackBtn");
+const videoSpinner = document.getElementById("videoSpinner");
 
 // New feature elements
 const textNextBtn = document.getElementById("textNextBtn");
@@ -503,6 +504,14 @@ function displayMessage(message, isSent) {
 }
 
 // ===== Video Chat Functions =====
+function toggleVideoSpinner(show) {
+  if (show) {
+    videoSpinner.style.display = "flex";
+  } else {
+    videoSpinner.style.display = "none";
+  }
+}
+
 async function startVideoChat() {
   try {
     console.log("Requesting user media...");
