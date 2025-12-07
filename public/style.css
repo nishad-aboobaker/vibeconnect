@@ -198,17 +198,6 @@ body {
   border-radius: 10px;
 }
 
-/* .chat-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-} */
-
-/* .input-group {
-  display: flex;
-  gap: 10px;
-} */
-
 #messageInput {
   flex: 1;
   padding: 15px;
@@ -334,6 +323,9 @@ video {
 }
 
 #localVideo {
+  transform: scaleX(-1);
+}
+#remoteVideo {
   transform: scaleX(-1);
 }
 
@@ -554,32 +546,6 @@ video {
     /* More height for chat on mobile */
   }
 
-  /*   .input-group {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .send-btn {
-    width: auto;
-    padding: 12px 20px;
-  }
-
-  .input-group .next-btn {
-    padding: 12px 15px;
-    font-size: 0.9em;
-  } */
-
-  /*   .action-buttons {
-    flex-wrap: wrap;
-  }
-
-  .action-btn {
-    flex: 1;
-    min-width: 120px;
-    padding: 10px;
-    font-size: 0.9em;
-  } */
-
   /* Video Chat Mobile */
   .video-chat-container {
     padding: 15px;
@@ -748,7 +714,6 @@ video {
 
   .modal-footer {
     flex-direction: column-reverse;
-    /* Stack buttons, agree on top visual (but bottoms in DOM) - let's keep it simple first */
     padding: 15px 20px;
   }
 
@@ -788,13 +753,10 @@ video {
 
 .skip-btn {
   flex: 1;
-  /* Takes remaining space */
   background: white !important;
-  /* Force white background */
   color: #333;
   border: 1px solid #e0e0e0;
   border-radius: 8px;
-  /* Slightly squared as per image */
   padding: 12px;
   font-weight: bold;
   display: flex;
@@ -822,12 +784,9 @@ video {
   align-items: center;
   justify-content: center;
   background: #333 !important;
-  /* Dark background per image */
   color: #ff6b6b;
-  /* Red warning icon */
   border-radius: 8px;
   border: none;
-  /* Prevent flex growing/shrinking from other rules */
   flex: 0 0 48px !important;
   min-width: 48px !important;
 }
@@ -839,25 +798,19 @@ video {
 
 .input-row #messageInput {
   background: #2c2c2c;
-  /* Dark input per typical dark mode, or use styling */
   color: white;
   border: 1px solid #444;
-  /* Assuming the rest of the app might be dark or the user wants this contrast. 
-     The image has a dark background for the container. 
-     Let's match the image's "dark container" vibe by forcing dark input. */
 }
 
 .input-row .send-btn {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  /* Circle send button */
   padding: 0;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #333 !important;
-  /* Dark circle */
   color: white;
   flex: 0 0 48px !important;
   min-width: 48px !important;
@@ -882,9 +835,7 @@ video {
   justify-content: center;
   z-index: 2;
   border-radius: 12px;
-  /* Match video border radius */
   display: none;
-  /* Hidden by default */
 }
 
 .spinner-icon {

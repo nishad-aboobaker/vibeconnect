@@ -426,9 +426,6 @@ function startTextChat() {
 
   // Send join message for text chat
   ws.send(JSON.stringify({ type: "join-text", userId }));
-
-  // textStartBtn.disabled = true; // Removed
-  // textStopBtn.disabled = false; // Removed
   textStatus.textContent = "Joining chat...";
 
   console.log("Sent join-text request");
@@ -444,8 +441,6 @@ function stopTextChat() {
   messageInput.disabled = true;
   sendBtn.disabled = true;
   messageInput.value = "";
-  // textStartBtn.disabled = false; // Removed
-  // textStopBtn.disabled = true; // Removed
   textStatus.textContent = "Chat stopped. Go back to start again.";
   partnerId = null;
 
