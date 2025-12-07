@@ -13,12 +13,14 @@
   <div id="landingView" class="view">
     <div class="landing-container">
       <div class="header-info">
-        <span id="userCount" class="user-count">🟢 Loading...</span>
+        <div class="header-left">
+          <div id="connectionStatus" class="connection-status">Connecting...</div>
+          <span id="userCount" class="user-count">🟢 Loading...</span>
+        </div>
         <button id="muteBtn" class="mute-btn" title="Toggle sound">🔊</button>
       </div>
       <h1>VibeConnect</h1>
       <p class="tagline">Connect Anonymously, Chat Freely</p>
-      <div id="connectionStatus" class="connection-status">Connecting...</div>
 
       <div class="mode-selection">
         <button id="textChatBtn" class="mode-btn text-mode" disabled>
@@ -47,9 +49,10 @@
       <div id="textStatus" class="status">Click "Start" to begin chatting</div>
 
       <div id="messageContainer" class="message-container">
-        <div id="typingIndicator" class="typing-indicator" style="display: none;">
-          <span></span><span></span><span></span>
-        </div>
+      </div>
+
+      <div id="typingIndicator" class="typing-indicator" style="display: none;">
+        <span></span><span></span><span></span>
       </div>
 
       <div class="chat-controls">

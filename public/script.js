@@ -95,7 +95,6 @@ function sendWsMessage(payload) {
     const statusElement = currentMode === 'video' ? videoStatus : textStatus;
     if (statusElement) {
       statusElement.textContent = 'Connection lost. Please try reconnecting.';
-      statusElement.style.color = '#ff6b6b';
     }
   }
 }
@@ -121,7 +120,7 @@ messageInput.addEventListener("input", handleTyping);
 // ===== WebSocket Connection =====
 function connectWebSocket() {
   console.log('Connecting to WebSocket...');
-  connectionStatus.textContent = 'Connecting...';
+  updateConnectionStatus('Connecting...', 'connecting');
   textChatBtn.disabled = true;
   videoChatBtn.disabled = true;
 
@@ -129,8 +128,7 @@ function connectWebSocket() {
 
   ws.onopen = () => {
     console.log("Connected to server");
-    connectionStatus.textContent = 'Connected';
-    connectionStatus.style.color = '#28a745';
+    updateConnectionStatus('Connected', 'connected');
     textChatBtn.disabled = false;
     videoChatBtn.disabled = false;
 
@@ -199,8 +197,7 @@ function connectWebSocket() {
 
   ws.onclose = () => {
     console.log("Disconnected from server");
-    connectionStatus.textContent = 'Disconnected';
-    connectionStatus.style.color = '#dc3545';
+    updateConnectionStatus('Disconnected', 'disconnected');
     textChatBtn.disabled = true;
     videoChatBtn.disabled = true;
 
@@ -217,10 +214,15 @@ function connectWebSocket() {
 
   ws.onerror = (error) => {
     console.error('WebSocket Error:', error);
-    connectionStatus.textContent = 'Error';
-    connectionStatus.style.color = '#ffc107';
+    updateConnectionStatus('Error', 'error');
     // ws.close() will be called automatically, triggering onclose
   };
+}
+
+function updateConnectionStatus(text, statusClass) {
+  connectionStatus.textContent = text;
+  connectionStatus.className = 'connection-status'; // Reset classes
+  connectionStatus.classList.add(statusClass);
 }
 
 
