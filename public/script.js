@@ -29,37 +29,30 @@ const fingerprint = generateFingerprint();
 const getWebSocketUrl = () => {
   // Check if we're in production (deployed)
   if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-    // Use environment variable or default WebSocket server URL
-    // You need to set this to your deployed WebSocket server URL
-    return 'wss://vibeconnect-4crg.onrender.com/'; // REPLACE THIS with your WebSocket server URL
+    return 'wss://vibeconnect-4crg.onrender.com/'; // Deployed WebSocket server
   }
   // Local development
   return 'ws://localhost:3000';
 };
 
-const ws = new WebSocket(getWebSocketUrl());
+let ws = new WebSocket(getWebSocketUrl());
+
+// DOM elements
+const landingView = document.getElementById('landingView');
+const textChatView = document.getElementById('textChatView');
+const videoChatView = document.getElementById('videoChatView');
 const textChatBtn = document.getElementById("textChatBtn");
 const videoChatBtn = document.getElementById("videoChatBtn");
-
-// DOM elements - Text Chat
 const messageContainer = document.getElementById("messageContainer");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
-// const textStartBtn = document.getElementById("textStartBtn"); // Removed
-// const textStopBtn = document.getElementById("textStopBtn"); // Removed
 const textStatus = document.getElementById("textStatus");
 const textBackBtn = document.getElementById("textBackBtn");
-
-// DOM elements - Video Chat
 const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
-// const startBtn = document.getElementById("startBtn"); // Removed
-// const stopBtn = document.getElementById("stopBtn"); // Removed
 const videoStatus = document.getElementById("status");
 const videoBackBtn = document.getElementById("videoBackBtn");
 const videoSpinner = document.getElementById("videoSpinner");
-
-// New feature elements
 const textNextBtn = document.getElementById("textNextBtn");
 const textReportBtn = document.getElementById("textReportBtn");
 const nextBtn = document.getElementById("nextBtn");
@@ -67,8 +60,11 @@ const reportBtn = document.getElementById("reportBtn");
 const userCount = document.getElementById("userCount");
 const muteBtn = document.getElementById("muteBtn");
 const typingIndicator = document.getElementById("typingIndicator");
+const termsModal = document.getElementById("termsModal");
 const termsCancelBtn = document.getElementById("termsCancelBtn");
 const termsAgreeBtn = document.getElementById("termsAgreeBtn");
+const connectionStatus = document.getElementById("connectionStatus");
+
 
 // WebRTC variables
 let localStream;
@@ -76,6 +72,8 @@ let peerConnection;
 let partnerId;
 let isOfferer = false;
 let iceCandidatesBuffer = [];
+let currentMode = null;
+let pendingMode = null;
 
 // WebRTC configuration
 const rtcConfig = {
@@ -86,33 +84,33 @@ const rtcConfig = {
 let isMuted = localStorage.getItem('isMuted') === 'true';
 let typingTimeout = null;
 
+
+// ===== Helper Functions =====
+function sendWsMessage(payload) {
+  if (ws.readyState === WebSocket.OPEN) {
+    ws.send(JSON.stringify(payload));
+  } else {
+    console.error("WebSocket is not open. Cannot send message:", payload);
+    // Optionally, display an error to the user
+    const statusElement = currentMode === 'video' ? videoStatus : textStatus;
+    if (statusElement) {
+      statusElement.textContent = 'Connection lost. Please try reconnecting.';
+      statusElement.style.color = '#ff6b6b';
+    }
+  }
+}
+
 // ===== Event Listeners =====
-// Landing page
-// Landing page
 textChatBtn.addEventListener("click", () => showTermsModal("text"));
 videoChatBtn.addEventListener("click", () => showTermsModal("video"));
-
-// Terms Modal
 termsCancelBtn.addEventListener("click", hideTermsModal);
 termsAgreeBtn.addEventListener("click", handleTermsAgree);
-
-// Text chat
-// textStartBtn.addEventListener("click", startTextChat); // Removed
-// textStopBtn.addEventListener("click", stopTextChat); // Removed
 sendBtn.addEventListener("click", sendMessage);
 messageInput.addEventListener("keypress", (e) => {
-  if (e.key === "Enter" && !sendBtn.disabled) {
-    sendMessage();
-  }
+  if (e.key === "Enter" && !sendBtn.disabled) sendMessage();
 });
 textBackBtn.addEventListener("click", returnToLanding);
-
-// Video chat
-// startBtn.addEventListener("click", startVideoChat); // Removed
-// stopBtn.addEventListener("click", stopVideoChat); // Removed
 videoBackBtn.addEventListener("click", returnToLanding);
-
-// New feature listeners
 textNextBtn.addEventListener("click", skipPartner);
 textReportBtn.addEventListener("click", reportUser);
 nextBtn.addEventListener("click", skipPartner);
@@ -120,133 +118,124 @@ reportBtn.addEventListener("click", reportUser);
 muteBtn.addEventListener("click", toggleMute);
 messageInput.addEventListener("input", handleTyping);
 
-// Initialize mute state
-updateMuteButton();
+// ===== WebSocket Connection =====
+function connectWebSocket() {
+  console.log('Connecting to WebSocket...');
+  connectionStatus.textContent = 'Connecting...';
+  textChatBtn.disabled = true;
+  videoChatBtn.disabled = true;
 
-// ===== WebSocket Event Handlers =====
-ws.onopen = () => {
-  console.log("Connected to server");
+  ws = new WebSocket(getWebSocketUrl());
 
-  // Security: Send fingerprint for tracking
-  ws.send(JSON.stringify({
-    type: "identify",
-    userId,
-    fingerprint
-  }));
-};
+  ws.onopen = () => {
+    console.log("Connected to server");
+    connectionStatus.textContent = 'Connected';
+    connectionStatus.style.color = '#28a745';
+    textChatBtn.disabled = false;
+    videoChatBtn.disabled = false;
 
-ws.onmessage = (event) => {
-  const data = JSON.parse(event.data);
-  console.log("Received:", data);
+    sendWsMessage({ type: "identify", userId, fingerprint });
+  };
 
-  switch (data.type) {
-    case "waiting":
-      if (currentMode === "text") {
-        textStatus.textContent = "Waiting for a partner...";
-      } else if (currentMode === "video") {
-        videoStatus.textContent = "Waiting for a partner...";
-      }
-      break;
-    case "paired":
-      partnerId = data.partnerId;
+  ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    console.log("Received:", data);
 
-      // Play notification sound
-      playNotificationSound();
+    switch (data.type) {
+      case "waiting":
+        updateStatus(currentMode === 'video' ? videoStatus : textStatus, "Waiting for a partner...");
+        break;
+      case "paired":
+        partnerId = data.partnerId;
+        playNotificationSound();
+        if (currentMode === "text") {
+          updateStatus(textStatus, "Connected! You can now chat.");
+          messageInput.disabled = false;
+          sendBtn.disabled = false;
+          textNextBtn.disabled = false;
+          textReportBtn.disabled = false;
+          messageInput.focus();
+        } else if (currentMode === "video") {
+          isOfferer = data.isOfferer;
+          updateStatus(videoStatus, "Connected! Starting video...");
+          nextBtn.disabled = false;
+          reportBtn.disabled = false;
+          startWebRTC();
+        }
+        break;
+      case "text-message":
+        handleTextMessage(data);
+        break;
+      case "offer":
+        handleOffer(data);
+        break;
+      case "answer":
+        handleAnswer(data);
+        break;
+      case "ice-candidate":
+        handleIceCandidate(data);
+        break;
+      case "partner-disconnected":
+        handlePartnerDisconnect();
+        break;
+      case "user-count":
+        userCount.textContent = `🟢 ${data.count} users online`;
+        break;
+      case "typing-start":
+        if (currentMode === "text") typingIndicator.style.display = "flex";
+        break;
+      case "typing-stop":
+        if (currentMode === "text") typingIndicator.style.display = "none";
+        break;
+      case "error":
+        handleServerError(data.message);
+        break;
+      case "warning":
+        console.warn("Server warning:", data.message);
+        alert(`⚠️ Warning: ${data.message}`);
+        break;
+    }
+  };
 
-      if (currentMode === "text") {
-        textStatus.textContent = "Connected! You can now chat.";
-        messageInput.disabled = false;
-        sendBtn.disabled = false;
-        messageInput.focus();
-        // Enable Next and Report buttons
-        textNextBtn.disabled = false;
-        textReportBtn.disabled = false;
-      } else if (currentMode === "video") {
-        isOfferer = data.isOfferer;
-        videoStatus.textContent = "Connected! Starting video...";
-        // Enable Next and Report buttons
-        nextBtn.disabled = false;
-        reportBtn.disabled = false;
-        startWebRTC();
-      }
-      break;
-    case "text-message":
-      handleTextMessage(data);
-      break;
-    case "offer":
-      handleOffer(data);
-      break;
-    case "answer":
-      handleAnswer(data);
-      break;
-    case "ice-candidate":
-      handleIceCandidate(data);
-      break;
-    case "partner-disconnected":
-      handlePartnerDisconnect();
-      break;
-    case "user-count":
-      userCount.textContent = `🟢 ${data.count} users online`;
-      break;
-    case "typing-start":
-      if (currentMode === "text") {
-        typingIndicator.style.display = "flex";
-      }
-      break;
-    case "typing-stop":
-      if (currentMode === "text") {
-        typingIndicator.style.display = "none";
-      }
-      break;
-    case "error":
-      // Security: Handle error messages from server
-      console.error("Server error:", data.message);
-      if (currentMode === "text") {
-        textStatus.textContent = `Error: ${data.message}`;
-        textStatus.style.color = "#ff6b6b";
-        setTimeout(() => {
-          textStatus.style.color = "";
-        }, 3000);
-      } else if (currentMode === "video") {
-        videoStatus.textContent = `Error: ${data.message}`;
-        videoStatus.style.color = "#ff6b6b";
-        setTimeout(() => {
-          videoStatus.style.color = "";
-        }, 3000);
-      }
-      break;
-    case "warning":
-      // Security: Handle warning messages from server
-      console.warn("Server warning:", data.message);
-      alert(`⚠️ Warning: ${data.message}`);
-      break;
-  }
-};
+  ws.onclose = () => {
+    console.log("Disconnected from server");
+    connectionStatus.textContent = 'Disconnected';
+    connectionStatus.style.color = '#dc3545';
+    textChatBtn.disabled = true;
+    videoChatBtn.disabled = true;
 
-ws.onclose = () => {
-  console.log("Disconnected from server");
-  if (currentMode === "text") {
-    stopTextChat();
-  } else if (currentMode === "video") {
-    stopVideoChat();
-  }
-};
+    if (currentMode) {
+      const statusElement = currentMode === 'video' ? videoStatus : textStatus;
+      updateStatus(statusElement, "Connection lost. Please return to the main menu.", true);
+      if (currentMode === 'video') stopVideoChat(false); // Don't send another disconnect message
+      else if (currentMode === 'text') stopTextChat(false); // Don't send another disconnect message
+    }
+
+    // Attempt to reconnect after a delay
+    setTimeout(connectWebSocket, 5000);
+  };
+
+  ws.onerror = (error) => {
+    console.error('WebSocket Error:', error);
+    connectionStatus.textContent = 'Error';
+    connectionStatus.style.color = '#ffc107';
+    // ws.close() will be called automatically, triggering onclose
+  };
+}
+
+
 
 // ===== View Management =====
 function showTextChatView() {
   landingView.style.display = "none";
   textChatView.style.display = "block";
-  videoChatView.style.display = "none";
   currentMode = "text";
-  console.log("Switched to text chat view");
 }
 
 function showVideoChatView() {
   landingView.style.display = "none";
-  textChatView.style.display = "none";
   videoChatView.style.display = "block";
   currentMode = "video";
-  console.log("Switched to video chat view");
 }
 
 function showLandingView() {
@@ -254,7 +243,6 @@ function showLandingView() {
   textChatView.style.display = "none";
   videoChatView.style.display = "none";
   currentMode = null;
-  console.log("Switched to landing view");
 }
 
 function showTermsModal(mode) {
@@ -270,10 +258,10 @@ function hideTermsModal() {
 function handleTermsAgree() {
   if (pendingMode === "text") {
     showTextChatView();
-    startTextChat(); // Auto-start
+    startTextChat();
   } else if (pendingMode === "video") {
     showVideoChatView();
-    startVideoChat(); // Auto-start
+    startVideoChat();
   }
   hideTermsModal();
 }
@@ -287,123 +275,91 @@ function returnToLanding() {
   showLandingView();
 }
 
-// ===== New Feature Functions =====
+function updateStatus(element, message, isError = false) {
+  if (element) {
+    element.textContent = message;
+    element.style.color = isError ? '#ff6b6b' : '';
+  }
+}
+
+function handleServerError(message) {
+  console.error("Server error:", message);
+  const statusElement = currentMode === 'video' ? videoStatus : textStatus;
+  updateStatus(statusElement, `Error: ${message}`, true);
+  setTimeout(() => updateStatus(statusElement, ' '), 3000);
+}
+
+
+// ===== Feature Functions =====
 function skipPartner() {
   console.log("Skipping to next partner...");
-
-  // Update status immediately
-  if (currentMode === "text") {
-    textStatus.textContent = "Skipping... Finding new partner...";
-    // Disable buttons to prevent double-clicks
-    textNextBtn.disabled = true;
-    textReportBtn.disabled = true;
-  } else if (currentMode === "video") {
-    videoStatus.textContent = "Skipping... Finding new partner...";
+  const statusElement = currentMode === 'video' ? videoStatus : textStatus;
+  updateStatus(statusElement, "Skipping... Finding new partner...");
+  if (currentMode === 'video') {
     nextBtn.disabled = true;
     reportBtn.disabled = true;
-    toggleVideoSpinner(true); // Show spinner while skipping
+    toggleVideoSpinner(true);
+  } else {
+    textNextBtn.disabled = true;
+    textReportBtn.disabled = true;
   }
 
-  // Disconnect current partner
   if (partnerId) {
-    ws.send(JSON.stringify({ type: "disconnect", userId }));
+    sendWsMessage({ type: "disconnect", userId });
     partnerId = null;
   }
 
-  // Small delay to ensure server processes disconnect before rejoin
   setTimeout(() => {
     if (currentMode === "text") {
-      // Clear messages
       messageContainer.innerHTML = "";
-      ws.send(JSON.stringify({ type: "join-text", userId }));
+      sendWsMessage({ type: "join-text", userId });
     } else if (currentMode === "video") {
-      ws.send(JSON.stringify({ type: "join-video", userId }));
+      sendWsMessage({ type: "join-video", userId });
     }
   }, 300);
 }
 
 function reportUser() {
   if (!partnerId) return;
-
-  const reason = prompt("Report reason:\n1. Inappropriate content\n2. Spam\n3. Harassment\n4. Other\n\nEnter number (1-4):");
-
+  const reason = prompt("Report reason:\n1. Inappropriate\n2. Spam\n3. Harassment\n4. Other");
   if (reason) {
-    const reasons = ["inappropriate", "spam", "harassment", "other"];
-    const reportReason = reasons[parseInt(reason) - 1] || "other";
-
-    ws.send(JSON.stringify({
-      type: "report-user",
-      userId,
-      reportedId: partnerId,
-      reason: reportReason
-    }));
-
+    const reportReason = ["inappropriate", "spam", "harassment", "other"][parseInt(reason) - 1] || "other";
+    sendWsMessage({ type: "report-user", userId, reportedId: partnerId, reason: reportReason });
     console.log("User reported:", reportReason);
-
-    // Update UI to show reported status
-    if (currentMode === "text") {
-      textStatus.textContent = "User reported. Disconnecting...";
-      textStatus.style.color = "#ff6b6b";
-    } else if (currentMode === "video") {
-      videoStatus.textContent = "User reported. Disconnecting...";
-      videoStatus.style.color = "#ff6b6b";
-    }
-
-    // Disconnect after a short delay to allow user to see the message
+    updateStatus(currentMode === 'video' ? videoStatus : textStatus, "User reported. Disconnecting...", true);
     setTimeout(() => {
-      if (currentMode === "text") {
-        textStatus.style.color = ""; // Reset color
-        stopTextChat();
-      } else if (currentMode === "video") {
-        videoStatus.style.color = ""; // Reset color
-        stopVideoChat();
-      }
+      if (currentMode === 'text') stopTextChat();
+      else if (currentMode === 'video') stopVideoChat();
     }, 1500);
   }
 }
 
 function handleTyping() {
   if (!partnerId || currentMode !== "text") return;
-
-  // Send typing-start
-  ws.send(JSON.stringify({
-    type: "typing-start",
-    userId,
-    targetId: partnerId
-  }));
-
-  // Clear previous timeout
+  sendWsMessage({ type: "typing-start", userId, targetId: partnerId });
   clearTimeout(typingTimeout);
-
-  // Send typing-stop after 2 seconds of no typing
   typingTimeout = setTimeout(() => {
-    ws.send(JSON.stringify({
-      type: "typing-stop",
-      userId,
-      targetId: partnerId
-    }));
+    sendWsMessage({ type: "typing-stop", userId, targetId: partnerId });
   }, 2000);
 }
 
 function playNotificationSound() {
   if (isMuted) return;
-
-  // Create audio context and play beep
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-  const oscillator = audioContext.createOscillator();
-  const gainNode = audioContext.createGain();
-
-  oscillator.connect(gainNode);
-  gainNode.connect(audioContext.destination);
-
-  oscillator.frequency.value = 800;
-  oscillator.type = 'sine';
-
-  gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-  gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-
-  oscillator.start(audioContext.currentTime);
-  oscillator.stop(audioContext.currentTime + 0.5);
+  try {
+    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    const oscillator = audioContext.createOscillator();
+    const gainNode = audioContext.createGain();
+    oscillator.connect(gainNode);
+    gainNode.connect(audioContext.destination);
+    oscillator.frequency.value = 800;
+    oscillator.type = 'sine';
+    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+    oscillator.start(audioContext.currentTime);
+    oscillator.stop(audioContext.currentTime + 0.5);
+  } catch (e) {
+    console.error("Could not play notification sound", e);
+  }
 }
 
 function toggleMute() {
@@ -420,165 +376,93 @@ function updateMuteButton() {
 // ===== Text Chat Functions =====
 function startTextChat() {
   console.log("Starting text chat...");
-
-  // Clear previous messages
   messageContainer.innerHTML = "";
-
-  // Send join message for text chat
-  ws.send(JSON.stringify({ type: "join-text", userId }));
-  textStatus.textContent = "Joining chat...";
-
-  console.log("Sent join-text request");
+  sendWsMessage({ type: "join-text", userId });
+  updateStatus(textStatus, "Joining chat...");
 }
 
-function stopTextChat() {
+function stopTextChat(notifyServer = true) {
   console.log("Stopping text chat...");
-
-  // Send disconnect message
-  ws.send(JSON.stringify({ type: "disconnect", userId }));
-
-  // Reset UI
+  if (notifyServer) sendWsMessage({ type: "disconnect", userId });
   messageInput.disabled = true;
   sendBtn.disabled = true;
   messageInput.value = "";
-  textStatus.textContent = "Chat stopped. Go back to start again.";
+  updateStatus(textStatus, "Chat stopped. Go back to start again.");
   partnerId = null;
-
-  // Disable feature buttons
   textNextBtn.disabled = true;
   textReportBtn.disabled = true;
   typingIndicator.style.display = "none";
-
-  console.log("Text chat stopped");
 }
 
 function sendMessage() {
   const message = messageInput.value.trim();
-
-  if (!message || !partnerId) {
-    return;
-  }
-
-  console.log("Sending message:", message);
-
-  // Display message locally
+  if (!message || !partnerId) return;
   displayMessage(message, true);
-
-  // Send to partner
-  ws.send(
-    JSON.stringify({
-      type: "text-message",
-      userId,
-      targetId: partnerId,
-      message,
-    })
-  );
-
-  // Clear input
+  sendWsMessage({ type: "text-message", userId, targetId: partnerId, message });
   messageInput.value = "";
   messageInput.focus();
 }
 
 function handleTextMessage(data) {
-  console.log("Received text message:", data.message);
   displayMessage(data.message, false);
 }
 
 function displayMessage(message, isSent) {
   const messageDiv = document.createElement("div");
   messageDiv.className = `message ${isSent ? "sent" : "received"}`;
-
-  // Security: Sanitize message to prevent XSS
-  // Use textContent instead of innerHTML to prevent script execution
-  messageDiv.textContent = message;
-
+  messageDiv.textContent = message; // Prevents XSS
   messageContainer.appendChild(messageDiv);
-
-  // Scroll to bottom
   messageContainer.scrollTop = messageContainer.scrollHeight;
 }
 
 // ===== Video Chat Functions =====
 function toggleVideoSpinner(show) {
-  if (show) {
-    videoSpinner.style.display = "flex";
-  } else {
-    videoSpinner.style.display = "none";
-  }
+  videoSpinner.style.display = show ? "flex" : "none";
 }
 
 async function startVideoChat() {
+  console.log("Requesting user media...");
+  toggleVideoSpinner(true);
   try {
-    console.log("Requesting user media...");
-
-    // Show spinner immediately
-    toggleVideoSpinner(true);
-
-    // Get user media
-    localStream = await navigator.mediaDevices.getUserMedia({
-      video: true,
-      audio: true,
-    });
-
-    console.log("Got local stream:", localStream);
-
-    // Set local video source
+    localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+    console.log("Got local stream");
     localVideo.srcObject = localStream;
-    localVideo.muted = true; // Mute local video
-
-    // Send join message for video chat
-    ws.send(JSON.stringify({ type: "join-video", userId }));
-
-    videoStatus.textContent = "Joining chat...";
-    console.log("Successfully started video chat, waiting for partner...");
-
+    localVideo.muted = true;
+    sendWsMessage({ type: "join-video", userId });
+    updateStatus(videoStatus, "Joining chat...");
   } catch (error) {
     console.error("Error accessing media devices:", error);
-
-    let errorMessage = "Error: Could not access camera/microphone";
+    let msg = "Error: Could not access camera/microphone.";
     if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
-      errorMessage = "Error: Camera/microphone permission denied.";
+      msg = "Error: Camera/microphone permission denied.";
     } else if (error.name === "NotFoundError" || error.name === "DevicesNotFoundError") {
-      errorMessage = "Error: No camera or microphone found.";
+      msg = "Error: No camera or microphone found.";
     } else if (error.name === "NotReadableError") {
-      errorMessage = "Error: Camera/microphone is in use.";
+      msg = "Error: Camera/microphone is already in use.";
     }
-
-    videoStatus.textContent = errorMessage;
+    updateStatus(videoStatus, msg, true);
     toggleVideoSpinner(false);
   }
 }
 
-function stopVideoChat() {
+function stopVideoChat(notifyServer = true) {
   console.log("Stopping video chat...");
-
-  // Send disconnect message
-  ws.send(JSON.stringify({ type: "disconnect", userId }));
-
-  // Stop local stream
+  if (notifyServer) sendWsMessage({ type: "disconnect", userId });
   if (localStream) {
     localStream.getTracks().forEach((track) => track.stop());
     localStream = null;
   }
-
-  // Close peer connection
   if (peerConnection) {
     peerConnection.close();
     peerConnection = null;
   }
-
-  // Clear video sources
   localVideo.srcObject = null;
   remoteVideo.srcObject = null;
-
-  videoStatus.textContent = 'Chat stopped. Go back to start again.';
+  updateStatus(videoStatus, 'Chat stopped. Go back to start again.');
   partnerId = null;
   isOfferer = false;
   iceCandidatesBuffer = [];
-
   toggleVideoSpinner(false);
-
-  // Disable feature buttons
   nextBtn.disabled = true;
   reportBtn.disabled = true;
 }
@@ -586,160 +470,102 @@ function stopVideoChat() {
 function startWebRTC() {
   console.log("Starting WebRTC connection...");
   peerConnection = new RTCPeerConnection(rtcConfig);
-
-  // Add local stream
   if (localStream) {
-    localStream.getTracks().forEach((track) => {
-      peerConnection.addTrack(track, localStream);
-    });
+    localStream.getTracks().forEach((track) => peerConnection.addTrack(track, localStream));
   }
-
-  // Handle remote stream
   peerConnection.ontrack = (event) => {
     if (event.streams && event.streams[0]) {
       remoteVideo.srcObject = event.streams[0];
-
       remoteVideo.onplaying = () => {
-        videoStatus.textContent = "Video chat active!";
-        toggleVideoSpinner(false); // Hide spinner when video plays
+        updateStatus(videoStatus, "Video chat active!");
+        toggleVideoSpinner(false);
       };
-
-      videoStatus.textContent = "Connecting video...";
+      updateStatus(videoStatus, "Connecting video...");
+    } else {
+        updateStatus(videoStatus, "No video stream from partner.");
     }
   };
-
-  // Handle ICE candidates
   peerConnection.onicecandidate = (event) => {
     if (event.candidate) {
-      ws.send(JSON.stringify({
-        type: "ice-candidate",
-        userId,
-        targetId: partnerId,
-        candidate: event.candidate,
-      }));
+      sendWsMessage({ type: "ice-candidate", userId, targetId: partnerId, candidate: event.candidate });
     }
   };
-
-  // Monitor connection state
   peerConnection.onconnectionstatechange = () => {
+    console.log(`Peer connection state: ${peerConnection.connectionState}`);
     if (peerConnection.connectionState === "failed") {
-      videoStatus.textContent = "Connection failed. Please try again.";
+      updateStatus(videoStatus, "Connection failed. Please try again.", true);
       toggleVideoSpinner(false);
     }
+     if (peerConnection.connectionState === 'disconnected') {
+      handlePartnerDisconnect();
+    }
   };
-
-  // Only create offer if this user is the offerer
   if (isOfferer) {
     peerConnection.createOffer()
-      .then((offer) => peerConnection.setLocalDescription(offer))
-      .then(() => {
-        ws.send(JSON.stringify({
-          type: "offer",
-          userId,
-          targetId: partnerId,
-          offer: peerConnection.localDescription,
-        }));
-      })
-      .catch(console.error);
+      .then(offer => peerConnection.setLocalDescription(offer))
+      .then(() => sendWsMessage({ type: "offer", userId, targetId: partnerId, offer: peerConnection.localDescription }))
+      .catch(e => console.error("Offer creation failed:", e));
   } else {
-    console.log("Waiting for offer as answerer...");
+    console.log("Waiting for offer...");
   }
 }
 
 function handleOffer(data) {
-  console.log("Received offer from:", data.from);
+  console.log("Received offer");
+  if (!peerConnection) startWebRTC(); 
   partnerId = data.from;
-
-  // Set remote description and create answer
-  peerConnection
-    .setRemoteDescription(data.offer)
+  peerConnection.setRemoteDescription(data.offer)
     .then(() => {
-      console.log("Set remote description from offer");
-      // Add buffered ICE candidates
-      console.log("Adding buffered ICE candidates:", iceCandidatesBuffer.length);
-      iceCandidatesBuffer.forEach((candidate) => {
-        peerConnection.addIceCandidate(candidate);
-      });
+      console.log("Processing buffered ICE candidates");
+      iceCandidatesBuffer.forEach(candidate => peerConnection.addIceCandidate(candidate));
       iceCandidatesBuffer = [];
-    })
-    .then(() => {
-      console.log("Creating answer...");
       return peerConnection.createAnswer();
     })
-    .then((answer) => {
-      console.log("Created answer:", answer);
-      return peerConnection.setLocalDescription(answer);
-    })
-    .then(() => {
-      console.log("Set local description, sending answer");
-      ws.send(
-        JSON.stringify({
-          type: "answer",
-          userId,
-          targetId: partnerId,
-          answer: peerConnection.localDescription,
-        })
-      );
-      console.log("Sent answer to partner");
-    })
-    .catch((error) => {
-      console.error("Error handling offer:", error);
-      videoStatus.textContent = "Error establishing connection. Please try again.";
-    });
+    .then(answer => peerConnection.setLocalDescription(answer))
+    .then(() => sendWsMessage({ type: "answer", userId, targetId: partnerId, answer: peerConnection.localDescription }))
+    .catch(e => console.error("Error in handleOffer:", e));
 }
 
 function handleAnswer(data) {
-  console.log("Received answer from:", data.from);
+  console.log("Received answer");
   peerConnection.setRemoteDescription(data.answer)
-    .then(() => {
-      console.log("Set remote description from answer");
-    })
-    .catch((error) => {
-      console.error("Error handling answer:", error);
-    });
+      .catch(e => console.error("Error in handleAnswer:", e));
 }
 
 function handleIceCandidate(data) {
-  console.log("Received ICE candidate from:", data.from);
-  if (peerConnection && peerConnection.remoteDescription) {
-    peerConnection.addIceCandidate(data.candidate)
-      .then(() => {
-        console.log("Added ICE candidate");
-      })
-      .catch((error) => {
-        console.error("Error adding ICE candidate:", error);
-      });
+  console.log("Received ICE candidate");
+  const candidate = new RTCIceCandidate(data.candidate);
+  if (peerConnection && peerConnection.remoteDescription && peerConnection.remoteDescription.type) {
+    peerConnection.addIceCandidate(candidate).catch(e => console.error("Error adding ICE candidate:", e));
   } else {
-    console.log("Buffering ICE candidate (no remote description yet)");
-    iceCandidatesBuffer.push(data.candidate);
+    console.log("Buffering ICE candidate");
+    iceCandidatesBuffer.push(candidate);
   }
 }
 
 function handlePartnerDisconnect() {
   console.log("Partner disconnected");
-
-  if (currentMode === "text") {
-    textStatus.textContent = "Partner disconnected. Waiting for new partner...";
-    messageInput.disabled = true;
-    sendBtn.disabled = true;
-    partnerId = null;
-  } else if (currentMode === "video") {
-    // Close existing peer connection
+  const statusElement = currentMode === 'video' ? videoStatus : textStatus;
+  updateStatus(statusElement, "Partner disconnected. Waiting for new partner...");
+  if (currentMode === "video") {
     if (peerConnection) {
       peerConnection.close();
       peerConnection = null;
     }
-
-    // Clear remote video
     remoteVideo.srcObject = null;
-
-    // Reset state
     partnerId = null;
     iceCandidatesBuffer = [];
-
-    videoStatus.textContent = "Partner disconnected. Waiting for new partner...";
     toggleVideoSpinner(true); // Show spinner while waiting
+     // The server should automatically requeue us, no need to send join-video again unless specified by server logic.
+  } else {
+    messageInput.disabled = true;
+    sendBtn.disabled = true;
+    partnerId = null;
   }
-
-  // Server will put us back in queue
 }
+
+// Initial setup
+document.addEventListener('DOMContentLoaded', () => {
+    updateMuteButton();
+    connectWebSocket();
+});
