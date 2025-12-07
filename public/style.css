@@ -895,24 +895,38 @@ video {
   }
 }
 
+/* Mobile-specific styles for keyboard issue */
 @media (max-width: 768px) {
-  html, body {
-    height: 100%;
+  body.chat-active {
     overflow: hidden;
   }
 
-  #textChatView {
+  body.chat-active #textChatView {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     height: 100%;
-  }
-
-  .chat-container {
-    height: 100%;
+    width: 100%;
+    z-index: 100;
     display: flex;
     flex-direction: column;
+    background: rgba(255, 255, 255, 0.95);
   }
 
-  .message-container {
+  body.chat-active .chat-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  body.chat-active .message-container {
     flex-grow: 1;
     height: auto;
+    overflow-y: auto;
   }
 }

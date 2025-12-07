@@ -232,6 +232,7 @@ function showTextChatView() {
   landingView.style.display = "none";
   textChatView.style.display = "block";
   currentMode = "text";
+  document.body.classList.add('chat-active');
 }
 
 function showVideoChatView() {
@@ -245,6 +246,7 @@ function showLandingView() {
   textChatView.style.display = "none";
   videoChatView.style.display = "none";
   currentMode = null;
+  document.body.classList.remove('chat-active');
 }
 
 function showTermsModal(mode) {
