@@ -300,6 +300,7 @@ function skipPartner() {
     videoStatus.textContent = "Skipping... Finding new partner...";
     nextBtn.disabled = true;
     reportBtn.disabled = true;
+    toggleVideoSpinner(true); // Show spinner while skipping
   }
 
   // Disconnect current partner
@@ -506,6 +507,9 @@ async function startVideoChat() {
   try {
     console.log("Requesting user media...");
 
+    // Show spinner immediately
+    toggleVideoSpinner(true);
+
     // Get user media
     localStream = await navigator.mediaDevices.getUserMedia({
       video: true,
@@ -513,75 +517,43 @@ async function startVideoChat() {
     });
 
     console.log("Got local stream:", localStream);
-    console.log("Video tracks:", localStream.getVideoTracks());
-    console.log("Audio tracks:", localStream.getAudioTracks());
-
-    // Verify we have active tracks
-    const videoTracks = localStream.getVideoTracks();
-    const audioTracks = localStream.getAudioTracks();
-
-    if (videoTracks.length === 0) {
-      throw new Error("No video track available");
-    }
-    if (audioTracks.length === 0) {
-      throw new Error("No audio track available");
-    }
-
-    console.log("Video track settings:", videoTracks[0].getSettings());
 
     // Set local video source
     localVideo.srcObject = localStream;
-
-    // Wait for video metadata to load
-    await new Promise((resolve, reject) => {
-      const timeout = setTimeout(() => {
-        reject(new Error("Timeout waiting for video metadata"));
-      }, 5000);
-
-      localVideo.onloadedmetadata = () => {
-        clearTimeout(timeout);
-        console.log("Local video metadata loaded");
-        console.log("Local video dimensions:", localVideo.videoWidth, "x", localVideo.videoHeight);
-        resolve();
-      };
-    });
+    localVideo.muted = true; // Mute local video
 
     // Send join message for video chat
     ws.send(JSON.stringify({ type: "join-video", userId }));
 
-    // startBtn.disabled = true; // Removed
-    // stopBtn.disabled = false; // Removed
     videoStatus.textContent = "Joining chat...";
-
     console.log("Successfully started video chat, waiting for partner...");
+
   } catch (error) {
     console.error("Error accessing media devices:", error);
 
-    // Provide specific error messages
     let errorMessage = "Error: Could not access camera/microphone";
     if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
-      errorMessage = "Error: Camera/microphone permission denied. Please allow access and try again.";
+      errorMessage = "Error: Camera/microphone permission denied.";
     } else if (error.name === "NotFoundError" || error.name === "DevicesNotFoundError") {
-      errorMessage = "Error: No camera or microphone found. Please connect devices and try again.";
-    } else if (error.name === "NotReadableError" || error.name === "TrackStartError") {
-      errorMessage = "Error: Camera/microphone is already in use by another application.";
-    } else if (error.message) {
-      errorMessage = `Error: ${error.message}`;
+      errorMessage = "Error: No camera or microphone found.";
+    } else if (error.name === "NotReadableError") {
+      errorMessage = "Error: Camera/microphone is in use.";
     }
 
     videoStatus.textContent = errorMessage;
+    toggleVideoSpinner(false);
   }
 }
 
 function stopVideoChat() {
   console.log("Stopping video chat...");
 
-  // Stop all local stream tracks
+  // Send disconnect message
+  ws.send(JSON.stringify({ type: "disconnect", userId }));
+
+  // Stop local stream
   if (localStream) {
-    localStream.getTracks().forEach((track) => {
-      track.stop();
-      console.log("Stopped track:", track.kind);
-    });
+    localStream.getTracks().forEach((track) => track.stop());
     localStream = null;
   }
 
@@ -589,29 +561,22 @@ function stopVideoChat() {
   if (peerConnection) {
     peerConnection.close();
     peerConnection = null;
-    console.log("Peer connection closed");
   }
-
-  // Send disconnect message
-  ws.send(JSON.stringify({ type: "disconnect", userId }));
 
   // Clear video sources
   localVideo.srcObject = null;
   remoteVideo.srcObject = null;
 
-  // Reset state
-  // startBtn.disabled = false; // Removed
-  // stopBtn.disabled = true; // Removed
   videoStatus.textContent = 'Chat stopped. Go back to start again.';
   partnerId = null;
   isOfferer = false;
   iceCandidatesBuffer = [];
 
+  toggleVideoSpinner(false);
+
   // Disable feature buttons
   nextBtn.disabled = true;
   reportBtn.disabled = true;
-
-  console.log("Video chat stopped and cleaned up");
 }
 
 function startWebRTC() {
@@ -619,36 +584,22 @@ function startWebRTC() {
   peerConnection = new RTCPeerConnection(rtcConfig);
 
   // Add local stream
-  localStream
-    .getTracks()
-    .forEach((track) => {
+  if (localStream) {
+    localStream.getTracks().forEach((track) => {
       peerConnection.addTrack(track, localStream);
-      console.log("Added local track:", track.kind);
     });
+  }
 
   // Handle remote stream
   peerConnection.ontrack = (event) => {
-    console.log("Received remote track:", event.track.kind);
-    console.log("Remote streams:", event.streams);
-
     if (event.streams && event.streams[0]) {
-      const remoteStream = event.streams[0];
-      console.log("Remote stream tracks:", remoteStream.getTracks());
-
-      remoteVideo.srcObject = remoteStream;
-
-      // Wait for remote video to start playing
-      remoteVideo.onloadedmetadata = () => {
-        console.log("Remote video metadata loaded");
-        console.log("Remote video dimensions:", remoteVideo.videoWidth, "x", remoteVideo.videoHeight);
-      };
+      remoteVideo.srcObject = event.streams[0];
 
       remoteVideo.onplaying = () => {
-        console.log("Remote video is playing");
         videoStatus.textContent = "Video chat active!";
+        toggleVideoSpinner(false); // Hide spinner when video plays
       };
 
-      // Update status immediately but will be confirmed when video plays
       videoStatus.textContent = "Connecting video...";
     }
   };
@@ -656,71 +607,36 @@ function startWebRTC() {
   // Handle ICE candidates
   peerConnection.onicecandidate = (event) => {
     if (event.candidate) {
-      console.log("Sending ICE candidate");
-      ws.send(
-        JSON.stringify({
-          type: "ice-candidate",
-          userId,
-          targetId: partnerId,
-          candidate: event.candidate,
-        })
-      );
-    } else {
-      console.log("All ICE candidates have been sent");
+      ws.send(JSON.stringify({
+        type: "ice-candidate",
+        userId,
+        targetId: partnerId,
+        candidate: event.candidate,
+      }));
     }
   };
 
-  // Monitor ICE connection state
-  peerConnection.oniceconnectionstatechange = () => {
-    console.log("ICE connection state:", peerConnection.iceConnectionState);
-
-    if (peerConnection.iceConnectionState === "connected") {
-      console.log("ICE connection established");
-    } else if (peerConnection.iceConnectionState === "failed") {
-      console.error("ICE connection failed");
-      videoStatus.textContent = "Connection failed. Please try again.";
-    } else if (peerConnection.iceConnectionState === "disconnected") {
-      console.warn("ICE connection disconnected");
-      videoStatus.textContent = "Connection lost. Reconnecting...";
-    }
-  };
-
-  // Monitor overall connection state
+  // Monitor connection state
   peerConnection.onconnectionstatechange = () => {
-    console.log("Connection state:", peerConnection.connectionState);
-
-    if (peerConnection.connectionState === "connected") {
-      console.log("Peer connection established successfully");
-    } else if (peerConnection.connectionState === "failed") {
-      console.error("Peer connection failed");
-      videoStatus.textContent = "Connection failed. Click 'Stop Chat' and try again.";
+    if (peerConnection.connectionState === "failed") {
+      videoStatus.textContent = "Connection failed. Please try again.";
+      toggleVideoSpinner(false);
     }
   };
 
   // Only create offer if this user is the offerer
   if (isOfferer) {
-    console.log("Creating offer as offerer...");
-    peerConnection
-      .createOffer()
-      .then((offer) => {
-        console.log("Created offer:", offer);
-        return peerConnection.setLocalDescription(offer);
-      })
+    peerConnection.createOffer()
+      .then((offer) => peerConnection.setLocalDescription(offer))
       .then(() => {
-        console.log("Set local description");
-        ws.send(
-          JSON.stringify({
-            type: "offer",
-            userId,
-            targetId: partnerId,
-            offer: peerConnection.localDescription,
-          })
-        );
-        console.log("Sent offer to partner");
+        ws.send(JSON.stringify({
+          type: "offer",
+          userId,
+          targetId: partnerId,
+          offer: peerConnection.localDescription,
+        }));
       })
-      .catch((error) => {
-        console.error("Error creating offer:", error);
-      });
+      .catch(console.error);
   } else {
     console.log("Waiting for offer as answerer...");
   }
@@ -818,6 +734,7 @@ function handlePartnerDisconnect() {
     iceCandidatesBuffer = [];
 
     videoStatus.textContent = "Partner disconnected. Waiting for new partner...";
+    toggleVideoSpinner(true); // Show spinner while waiting
   }
 
   // Server will put us back in queue
