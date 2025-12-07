@@ -382,16 +382,32 @@ function handleTextJoin(ws, userId) {
   // Track user IP
   userIPs.set(userId, ws.ip);
 
+  // Remove from queue if already there to prevent self-matching
+  const existingIndex = textWaitingQueue.indexOf(userId);
+  if (existingIndex !== -1) {
+    textWaitingQueue.splice(existingIndex, 1);
+  }
+
   if (textWaitingQueue.length > 0) {
     // Pair with waiting user
     const partnerId = textWaitingQueue.shift();
+
+    // Final safety check
+    if (partnerId === userId) {
+      textWaitingQueue.push(userId);
+      ws.send(JSON.stringify({ type: "waiting" }));
+      return;
+    }
+
     pairs.set(userId, partnerId);
     pairs.set(partnerId, userId);
 
     // Notify both users
     const partnerWs = connections.get(partnerId);
     ws.send(JSON.stringify({ type: "paired", partnerId }));
-    partnerWs.send(JSON.stringify({ type: "paired", partnerId: userId }));
+    if (partnerWs) {
+      partnerWs.send(JSON.stringify({ type: "paired", partnerId: userId }));
+    }
 
     logger.info(`Paired text chat users: ${userId} and ${partnerId}`);
   } else {
@@ -410,18 +426,34 @@ function handleVideoJoin(ws, userId) {
   // Track user IP
   userIPs.set(userId, ws.ip);
 
+  // Remove from queue if already there to prevent self-matching
+  const existingIndex = videoWaitingQueue.indexOf(userId);
+  if (existingIndex !== -1) {
+    videoWaitingQueue.splice(existingIndex, 1);
+  }
+
   if (videoWaitingQueue.length > 0) {
     // Pair with waiting user - the waiting user is the offerer
     const partnerId = videoWaitingQueue.shift();
+
+    // Final safety check
+    if (partnerId === userId) {
+      videoWaitingQueue.push(userId);
+      ws.send(JSON.stringify({ type: "waiting" }));
+      return;
+    }
+
     pairs.set(userId, partnerId);
     pairs.set(partnerId, userId);
 
     // Notify both users
     const partnerWs = connections.get(partnerId);
     ws.send(JSON.stringify({ type: "paired", partnerId, isOfferer: false }));
-    partnerWs.send(
-      JSON.stringify({ type: "paired", partnerId: userId, isOfferer: true })
-    );
+    if (partnerWs) {
+      partnerWs.send(
+        JSON.stringify({ type: "paired", partnerId: userId, isOfferer: true })
+      );
+    }
 
     logger.info(`Paired video chat users: ${userId} and ${partnerId}`);
   } else {

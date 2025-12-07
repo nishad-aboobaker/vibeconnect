@@ -38,16 +38,6 @@ const getWebSocketUrl = () => {
 };
 
 const ws = new WebSocket(getWebSocketUrl());
-
-// Current mode
-let currentMode = null; // 'text' or 'video'
-
-// DOM elements - Views
-const landingView = document.getElementById("landingView");
-const textChatView = document.getElementById("textChatView");
-const videoChatView = document.getElementById("videoChatView");
-
-// DOM elements - Landing
 const textChatBtn = document.getElementById("textChatBtn");
 const videoChatBtn = document.getElementById("videoChatBtn");
 
@@ -55,16 +45,16 @@ const videoChatBtn = document.getElementById("videoChatBtn");
 const messageContainer = document.getElementById("messageContainer");
 const messageInput = document.getElementById("messageInput");
 const sendBtn = document.getElementById("sendBtn");
-const textStartBtn = document.getElementById("textStartBtn");
-const textStopBtn = document.getElementById("textStopBtn");
+// const textStartBtn = document.getElementById("textStartBtn"); // Removed
+// const textStopBtn = document.getElementById("textStopBtn"); // Removed
 const textStatus = document.getElementById("textStatus");
 const textBackBtn = document.getElementById("textBackBtn");
 
 // DOM elements - Video Chat
 const localVideo = document.getElementById("localVideo");
 const remoteVideo = document.getElementById("remoteVideo");
-const startBtn = document.getElementById("startBtn");
-const stopBtn = document.getElementById("stopBtn");
+// const startBtn = document.getElementById("startBtn"); // Removed
+// const stopBtn = document.getElementById("stopBtn"); // Removed
 const videoStatus = document.getElementById("status");
 const videoBackBtn = document.getElementById("videoBackBtn");
 
@@ -76,6 +66,8 @@ const reportBtn = document.getElementById("reportBtn");
 const userCount = document.getElementById("userCount");
 const muteBtn = document.getElementById("muteBtn");
 const typingIndicator = document.getElementById("typingIndicator");
+const termsCancelBtn = document.getElementById("termsCancelBtn");
+const termsAgreeBtn = document.getElementById("termsAgreeBtn");
 
 // WebRTC variables
 let localStream;
@@ -95,12 +87,17 @@ let typingTimeout = null;
 
 // ===== Event Listeners =====
 // Landing page
-textChatBtn.addEventListener("click", () => showTextChatView());
-videoChatBtn.addEventListener("click", () => showVideoChatView());
+// Landing page
+textChatBtn.addEventListener("click", () => showTermsModal("text"));
+videoChatBtn.addEventListener("click", () => showTermsModal("video"));
+
+// Terms Modal
+termsCancelBtn.addEventListener("click", hideTermsModal);
+termsAgreeBtn.addEventListener("click", handleTermsAgree);
 
 // Text chat
-textStartBtn.addEventListener("click", startTextChat);
-textStopBtn.addEventListener("click", stopTextChat);
+// textStartBtn.addEventListener("click", startTextChat); // Removed
+// textStopBtn.addEventListener("click", stopTextChat); // Removed
 sendBtn.addEventListener("click", sendMessage);
 messageInput.addEventListener("keypress", (e) => {
   if (e.key === "Enter" && !sendBtn.disabled) {
@@ -110,8 +107,8 @@ messageInput.addEventListener("keypress", (e) => {
 textBackBtn.addEventListener("click", returnToLanding);
 
 // Video chat
-startBtn.addEventListener("click", startVideoChat);
-stopBtn.addEventListener("click", stopVideoChat);
+// startBtn.addEventListener("click", startVideoChat); // Removed
+// stopBtn.addEventListener("click", stopVideoChat); // Removed
 videoBackBtn.addEventListener("click", returnToLanding);
 
 // New feature listeners
@@ -257,6 +254,27 @@ function showLandingView() {
   videoChatView.style.display = "none";
   currentMode = null;
   console.log("Switched to landing view");
+}
+
+function showTermsModal(mode) {
+  pendingMode = mode;
+  termsModal.style.display = "flex";
+}
+
+function hideTermsModal() {
+  termsModal.style.display = "none";
+  pendingMode = null;
+}
+
+function handleTermsAgree() {
+  if (pendingMode === "text") {
+    showTextChatView();
+    startTextChat(); // Auto-start
+  } else if (pendingMode === "video") {
+    showVideoChatView();
+    startVideoChat(); // Auto-start
+  }
+  hideTermsModal();
 }
 
 function returnToLanding() {
@@ -407,8 +425,8 @@ function startTextChat() {
   // Send join message for text chat
   ws.send(JSON.stringify({ type: "join-text", userId }));
 
-  textStartBtn.disabled = true;
-  textStopBtn.disabled = false;
+  // textStartBtn.disabled = true; // Removed
+  // textStopBtn.disabled = false; // Removed
   textStatus.textContent = "Joining chat...";
 
   console.log("Sent join-text request");
@@ -418,17 +436,15 @@ function stopTextChat() {
   console.log("Stopping text chat...");
 
   // Send disconnect message
-  if (partnerId) {
-    ws.send(JSON.stringify({ type: "disconnect", userId }));
-  }
+  ws.send(JSON.stringify({ type: "disconnect", userId }));
 
   // Reset UI
   messageInput.disabled = true;
   sendBtn.disabled = true;
   messageInput.value = "";
-  textStartBtn.disabled = false;
-  textStopBtn.disabled = true;
-  textStatus.textContent = "Chat stopped. Click \"Start Chat\" to begin again.";
+  // textStartBtn.disabled = false; // Removed
+  // textStopBtn.disabled = true; // Removed
+  textStatus.textContent = "Chat stopped. Go back to start again.";
   partnerId = null;
 
   // Disable feature buttons
@@ -533,8 +549,8 @@ async function startVideoChat() {
     // Send join message for video chat
     ws.send(JSON.stringify({ type: "join-video", userId }));
 
-    startBtn.disabled = true;
-    stopBtn.disabled = false;
+    // startBtn.disabled = true; // Removed
+    // stopBtn.disabled = false; // Removed
     videoStatus.textContent = "Joining chat...";
 
     console.log("Successfully started video chat, waiting for partner...");
@@ -577,18 +593,16 @@ function stopVideoChat() {
   }
 
   // Send disconnect message
-  if (partnerId) {
-    ws.send(JSON.stringify({ type: "disconnect", userId }));
-  }
+  ws.send(JSON.stringify({ type: "disconnect", userId }));
 
   // Clear video sources
   localVideo.srcObject = null;
   remoteVideo.srcObject = null;
 
   // Reset state
-  startBtn.disabled = false;
-  stopBtn.disabled = true;
-  videoStatus.textContent = 'Chat stopped. Click "Start Chat" to begin again.';
+  // startBtn.disabled = false; // Removed
+  // stopBtn.disabled = true; // Removed
+  videoStatus.textContent = 'Chat stopped. Go back to start again.';
   partnerId = null;
   isOfferer = false;
   iceCandidatesBuffer = [];

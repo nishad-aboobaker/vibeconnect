@@ -52,15 +52,25 @@
       </div>
 
       <div class="chat-controls">
-        <div class="input-group">
-          <input id="messageInput" type="text" placeholder="Type a message..." disabled />
-          <button id="sendBtn" class="send-btn" disabled>Send</button>
-        </div>
-        <div class="action-buttons">
-          <button id="textStartBtn" class="action-btn start-btn">Start Chat</button>
-          <button id="textNextBtn" class="action-btn next-btn" disabled>Next</button>
-          <button id="textStopBtn" class="action-btn stop-btn" disabled>Stop Chat</button>
-          <button id="textReportBtn" class="action-btn report-btn" disabled>Report</button>
+
+
+        <!-- Active Chat Controls -->
+        <div class="active-controls">
+          <div class="control-row action-row">
+            <button id="textNextBtn" class="action-btn skip-btn" disabled>
+              <span class="btn-icon">✕</span> SKIP
+            </button>
+            <button id="textReportBtn" class="action-btn report-btn" disabled title="Report">
+              <span class="btn-icon">⚠️</span>
+            </button>
+          </div>
+
+          <div class="control-row input-row">
+            <input id="messageInput" type="text" placeholder="Type a message..." disabled />
+            <button id="sendBtn" class="send-btn" disabled>
+              <span class="btn-icon">➤</span>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -85,17 +95,51 @@
         </div>
       </div>
 
-      <div class="controls">
-        <button id="startBtn" class="action-btn start-btn">Start Chat</button>
-        <button id="nextBtn" class="action-btn next-btn" disabled>Next</button>
-        <button id="stopBtn" class="action-btn stop-btn" disabled>Stop Chat</button>
-        <button id="reportBtn" class="action-btn report-btn" disabled>Report</button>
+      <!-- Active Chat Controls -->
+      <div class="active-controls">
+        <div class="control-row action-row">
+          <button id="nextBtn" class="action-btn skip-btn" disabled>
+            <span class="btn-icon">✕</span> SKIP
+          </button>
+          <button id="reportBtn" class="action-btn report-btn" disabled title="Report">
+            <span class="btn-icon">⚠️</span>
+          </button>
+        </div>
       </div>
 
       <div id="status" class="status">Click "Start Chat" to begin</div>
     </div>
   </div>
 
+
+
+  <!-- Terms and Conditions Modal -->
+  <div id="termsModal" class="modal-overlay" style="display: none;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2>Terms and Conditions</h2>
+      </div>
+      <div class="modal-body">
+        <p><strong>Welcome to VibeConnect!</strong></p>
+        <p>By determining to use our "Text Chat" or "Video Chat" services, you agree to the following terms:</p>
+        <ul>
+          <li><strong>Respect Others:</strong> Do not engage in harassment, hate speech, or abuse.</li>
+          <li><strong>No Inappropriate Content:</strong> Nudity, violence, and illegal content are strictly prohibited.
+          </li>
+          <li><strong>Age Requirement:</strong> You must be 18 years or older to use this service.</li>
+          <li><strong>Privacy:</strong> Be mindful of sharing personal information. We encourage anonymity.</li>
+          <li><strong>Reporting:</strong> Use the report feature if you encounter violations. We take reports seriously.
+          </li>
+        </ul>
+        <p>Failure to follow these rules may result in a permanent ban.</p>
+        <p>Please read carefully and agree to proceed.</p>
+      </div>
+      <div class="modal-footer">
+        <button id="termsCancelBtn" class="modal-btn cancel-btn">Cancel</button>
+        <button id="termsAgreeBtn" class="modal-btn agree-btn">Agree & Continue</button>
+      </div>
+    </div>
+  </div>
   <script src="script.js"></script>
 </body>
 

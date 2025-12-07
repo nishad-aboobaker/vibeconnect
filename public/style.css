@@ -107,14 +107,14 @@ body {
 
 .chat-header h2 {
   margin: 0;
-  color: white;
+  color: #333;
   font-size: 2em;
 }
 
 .back-btn {
-  background: rgba(255, 255, 255, 0.2);
-  color: white;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  background: rgba(102, 126, 234, 0.1);
+  color: #333;
+  border: 2px solid rgba(102, 126, 234, 0.3);
   padding: 10px 20px;
   border-radius: 8px;
   cursor: pointer;
@@ -123,7 +123,7 @@ body {
 }
 
 .back-btn:hover {
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(102, 126, 234, 0.2);
   transform: translateX(-3px);
 }
 
@@ -198,16 +198,16 @@ body {
   border-radius: 10px;
 }
 
-.chat-controls {
+/* .chat-controls {
   display: flex;
   flex-direction: column;
   gap: 15px;
-}
+} */
 
-.input-group {
+/* .input-group {
   display: flex;
   gap: 10px;
-}
+} */
 
 #messageInput {
   flex: 1;
@@ -217,6 +217,12 @@ body {
   font-size: 1em;
   outline: none;
   transition: all 0.3s ease;
+}
+
+.input-group .next-btn {
+  padding: 15px 25px;
+  border-radius: 25px;
+  white-space: nowrap;
 }
 
 #messageInput:focus {
@@ -318,12 +324,17 @@ body {
 video {
   width: 100%;
   min-height: 300px;
-  height: 225px; /* 4:3 aspect ratio fallback */
+  height: 225px;
+  /* 4:3 aspect ratio fallback */
   background-color: #000;
   border: 3px solid #667eea;
   border-radius: 15px;
   object-fit: cover;
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+#localVideo {
+  transform: scaleX(-1);
 }
 
 .video-label {
@@ -424,6 +435,7 @@ video {
 }
 
 @keyframes typing {
+
   0%,
   60%,
   100% {
@@ -542,16 +554,22 @@ video {
     /* More height for chat on mobile */
   }
 
-  .input-group {
-    flex-direction: column;
+  /*   .input-group {
+    flex-direction: row;
+    align-items: center;
   }
 
   .send-btn {
-    width: 100%;
-    padding: 12px;
+    width: auto;
+    padding: 12px 20px;
   }
 
-  .action-buttons {
+  .input-group .next-btn {
+    padding: 12px 15px;
+    font-size: 0.9em;
+  } */
+
+  /*   .action-buttons {
     flex-wrap: wrap;
   }
 
@@ -560,7 +578,7 @@ video {
     min-width: 120px;
     padding: 10px;
     font-size: 0.9em;
-  }
+  } */
 
   /* Video Chat Mobile */
   .video-chat-container {
@@ -576,19 +594,276 @@ video {
   }
 
   .header-info {
-    flex-direction: column;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     gap: 10px;
-    align-items: flex-start;
   }
 
   .user-count {
-    width: 100%;
-    text-align: center;
+    width: auto;
+    text-align: left;
+    font-size: 0.9em;
   }
 
   .mute-btn {
-    position: absolute;
-    top: 20px;
-    right: 20px;
+    position: static;
+    top: auto;
+    right: auto;
   }
+}
+
+/* ===== Modal Styles ===== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+
+.modal-content {
+  background: rgba(255, 255, 255, 0.98);
+  padding: 0;
+  border-radius: 20px;
+  width: 90%;
+  max-width: 600px;
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+  overflow: hidden;
+  animation: slideUp 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  max-height: 90vh;
+}
+
+.modal-header {
+  padding: 20px 30px;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.modal-header h2 {
+  margin: 0;
+  font-size: 1.5em;
+}
+
+.modal-body {
+  padding: 30px;
+  overflow-y: auto;
+  font-size: 1em;
+  color: #333;
+  line-height: 1.6;
+}
+
+.modal-body ul {
+  padding-left: 20px;
+  margin-bottom: 20px;
+}
+
+.modal-body li {
+  margin-bottom: 10px;
+}
+
+.modal-footer {
+  padding: 20px 30px;
+  background: #f9f9f9;
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+  border-top: 1px solid #eee;
+}
+
+.modal-btn {
+  padding: 12px 25px;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1em;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+.modal-btn.cancel-btn {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.modal-btn.cancel-btn:hover {
+  background: #d0d0d0;
+}
+
+.modal-btn.agree-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.modal-btn.agree-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Mobile Modal Adjustments */
+@media (max-width: 480px) {
+  .modal-content {
+    width: 95%;
+  }
+
+  .modal-header {
+    padding: 15px 20px;
+  }
+
+  .modal-body {
+    padding: 20px;
+  }
+
+  .modal-footer {
+    flex-direction: column-reverse;
+    /* Stack buttons, agree on top visual (but bottoms in DOM) - let's keep it simple first */
+    padding: 15px 20px;
+  }
+
+  .modal-footer {
+    flex-direction: column;
+  }
+
+  .modal-btn {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}
+
+/* ===== New Mobile Chat Layout ===== */
+.session-controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.active-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.control-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.action-row {
+  justify-content: space-between;
+}
+
+.skip-btn {
+  flex: 1;
+  /* Takes remaining space */
+  background: white !important;
+  /* Force white background */
+  color: #333;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  /* Slightly squared as per image */
+  padding: 12px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.skip-btn:hover:not(:disabled) {
+  background: #f5f5f5 !important;
+  border-color: #ccc;
+}
+
+.skip-btn .btn-icon {
+  font-size: 1.2em;
+}
+
+.report-btn {
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333 !important;
+  /* Dark background per image */
+  color: #ff6b6b;
+  /* Red warning icon */
+  border-radius: 8px;
+  border: none;
+  /* Prevent flex growing/shrinking from other rules */
+  flex: 0 0 48px !important;
+  min-width: 48px !important;
+}
+
+.input-row {
+  background: transparent;
+  padding: 0;
+}
+
+.input-row #messageInput {
+  background: #2c2c2c;
+  /* Dark input per typical dark mode, or use styling */
+  color: white;
+  border: 1px solid #444;
+  /* Assuming the rest of the app might be dark or the user wants this contrast. 
+     The image has a dark background for the container. 
+     Let's match the image's "dark container" vibe by forcing dark input. */
+}
+
+.input-row .send-btn {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  /* Circle send button */
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #333 !important;
+  /* Dark circle */
+  color: white;
+  flex: 0 0 48px !important;
+  min-width: 48px !important;
+}
+
+.send-btn .btn-icon {
+  font-size: 1.2em;
+  margin-left: 2px;
 }
