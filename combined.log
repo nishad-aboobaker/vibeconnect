@@ -1613,3 +1613,8 @@
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:15.411Z"}
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:21.419Z"}
 {"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:27.411Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:38:33.404Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:38:33.404Z"}
+{"level":"info","message":"Broadcasting user count: 4","timestamp":"2025-12-08T20:38:33.405Z"}
+{"level":"info","message":"Received from 4khyx0dyk85: identify","timestamp":"2025-12-08T20:38:33.407Z"}
+{"level":"info","message":"User 4khyx0dyk85 identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:38:33.407Z"}
