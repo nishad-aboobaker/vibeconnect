@@ -65,6 +65,12 @@ const termsCancelBtn = document.getElementById("termsCancelBtn");
 const termsAgreeBtn = document.getElementById("termsAgreeBtn");
 const termsCheckbox = document.getElementById("termsCheckbox");
 const connectionStatus = document.getElementById("connectionStatus");
+const videoRequestBtn = document.getElementById("videoRequestBtn");
+const videoRequestModal = document.getElementById("videoRequestModal");
+const requestModalTitle = document.getElementById("requestModalTitle");
+const requestModalMessage = document.getElementById("requestModalMessage");
+const acceptVideoBtn = document.getElementById("acceptVideoBtn");
+const declineVideoBtn = document.getElementById("declineVideoBtn");
 
 
 // WebRTC variables
@@ -84,6 +90,8 @@ const rtcConfig = {
 // Feature state
 let isMuted = localStorage.getItem('isMuted') === 'true';
 let typingTimeout = null;
+let videoRequestPending = false;
+let videoRequestReceived = false;
 
 
 // ===== Helper Functions =====
@@ -123,6 +131,12 @@ termsCheckbox.addEventListener("change", () => {
   termsAgreeBtn.disabled = !termsCheckbox.checked;
 });
 
+// Video request handlers
+videoRequestBtn.addEventListener("click", sendVideoRequest);
+acceptVideoBtn.addEventListener("click", acceptVideoRequest);
+declineVideoBtn.addEventListener("click", declineVideoRequest);
+
+
 // ===== WebSocket Connection =====
 function connectWebSocket() {
   console.log('Connecting to WebSocket...');
@@ -158,6 +172,7 @@ function connectWebSocket() {
           sendBtn.disabled = false;
           textNextBtn.disabled = false;
           textReportBtn.disabled = false;
+          videoRequestBtn.disabled = false; // Enable video request
           messageInput.focus();
         } else if (currentMode === "video") {
           isOfferer = data.isOfferer;
@@ -193,6 +208,24 @@ function connectWebSocket() {
         break;
       case "error":
         handleServerError(data.message);
+        break;
+      case "video-request":
+        receiveVideoRequest(data);
+        break;
+      case "video-request-accept":
+        handleVideoRequestAccepted();
+        break;
+      case "video-request-decline":
+        handleVideoRequestDeclined();
+        break;
+      case "video-request-cancel":
+        // Partner cancelled their request
+        videoRequestModal.style.display = "none";
+        videoRequestReceived = false;
+        displaySystemMessage("Partner cancelled the video request.");
+        break;
+      case "video-mode-ready":
+        handleVideoModeReady(data);
         break;
       case "warning":
         console.warn("Server warning:", data.message);
@@ -572,6 +605,199 @@ function handlePartnerDisconnect() {
     sendBtn.disabled = true;
     partnerId = null;
   }
+}
+
+// ===== Video Request Functions =====
+function sendVideoRequest() {
+  if (!partnerId || videoRequestPending || currentMode !== "text") return;
+
+  videoRequestPending = true;
+  videoRequestBtn.classList.add("pending");
+  videoRequestBtn.innerHTML = '<span class="btn-icon">⏳</span> Request Sent...';
+  videoRequestBtn.disabled = true;
+
+  sendWsMessage({
+    type: "video-request",
+    to: partnerId,
+    from: userId
+  });
+
+  // Show cancel option after a moment
+  setTimeout(() => {
+    if (videoRequestPending) {
+      videoRequestBtn.innerHTML = '<span class="btn-icon">✕</span> Cancel Request';
+      videoRequestBtn.disabled = false;
+      videoRequestBtn.onclick = cancelVideoRequest;
+    }
+  }, 500);
+}
+
+function cancelVideoRequest() {
+  videoRequestPending = false;
+  videoRequestBtn.classList.remove("pending");
+  videoRequestBtn.innerHTML = '<span class="btn-icon">📹</span> Request Video';
+  videoRequestBtn.onclick = sendVideoRequest;
+
+  sendWsMessage({
+    type: "video-request-cancel",
+    to: partnerId,
+    from: userId
+  });
+}
+
+function receiveVideoRequest(data) {
+  console.log("📹 Received video request from:", data.from);
+  videoRequestReceived = true;
+
+  // Show modal
+  requestModalTitle.textContent = "📹 Video Chat Request";
+  requestModalMessage.textContent = "Your partner wants to switch to video chat. Do you accept?";
+  videoRequestModal.style.display = "flex";
+
+  // Play notification sound if not muted
+  if (!isMuted) {
+    playNotificationSound();
+  }
+}
+
+function acceptVideoRequest() {
+  videoRequestModal.style.display = "none";
+  videoRequestReceived = false;
+
+  sendWsMessage({
+    type: "video-request-accept",
+    to: partnerId,
+    from: userId
+  });
+
+  // Switch to video mode
+  displaySystemMessage("Switching to video...");
+  setTimeout(() => {
+    switchToVideoMode();
+  }, 500);
+}
+
+function declineVideoRequest() {
+  videoRequestModal.style.display = "none";
+  videoRequestReceived = false;
+
+  sendWsMessage({
+    type: "video-request-decline",
+    to: partnerId,
+    from: userId
+  });
+
+  // Show message in chat
+  displaySystemMessage("You declined the video chat request.");
+}
+
+function handleVideoRequestAccepted() {
+  videoRequestPending = false;
+  videoRequestBtn.classList.remove("pending");
+
+  // Show success message
+  displaySystemMessage("Partner accepted! Switching to video...");
+
+  // Switch to video mode after 1 second
+  setTimeout(() => {
+    switchToVideoMode();
+  }, 1000);
+}
+
+function handleVideoRequestDeclined() {
+  videoRequestPending = false;
+  videoRequestBtn.classList.remove("pending");
+  videoRequestBtn.innerHTML = '<span class="btn-icon">📹</span> Request Video';
+  videoRequestBtn.disabled = false;
+  videoRequestBtn.onclick = sendVideoRequest;
+
+  // Show message in chat
+  displaySystemMessage("Partner declined the video chat request.");
+}
+
+async function switchToVideoMode() {
+  try {
+    console.log("Switching to video mode...");
+
+    // Update current mode BEFORE getting media
+    currentMode = "video";
+
+    // Hide text chat, show video chat
+    textChatView.style.display = "none";
+    videoChatView.style.display = "block";
+
+    // Show spinner while setting up
+    toggleVideoSpinner(true);
+    videoStatus.textContent = "Setting up video...";
+
+    // Get camera/mic permissions
+    localStream = await navigator.mediaDevices.getUserMedia({
+      video: true,
+      audio: true
+    });
+
+    // Set local video
+    localVideo.srcObject = localStream;
+    localVideo.muted = true;
+
+    // Update status
+    videoStatus.textContent = "Connecting to partner...";
+
+    // Notify server about mode switch - server will coordinate who is offerer
+    sendWsMessage({
+      type: "mode-switch-to-video",
+      userId: userId,
+      partnerId: partnerId
+    });
+
+    // Enable video controls
+    nextBtn.disabled = false;
+    reportBtn.disabled = false;
+
+  } catch (error) {
+    console.error("Failed to switch to video:", error);
+
+    let errorMsg = "Failed to access camera/microphone.";
+    if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
+      errorMsg = "Camera/microphone permission denied.";
+    } else if (error.name === "NotFoundError" || error.name === "DevicesNotFoundError") {
+      errorMsg = "No camera or microphone found.";
+    } else if (error.name === "NotReadableError") {
+      errorMsg = "Camera/microphone is already in use.";
+    }
+
+    displaySystemMessage(errorMsg);
+
+    // Revert to text chat
+    currentMode = "text";
+    textChatView.style.display = "block";
+    videoChatView.style.display = "none";
+    toggleVideoSpinner(false);
+
+    // Stop any tracks that might have been started
+    if (localStream) {
+      localStream.getTracks().forEach(track => track.stop());
+      localStream = null;
+    }
+  }
+}
+
+function displaySystemMessage(message) {
+  const systemMsg = document.createElement("div");
+  systemMsg.className = "message system-message";
+  systemMsg.textContent = message;
+  messageContainer.appendChild(systemMsg);
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+function handleVideoModeReady(data) {
+  console.log("Video mode ready:", data);
+  isOfferer = data.isOfferer;
+  partnerId = data.partnerId;
+
+  // Now that both users are ready and we know who is offerer, start WebRTC
+  videoStatus.textContent = "Establishing video connection...";
+  startWebRTC();
 }
 
 // Initial setup

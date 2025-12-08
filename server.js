@@ -361,6 +361,24 @@ wss.on("connection", (ws) => {
       case "report-user":
         handleReport(data);
         break;
+      case "video-request":
+        handleVideoRequest(data);
+        break;
+      case "video-request-accept":
+        handleVideoRequestAccept(data);
+        break;
+      case "video-request-decline":
+        handleVideoRequestDecline(data);
+        break;
+      case "video-request-cancel":
+        handleVideoRequestCancel(data);
+        break;
+      case "mode-switch":
+        handleModeSwitch(data);
+        break;
+      case "mode-switch-to-video":
+        handleModeSwitchToVideo(data);
+        break;
     }
   });
 
@@ -888,14 +906,7 @@ function handleDisconnect(userId) {
   logger.info(`User ${userId} disconnected and cleaned up`);
 }
 
-function broadcastUserCount() {
-  totalUsers = connections.size;
-  const message = JSON.stringify({ type: "user-count", count: totalUsers });
 
-  connections.forEach((ws) => {
-    ws.send(message);
-  });
-}
 
 function handleTyping(data) {
   const { userId, targetId, type } = data;
@@ -965,3 +976,123 @@ function handleReport(data) {
   // Optional: Auto-disconnect reported user
   // handleDisconnect(reportedId);
 }
+
+// ===== Video Request Handlers =====
+function handleVideoRequest(data) {
+  const { to, from } = data;
+  const targetWs = connections.get(to);
+  const senderWs = connections.get(from);
+
+  // Verify both users are connected and paired
+  if (targetWs && senderWs && pairs.get(from) === to) {
+    targetWs.send(JSON.stringify({
+      type: "video-request",
+      from: from
+    }));
+    logger.info(`Video request from ${from} to ${to}`);
+  } else {
+    logger.warn(`Invalid video request from ${from} to ${to}`);
+  }
+}
+
+function handleVideoRequestAccept(data) {
+  const { to, from } = data;
+  const targetWs = connections.get(to);
+
+  if (targetWs && pairs.get(from) === to) {
+    targetWs.send(JSON.stringify({
+      type: "video-request-accept",
+      from: from
+    }));
+    logger.info(`Video request accepted: ${from} <-> ${to}`);
+  }
+}
+
+function handleVideoRequestDecline(data) {
+  const { to, from } = data;
+  const targetWs = connections.get(to);
+
+  if (targetWs && pairs.get(from) === to) {
+    targetWs.send(JSON.stringify({
+      type: "video-request-decline",
+      from: from
+    }));
+    logger.info(`Video request declined: ${from} -> ${to}`);
+  }
+}
+
+function handleVideoRequestCancel(data) {
+  const { to, from } = data;
+  const targetWs = connections.get(to);
+
+  if (targetWs && pairs.get(from) === to) {
+    targetWs.send(JSON.stringify({
+      type: "video-request-cancel",
+      from: from
+    }));
+    logger.info(`Video request cancelled: ${from} -> ${to}`);
+  }
+}
+
+function handleModeSwitch(data) {
+  const { mode, partnerId } = data;
+  const userId = data.userId || data.from;
+
+  // Update user mode
+  if (userModes.has(userId)) {
+    userModes.set(userId, mode);
+    logger.info(`User ${userId} switched to ${mode} mode with partner ${partnerId}`);
+  }
+}
+
+// Track users who are switching to video mode
+const videoModeSwitchers = new Map(); // partnerId -> userId who initiated
+
+function handleModeSwitchToVideo(data) {
+  const { userId, partnerId } = data;
+
+  logger.info(`User ${userId} requesting video mode switch with partner ${partnerId}`);
+
+  // Verify they are actually paired
+  if (pairs.get(userId) !== partnerId) {
+    logger.warn(`Invalid mode switch: ${userId} and ${partnerId} are not paired`);
+    return;
+  }
+
+  // Update user mode
+  userModes.set(userId, "video");
+
+  // Check if partner has also requested the switch
+  if (videoModeSwitchers.has(userId)) {
+    // Partner already requested - this user is the answerer
+    const initiatorId = videoModeSwitchers.get(userId);
+    videoModeSwitchers.delete(userId);
+
+    logger.info(`Both users ready for video. ${initiatorId} is offerer, ${userId} is answerer`);
+
+    // Tell this user (answerer) to wait for offer
+    const ws = connections.get(userId);
+    if (ws) {
+      ws.send(JSON.stringify({
+        type: "video-mode-ready",
+        isOfferer: false,
+        partnerId: initiatorId
+      }));
+    }
+
+    // Tell partner (offerer) to initiate
+    const partnerWs = connections.get(initiatorId);
+    if (partnerWs) {
+      partnerWs.send(JSON.stringify({
+        type: "video-mode-ready",
+        isOfferer: true,
+        partnerId: userId
+      }));
+    }
+  } else {
+    // This user is first to request - mark as potential offerer
+    videoModeSwitchers.set(partnerId, userId);
+    logger.info(`User ${userId} waiting for partner ${partnerId} to accept video mode`);
+  }
+}
+

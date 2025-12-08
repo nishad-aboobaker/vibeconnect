@@ -430,6 +430,20 @@ body {
   line-height: 1.5;
 }
 
+.system-message {
+  align-self: center;
+  background: rgba(100, 116, 139, 0.1);
+  color: var(--gray-600);
+  padding: var(--space-xs) var(--space-md);
+  border-radius: var(--radius-full);
+  font-size: 0.8125rem;
+  font-style: italic;
+  max-width: 80%;
+  text-align: center;
+  margin: var(--space-sm) 0;
+}
+
+
 .chat-controls {
   display: flex;
   flex-direction: column;
@@ -533,6 +547,41 @@ body {
   border-color: var(--gray-300);
   transform: translateY(-2px);
   box-shadow: var(--shadow-md);
+}
+
+.video-request-btn {
+  background: linear-gradient(135deg, var(--secondary) 0%, #059669 100%);
+  color: white;
+  flex: 1;
+}
+
+.video-request-btn:hover:not(:disabled) {
+  background: linear-gradient(135deg, #059669 0%, #047857 100%);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.video-request-btn:disabled {
+  background: var(--gray-300);
+  cursor: not-allowed;
+  transform: none;
+}
+
+.video-request-btn.pending {
+  background: var(--warning);
+  animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 1;
+  }
+
+  50% {
+    opacity: 0.7;
+  }
 }
 
 .report-btn {
@@ -852,6 +901,21 @@ video {
   color: var(--gray-700);
   font-size: 0.875rem;
   line-height: 1.5;
+}
+
+/* Video Request Modal */
+.request-modal {
+  max-width: 450px;
+}
+
+.request-modal .modal-body {
+  text-align: center;
+}
+
+.request-modal .modal-body p {
+  font-size: 1.125rem;
+  color: var(--gray-700);
+  margin: 0;
 }
 
 /* ===== Responsive Design ===== */
