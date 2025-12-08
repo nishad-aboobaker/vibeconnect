@@ -739,11 +739,12 @@ video {
 }
 
 .modal-footer {
-  padding: var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
   border-top: 2px solid var(--gray-100);
   display: flex;
   gap: var(--space-md);
   justify-content: flex-end;
+  flex-shrink: 0;
 }
 
 .modal-btn {

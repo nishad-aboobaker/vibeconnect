@@ -5,7 +5,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport"
     content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-  <title>VibeConnect - Anonymous Chat</title>
+  <title>Vibe Connect - Anonymous Chat</title>
+  <link rel="icon" href="favicon.ico" type="image/x-icon">
   <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -20,7 +21,7 @@
         </div>
         <button id="muteBtn" class="mute-btn" title="Toggle sound">🔊</button>
       </div>
-      <h1>VibeConnect</h1>
+      <h1>Vibe Connect</h1>
       <p class="tagline">Connect Anonymously, Chat Freely</p>
 
       <div class="mode-selection">
@@ -28,12 +29,6 @@
           <span class="icon">💬</span>
           <span class="mode-title">Text Chat</span>
           <span class="mode-desc">Anonymous messaging</span>
-        </button>
-
-        <button id="voiceChatBtn" class="mode-btn voice-mode" disabled>
-          <span class="icon">🎙️</span>
-          <span class="mode-title">Voice Chat</span>
-          <span class="mode-desc">Audio-only conversation</span>
         </button>
 
         <button id="videoChatBtn" class="mode-btn video-mode" disabled>
@@ -83,70 +78,6 @@
           </div>
         </div>
       </div>
-    </div>
-  </div>
-
-  <!-- Voice Chat View -->
-  <div id="voiceChatView" class="view" style="display: none;">
-    <div class="voice-chat-container">
-      <div class="chat-header">
-        <h2>Voice Chat</h2>
-        <button id="voiceBackBtn" class="back-btn">← Back</button>
-      </div>
-
-      <div class="voice-visualizer-container">
-        <!-- Local Audio Visualizer -->
-        <div class="audio-visualizer-wrapper">
-          <div class="audio-visualizer" id="localVisualizer">
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-          </div>
-          <span class="audio-label">You</span>
-          <button id="toggleMicBtn" class="mic-toggle-btn" disabled>🎤</button>
-        </div>
-
-        <!-- Remote Audio Visualizer -->
-        <div class="audio-visualizer-wrapper">
-          <div class="audio-visualizer" id="remoteVisualizer">
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-            <div class="visualizer-bar"></div>
-          </div>
-          <span class="audio-label">Partner</span>
-          <div id="voiceSpinner" class="voice-spinner">
-            <div class="spinner-icon"></div>
-            <div class="spinner-text">Finding partner...</div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Hidden audio elements -->
-      <audio id="remoteAudio" autoplay></audio>
-
-      <!-- Active Chat Controls -->
-      <div class="active-controls">
-        <div class="control-row action-row">
-          <button id="voiceNextBtn" class="action-btn skip-btn" disabled>
-            <span class="btn-icon">✕</span> SKIP
-          </button>
-          <button id="voiceReportBtn" class="action-btn report-btn" disabled title="Report">
-            <span class="btn-icon">⚠️</span>
-          </button>
-        </div>
-      </div>
-
-      <div id="voiceStatus" class="status">Click "Start Chat" to begin</div>
     </div>
   </div>
 
