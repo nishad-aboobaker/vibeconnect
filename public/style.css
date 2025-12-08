@@ -301,7 +301,7 @@ body {
   background: rgba(255, 255, 255, 0.98);
   backdrop-filter: blur(20px);
   border-radius: var(--radius-2xl);
-  padding: var(--space-xl);
+  padding: var(--space-lg);
   box-shadow: var(--shadow-2xl);
   max-width: 900px;
   margin: 0 auto;
@@ -311,8 +311,8 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: var(--space-xl);
-  padding-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
+  padding-bottom: var(--space-md);
   border-bottom: 2px solid var(--gray-100);
 }
 
@@ -345,15 +345,15 @@ body {
 
 /* ===== Text Chat ===== */
 .message-container {
-  height: 450px;
+  height: 350px;
   overflow-y: auto;
-  padding: var(--space-lg);
+  padding: var(--space-md);
   background: var(--gray-50);
   border-radius: var(--radius-lg);
-  margin-bottom: var(--space-lg);
+  margin-bottom: var(--space-md);
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
   position: relative;
 }
 
@@ -433,13 +433,13 @@ body {
 .chat-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 .active-controls {
   display: flex;
   flex-direction: column;
-  gap: var(--space-md);
+  gap: var(--space-sm);
 }
 
 .control-row {
@@ -646,8 +646,9 @@ video {
 }
 
 .status {
-  margin-top: var(--space-lg);
-  padding: var(--space-md);
+  margin-top: var(--space-md);
+  margin-bottom: var(--space-md);
+  padding: var(--space-sm);
   font-weight: 600;
   color: var(--gray-700);
   text-align: center;
@@ -676,10 +677,11 @@ video {
 .modal-content {
   background: white;
   border-radius: var(--radius-xl);
-  max-width: 600px;
+  max-width: 550px;
   width: 100%;
-  max-height: 80vh;
-  overflow-y: auto;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
   box-shadow: var(--shadow-2xl);
   animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -697,19 +699,22 @@ video {
 }
 
 .modal-header {
-  padding: var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
   border-bottom: 2px solid var(--gray-100);
+  flex-shrink: 0;
 }
 
 .modal-header h2 {
-  font-size: 1.5rem;
+  font-size: 1.375rem;
   font-weight: 700;
   color: var(--gray-900);
   margin: 0;
 }
 
 .modal-body {
-  padding: var(--space-xl);
+  padding: var(--space-lg) var(--space-xl);
+  overflow-y: auto;
+  flex-grow: 1;
 }
 
 .modal-body p {
@@ -767,31 +772,141 @@ video {
   box-shadow: var(--shadow-md);
 }
 
-.agree-btn:hover {
+.agree-btn:hover:not(:disabled) {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lg);
+}
+
+.agree-btn:disabled {
+  background: var(--gray-300);
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+/* Terms Checkbox */
+.terms-checkbox-container {
+  margin: var(--space-md) 0;
+  padding: var(--space-sm) var(--space-md);
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  border: 2px solid var(--gray-200);
+}
+
+.checkbox-label {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm);
+  cursor: pointer;
+  user-select: none;
+}
+
+.terms-checkbox {
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  cursor: pointer;
+  flex-shrink: 0;
+  accent-color: var(--primary);
+}
+
+.checkbox-text {
+  color: var(--gray-700);
+  line-height: 1.6;
+  font-size: 0.875rem;
+}
+
+.terms-link {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 600;
+  border-bottom: 1px solid transparent;
+  transition: all 0.2s ease;
+}
+
+.terms-link:hover {
+  color: var(--primary-dark);
+  border-bottom-color: var(--primary-dark);
+}
+
+.terms-notice {
+  margin-top: var(--space-md);
+  padding: var(--space-sm) var(--space-md);
+  background: rgba(37, 99, 235, 0.05);
+  border-left: 4px solid var(--primary);
+  border-radius: var(--radius-sm);
+}
+
+.terms-notice p {
+  margin-bottom: var(--space-xs);
+  font-size: 0.875rem;
+}
+
+.terms-notice ul {
+  margin: var(--space-xs) 0 0 0;
+  padding-left: var(--space-lg);
+}
+
+.terms-notice li {
+  margin-bottom: 0;
+  color: var(--gray-700);
+  font-size: 0.875rem;
+  line-height: 1.5;
 }
 
 /* ===== Responsive Design ===== */
 @media (max-width: 768px) {
   body {
-    padding: var(--space-md);
+    padding: var(--space-xs);
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+
+  .landing-container {
+    padding: var(--space-lg) var(--space-md);
   }
 
   .landing-container h1 {
-    font-size: 2.5rem;
+    font-size: 2rem;
+    margin-bottom: var(--space-xs);
   }
 
   .tagline {
-    font-size: 1rem;
+    font-size: 0.9375rem;
+    margin-bottom: var(--space-lg);
+  }
+
+  .header-info {
+    margin-bottom: var(--space-md);
+    padding-bottom: var(--space-sm);
+    flex-wrap: wrap;
+    gap: var(--space-xs);
   }
 
   .mode-selection {
     grid-template-columns: 1fr;
+    gap: var(--space-md);
+    margin-top: var(--space-md);
+  }
+
+  .mode-btn {
+    padding: var(--space-lg);
+  }
+
+  .mode-btn .icon {
+    font-size: 2.5rem;
+  }
+
+  .mode-btn .mode-title {
+    font-size: 1.25rem;
+  }
+
+  .mode-btn .mode-desc {
+    font-size: 0.8125rem;
   }
 
   .message-container {
-    height: 350px;
+    height: auto;
+    max-height: 60vh;
   }
 
   .video-container {
@@ -802,12 +917,24 @@ video {
     height: 250px;
   }
 
+  .chat-header h2 {
+    font-size: 1.5rem;
+  }
+
+  .status {
+    margin-top: var(--space-sm);
+    margin-bottom: var(--space-sm);
+    padding: var(--space-xs);
+    font-size: 0.875rem;
+  }
+
   body.chat-active {
     overflow: hidden;
     position: fixed;
     width: 100%;
     height: 100vh;
     height: 100dvh;
+    padding: 0;
   }
 
   body.chat-active #textChatView {
@@ -833,15 +960,27 @@ video {
     flex-direction: column;
     border-radius: 0;
     box-shadow: none;
-    padding: var(--space-md);
+    padding: var(--space-sm);
     overflow: hidden;
+  }
+
+  body.chat-active .chat-header {
+    margin-bottom: var(--space-sm);
+    padding-bottom: var(--space-sm);
+    flex-shrink: 0;
+  }
+
+  body.chat-active .status {
+    flex-shrink: 0;
   }
 
   body.chat-active .message-container {
     flex-grow: 1;
     height: auto;
+    max-height: none;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;
+    margin-bottom: var(--space-sm);
   }
 
   body.chat-active .chat-controls {
@@ -852,18 +991,22 @@ video {
 
 @media (max-width: 480px) {
   .landing-container h1 {
-    font-size: 2rem;
+    font-size: 1.75rem;
+  }
+
+  .tagline {
+    font-size: 0.875rem;
   }
 
   .mode-btn {
-    padding: var(--space-xl);
+    padding: var(--space-md);
   }
 
   .mode-btn .icon {
-    font-size: 2.5rem;
+    font-size: 2rem;
   }
 
   .mode-btn .mode-title {
-    font-size: 1.25rem;
+    font-size: 1.125rem;
   }
 }

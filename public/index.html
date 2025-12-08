@@ -191,30 +191,41 @@
 
 
 
-  <!-- Terms and Conditions Modal -->
+  <!-- Terms Modal -->
   <div id="termsModal" class="modal-overlay" style="display: none;">
     <div class="modal-content">
       <div class="modal-header">
-        <h2>Terms and Conditions</h2>
+        <h2>Before You Continue</h2>
       </div>
       <div class="modal-body">
-        <p><strong>Welcome to VibeConnect!</strong></p>
-        <p>By determining to use our "Text Chat" or "Video Chat" services, you agree to the following terms:</p>
-        <ul>
-          <li><strong>Respect Others:</strong> Do not engage in harassment, hate speech, or abuse.</li>
-          <li><strong>No Inappropriate Content:</strong> Nudity, violence, and illegal content are strictly prohibited.
-          </li>
-          <li><strong>Age Requirement:</strong> You must be 18 years or older to use this service.</li>
-          <li><strong>Privacy:</strong> Be mindful of sharing personal information. We encourage anonymity.</li>
-          <li><strong>Reporting:</strong> Use the report feature if you encounter violations. We take reports seriously.
-          </li>
-        </ul>
-        <p>Failure to follow these rules may result in a permanent ban.</p>
-        <p>Please read carefully and agree to proceed.</p>
+        <p><strong>Welcome to Vibe Connect!</strong></p>
+        <p>To use our service, please read and agree to our policies:</p>
+
+        <div class="terms-checkbox-container">
+          <label class="checkbox-label">
+            <input type="checkbox" id="termsCheckbox" class="terms-checkbox">
+            <span class="checkbox-text">
+              I have read and agree to the
+              <a href="terms.html" target="_blank" class="terms-link">Terms & Conditions</a>
+              and
+              <a href="privacy.html" target="_blank" class="terms-link">Privacy Policy</a>
+            </span>
+          </label>
+        </div>
+
+        <div class="terms-notice">
+          <p><strong>Key Points:</strong></p>
+          <ul>
+            <li>You must be 18 years or older</li>
+            <li>Respect others and follow community guidelines</li>
+            <li>No inappropriate or illegal content</li>
+            <li>Your privacy and safety are important to us</li>
+          </ul>
+        </div>
       </div>
       <div class="modal-footer">
         <button id="termsCancelBtn" class="modal-btn cancel-btn">Cancel</button>
-        <button id="termsAgreeBtn" class="modal-btn agree-btn">Agree & Continue</button>
+        <button id="termsAgreeBtn" class="modal-btn agree-btn" disabled>Agree & Continue</button>
       </div>
     </div>
   </div>

@@ -63,6 +63,7 @@ const typingIndicator = document.getElementById("typingIndicator");
 const termsModal = document.getElementById("termsModal");
 const termsCancelBtn = document.getElementById("termsCancelBtn");
 const termsAgreeBtn = document.getElementById("termsAgreeBtn");
+const termsCheckbox = document.getElementById("termsCheckbox");
 const connectionStatus = document.getElementById("connectionStatus");
 
 
@@ -116,6 +117,11 @@ nextBtn.addEventListener("click", skipPartner);
 reportBtn.addEventListener("click", reportUser);
 muteBtn.addEventListener("click", toggleMute);
 messageInput.addEventListener("input", handleTyping);
+
+// Terms checkbox handler
+termsCheckbox.addEventListener("change", () => {
+  termsAgreeBtn.disabled = !termsCheckbox.checked;
+});
 
 // ===== WebSocket Connection =====
 function connectWebSocket() {
