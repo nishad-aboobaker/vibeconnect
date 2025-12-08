@@ -52,6 +52,7 @@ const wss = new WebSocket.Server({ noServer: true });
 
 // Separate queues for different modes
 let textWaitingQueue = [];
+let voiceWaitingQueue = [];
 let videoWaitingQueue = [];
 
 // Map of user IDs to WebSocket connections
@@ -336,6 +337,9 @@ wss.on("connection", (ws) => {
       case "join-text":
         handleTextJoin(ws, data.userId);
         break;
+      case "join-voice":
+        handleVoiceJoin(ws, data.userId);
+        break;
       case "join-video":
         handleVideoJoin(ws, data.userId);
         break;
@@ -415,6 +419,52 @@ function handleTextJoin(ws, userId) {
     textWaitingQueue.push(userId);
     ws.send(JSON.stringify({ type: "waiting" }));
     logger.info(`User ${userId} added to text chat queue`);
+  }
+}
+
+function handleVoiceJoin(ws, userId) {
+  logger.info(`User ${userId} joining voice chat`);
+  connections.set(userId, ws);
+  userModes.set(userId, "voice");
+
+  // Track user IP
+  userIPs.set(userId, ws.ip);
+
+  // Remove from queue if already there to prevent self-matching
+  const existingIndex = voiceWaitingQueue.indexOf(userId);
+  if (existingIndex !== -1) {
+    voiceWaitingQueue.splice(existingIndex, 1);
+  }
+
+  if (voiceWaitingQueue.length > 0) {
+    // Pair with waiting user - the waiting user is the offerer
+    const partnerId = voiceWaitingQueue.shift();
+
+    // Final safety check
+    if (partnerId === userId) {
+      voiceWaitingQueue.push(userId);
+      ws.send(JSON.stringify({ type: "waiting" }));
+      return;
+    }
+
+    pairs.set(userId, partnerId);
+    pairs.set(partnerId, userId);
+
+    // Notify both users
+    const partnerWs = connections.get(partnerId);
+    ws.send(JSON.stringify({ type: "paired", partnerId, isOfferer: false }));
+    if (partnerWs) {
+      partnerWs.send(
+        JSON.stringify({ type: "paired", partnerId: userId, isOfferer: true })
+      );
+    }
+
+    logger.info(`Paired voice chat users: ${userId} and ${partnerId}`);
+  } else {
+    // Add to queue
+    voiceWaitingQueue.push(userId);
+    ws.send(JSON.stringify({ type: "waiting" }));
+    logger.info(`User ${userId} added to voice chat queue`);
   }
 }
 

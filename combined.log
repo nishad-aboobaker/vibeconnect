@@ -1,1 +1,877 @@
 {"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-08T15:52:51.013Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-08T16:21:50.227Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:21:54.800Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:21:54.817Z"}
+{"level":"info","message":"Received from k67byzfld9k: identify","timestamp":"2025-12-08T16:21:54.865Z"}
+{"level":"info","message":"User k67byzfld9k identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:21:54.868Z"}
+{"level":"info","message":"Received from k67byzfld9k: join-voice","timestamp":"2025-12-08T16:22:25.304Z"}
+{"level":"info","message":"User k67byzfld9k joining voice chat","timestamp":"2025-12-08T16:22:25.306Z"}
+{"level":"info","message":"User k67byzfld9k added to voice chat queue","timestamp":"2025-12-08T16:22:25.309Z"}
+{"level":"info","message":"Received from k67byzfld9k: disconnect","timestamp":"2025-12-08T16:22:57.444Z"}
+{"level":"info","message":"User k67byzfld9k disconnecting","timestamp":"2025-12-08T16:22:57.446Z"}
+{"level":"info","message":"User k67byzfld9k disconnected and cleaned up","timestamp":"2025-12-08T16:22:57.447Z"}
+{"level":"info","message":"Received from k67byzfld9k: join-voice","timestamp":"2025-12-08T16:24:06.798Z"}
+{"level":"info","message":"User k67byzfld9k joining voice chat","timestamp":"2025-12-08T16:24:06.801Z"}
+{"level":"info","message":"User k67byzfld9k added to voice chat queue","timestamp":"2025-12-08T16:24:06.802Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:24:38.633Z"}
+{"level":"info","message":"User k67byzfld9k disconnecting","timestamp":"2025-12-08T16:24:38.635Z"}
+{"level":"info","message":"User k67byzfld9k disconnected and cleaned up","timestamp":"2025-12-08T16:24:38.639Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:24:38.641Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:24:38.667Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:24:38.682Z"}
+{"level":"info","message":"Received from lld3ey42be: identify","timestamp":"2025-12-08T16:24:38.687Z"}
+{"level":"info","message":"User lld3ey42be identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:24:38.690Z"}
+{"level":"info","message":"Received from lld3ey42be: join-voice","timestamp":"2025-12-08T16:24:40.988Z"}
+{"level":"info","message":"User lld3ey42be joining voice chat","timestamp":"2025-12-08T16:24:40.988Z"}
+{"level":"info","message":"Paired voice chat users: lld3ey42be and k67byzfld9k","timestamp":"2025-12-08T16:24:40.990Z"}
+{"level":"info","message":"Received from lld3ey42be: disconnect","timestamp":"2025-12-08T16:24:55.357Z"}
+{"level":"info","message":"User lld3ey42be disconnecting","timestamp":"2025-12-08T16:24:55.357Z"}
+{"level":"info","message":"User lld3ey42be disconnected and cleaned up","timestamp":"2025-12-08T16:24:55.358Z"}
+{"level":"info","message":"Received from lld3ey42be: join-video","timestamp":"2025-12-08T16:25:00.288Z"}
+{"level":"info","message":"User lld3ey42be joining video chat","timestamp":"2025-12-08T16:25:00.289Z"}
+{"level":"info","message":"User lld3ey42be added to video chat queue","timestamp":"2025-12-08T16:25:00.291Z"}
+{"level":"info","message":"Received from lld3ey42be: disconnect","timestamp":"2025-12-08T16:25:11.602Z"}
+{"level":"info","message":"User lld3ey42be disconnecting","timestamp":"2025-12-08T16:25:11.603Z"}
+{"level":"info","message":"Removed lld3ey42be from video chat queue","timestamp":"2025-12-08T16:25:11.605Z"}
+{"level":"info","message":"User lld3ey42be disconnected and cleaned up","timestamp":"2025-12-08T16:25:11.606Z"}
+{"level":"info","message":"Received from lld3ey42be: join-voice","timestamp":"2025-12-08T16:25:22.219Z"}
+{"level":"info","message":"User lld3ey42be joining voice chat","timestamp":"2025-12-08T16:25:22.219Z"}
+{"level":"info","message":"User lld3ey42be added to voice chat queue","timestamp":"2025-12-08T16:25:22.220Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:42.463Z"}
+{"level":"info","message":"User lld3ey42be disconnecting","timestamp":"2025-12-08T16:25:42.465Z"}
+{"level":"info","message":"User lld3ey42be disconnected and cleaned up","timestamp":"2025-12-08T16:25:42.466Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:42.466Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:25:42.498Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:25:42.513Z"}
+{"level":"info","message":"Received from euc3b8vy5zi: identify","timestamp":"2025-12-08T16:25:42.516Z"}
+{"level":"info","message":"User euc3b8vy5zi identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:25:42.517Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:43.422Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:43.426Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:25:43.450Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:25:43.465Z"}
+{"level":"info","message":"Received from ek12mjmhi0h: identify","timestamp":"2025-12-08T16:25:43.468Z"}
+{"level":"info","message":"User ek12mjmhi0h identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:25:43.468Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:44.074Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:44.077Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:25:44.101Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:44.117Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:25:44.254Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:44.277Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:44.291Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:44.481Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:44.495Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:49.536Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:54.548Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:25:59.573Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:04.586Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:09.596Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:14.604Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:19.622Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:24.634Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:29.644Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:35.117Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:26:41.111Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:26:47.110Z"}
+{"level":"info","message":"Received from 949j0ckalkn: identify","timestamp":"2025-12-08T16:26:47.113Z"}
+{"level":"info","message":"User 949j0ckalkn identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:26:47.113Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:29:19.524Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:29:19.577Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:29:19.594Z"}
+{"level":"info","message":"Received from 183pkxng0a5: identify","timestamp":"2025-12-08T16:29:19.634Z"}
+{"level":"info","message":"User 183pkxng0a5 identified with fingerprint: z9f6sl","timestamp":"2025-12-08T16:29:19.635Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:30:40.648Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:30:40.651Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:30:40.679Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:31:37.215Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:31:37.263Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:32:00.392Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:32:00.443Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:32:27.498Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:32:27.553Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:32:27.574Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: identify","timestamp":"2025-12-08T16:32:27.579Z"}
+{"level":"info","message":"User yyjhgqf59ti identified with fingerprint: 5fnebi","timestamp":"2025-12-08T16:32:27.579Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-voice","timestamp":"2025-12-08T16:32:32.124Z"}
+{"level":"info","message":"User yyjhgqf59ti joining voice chat","timestamp":"2025-12-08T16:32:32.124Z"}
+{"level":"info","message":"Paired voice chat users: yyjhgqf59ti and lld3ey42be","timestamp":"2025-12-08T16:32:32.125Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: disconnect","timestamp":"2025-12-08T16:32:58.679Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:32:58.680Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:32:58.683Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-text","timestamp":"2025-12-08T16:33:01.206Z"}
+{"level":"info","message":"User yyjhgqf59ti joining text chat","timestamp":"2025-12-08T16:33:01.207Z"}
+{"level":"info","message":"User yyjhgqf59ti added to text chat queue","timestamp":"2025-12-08T16:33:01.208Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: disconnect","timestamp":"2025-12-08T16:33:04.863Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:33:04.863Z"}
+{"level":"info","message":"Removed yyjhgqf59ti from text chat queue","timestamp":"2025-12-08T16:33:04.864Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:33:04.864Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-video","timestamp":"2025-12-08T16:33:08.808Z"}
+{"level":"info","message":"User yyjhgqf59ti joining video chat","timestamp":"2025-12-08T16:33:08.809Z"}
+{"level":"info","message":"User yyjhgqf59ti added to video chat queue","timestamp":"2025-12-08T16:33:08.810Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: disconnect","timestamp":"2025-12-08T16:33:12.129Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:33:12.130Z"}
+{"level":"info","message":"Removed yyjhgqf59ti from video chat queue","timestamp":"2025-12-08T16:33:12.134Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:33:12.135Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-voice","timestamp":"2025-12-08T16:33:14.443Z"}
+{"level":"info","message":"User yyjhgqf59ti joining voice chat","timestamp":"2025-12-08T16:33:14.443Z"}
+{"level":"info","message":"User yyjhgqf59ti added to voice chat queue","timestamp":"2025-12-08T16:33:14.444Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: disconnect","timestamp":"2025-12-08T16:33:19.500Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:33:19.501Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:33:19.501Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-voice","timestamp":"2025-12-08T16:33:21.774Z"}
+{"level":"info","message":"User yyjhgqf59ti joining voice chat","timestamp":"2025-12-08T16:33:21.774Z"}
+{"level":"info","message":"User yyjhgqf59ti added to voice chat queue","timestamp":"2025-12-08T16:33:21.775Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: disconnect","timestamp":"2025-12-08T16:33:24.785Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:33:24.786Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:33:24.787Z"}
+{"level":"info","message":"Received from yyjhgqf59ti: join-voice","timestamp":"2025-12-08T16:33:27.417Z"}
+{"level":"info","message":"User yyjhgqf59ti joining voice chat","timestamp":"2025-12-08T16:33:27.418Z"}
+{"level":"info","message":"User yyjhgqf59ti added to voice chat queue","timestamp":"2025-12-08T16:33:27.419Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:35:30.683Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnecting","timestamp":"2025-12-08T16:35:30.687Z"}
+{"level":"info","message":"User yyjhgqf59ti disconnected and cleaned up","timestamp":"2025-12-08T16:35:30.689Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:35:30.690Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:35:30.738Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:35:30.766Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: identify","timestamp":"2025-12-08T16:35:30.769Z"}
+{"level":"info","message":"User 3eb7si8y8nk identified with fingerprint: 5fnebi","timestamp":"2025-12-08T16:35:30.771Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: join-voice","timestamp":"2025-12-08T16:35:33.437Z"}
+{"level":"info","message":"User 3eb7si8y8nk joining voice chat","timestamp":"2025-12-08T16:35:33.438Z"}
+{"level":"info","message":"Paired voice chat users: 3eb7si8y8nk and yyjhgqf59ti","timestamp":"2025-12-08T16:35:33.439Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: disconnect","timestamp":"2025-12-08T16:35:48.157Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnecting","timestamp":"2025-12-08T16:35:48.158Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnected and cleaned up","timestamp":"2025-12-08T16:35:48.158Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: join-text","timestamp":"2025-12-08T16:35:58.096Z"}
+{"level":"info","message":"User 3eb7si8y8nk joining text chat","timestamp":"2025-12-08T16:35:58.097Z"}
+{"level":"info","message":"User 3eb7si8y8nk added to text chat queue","timestamp":"2025-12-08T16:35:58.098Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: disconnect","timestamp":"2025-12-08T16:36:00.892Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnecting","timestamp":"2025-12-08T16:36:00.893Z"}
+{"level":"info","message":"Removed 3eb7si8y8nk from text chat queue","timestamp":"2025-12-08T16:36:00.893Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnected and cleaned up","timestamp":"2025-12-08T16:36:00.894Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: join-video","timestamp":"2025-12-08T16:36:06.944Z"}
+{"level":"info","message":"User 3eb7si8y8nk joining video chat","timestamp":"2025-12-08T16:36:06.945Z"}
+{"level":"info","message":"User 3eb7si8y8nk added to video chat queue","timestamp":"2025-12-08T16:36:06.946Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: disconnect","timestamp":"2025-12-08T16:36:11.194Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnecting","timestamp":"2025-12-08T16:36:11.195Z"}
+{"level":"info","message":"Removed 3eb7si8y8nk from video chat queue","timestamp":"2025-12-08T16:36:11.199Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnected and cleaned up","timestamp":"2025-12-08T16:36:11.200Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: join-voice","timestamp":"2025-12-08T16:36:15.880Z"}
+{"level":"info","message":"User 3eb7si8y8nk joining voice chat","timestamp":"2025-12-08T16:36:15.880Z"}
+{"level":"info","message":"User 3eb7si8y8nk added to voice chat queue","timestamp":"2025-12-08T16:36:15.881Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: disconnect","timestamp":"2025-12-08T16:36:29.765Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnecting","timestamp":"2025-12-08T16:36:29.766Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnected and cleaned up","timestamp":"2025-12-08T16:36:29.770Z"}
+{"level":"info","message":"Received from 3eb7si8y8nk: join-voice","timestamp":"2025-12-08T16:37:32.746Z"}
+{"level":"info","message":"User 3eb7si8y8nk joining voice chat","timestamp":"2025-12-08T16:37:32.746Z"}
+{"level":"info","message":"User 3eb7si8y8nk added to voice chat queue","timestamp":"2025-12-08T16:37:32.747Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:37:37.237Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnecting","timestamp":"2025-12-08T16:37:37.241Z"}
+{"level":"info","message":"User 3eb7si8y8nk disconnected and cleaned up","timestamp":"2025-12-08T16:37:37.246Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:37:37.251Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:37:37.321Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:37:37.338Z"}
+{"level":"info","message":"Received from atvcyz6wwm: identify","timestamp":"2025-12-08T16:37:37.349Z"}
+{"level":"info","message":"User atvcyz6wwm identified with fingerprint: 5fnebi","timestamp":"2025-12-08T16:37:37.353Z"}
+{"level":"info","message":"Received from atvcyz6wwm: join-voice","timestamp":"2025-12-08T16:37:39.428Z"}
+{"level":"info","message":"User atvcyz6wwm joining voice chat","timestamp":"2025-12-08T16:37:39.428Z"}
+{"level":"info","message":"Paired voice chat users: atvcyz6wwm and 3eb7si8y8nk","timestamp":"2025-12-08T16:37:39.429Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:37:55.326Z"}
+{"level":"info","message":"User atvcyz6wwm disconnecting","timestamp":"2025-12-08T16:37:55.330Z"}
+{"level":"info","message":"User atvcyz6wwm disconnected and cleaned up","timestamp":"2025-12-08T16:37:55.333Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:37:55.337Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:37:55.376Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:37:55.390Z"}
+{"level":"info","message":"Received from dupyyc3rh3a: identify","timestamp":"2025-12-08T16:37:55.402Z"}
+{"level":"info","message":"User dupyyc3rh3a identified with fingerprint: 5fnebi","timestamp":"2025-12-08T16:37:55.403Z"}
+{"level":"info","message":"Received from dupyyc3rh3a: join-voice","timestamp":"2025-12-08T16:37:58.746Z"}
+{"level":"info","message":"User dupyyc3rh3a joining voice chat","timestamp":"2025-12-08T16:37:58.746Z"}
+{"level":"info","message":"User dupyyc3rh3a added to voice chat queue","timestamp":"2025-12-08T16:37:58.747Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:38:26.389Z"}
+{"level":"info","message":"User dupyyc3rh3a disconnecting","timestamp":"2025-12-08T16:38:26.392Z"}
+{"level":"info","message":"User dupyyc3rh3a disconnected and cleaned up","timestamp":"2025-12-08T16:38:26.395Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:38:26.396Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:38:26.453Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:38:26.472Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:38:31.495Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T16:38:36.519Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:38:42.126Z"}
+{"level":"info","message":"Received from 8lf09ip1l0o: identify","timestamp":"2025-12-08T16:38:42.133Z"}
+{"level":"info","message":"User 8lf09ip1l0o identified with fingerprint: 5fnebi","timestamp":"2025-12-08T16:38:42.134Z"}
+{"level":"info","message":"Received from 8lf09ip1l0o: join-voice","timestamp":"2025-12-08T16:38:48.113Z"}
+{"level":"info","message":"User 8lf09ip1l0o joining voice chat","timestamp":"2025-12-08T16:38:48.113Z"}
+{"level":"info","message":"Paired voice chat users: 8lf09ip1l0o and dupyyc3rh3a","timestamp":"2025-12-08T16:38:48.114Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:42:43.297Z"}
+{"level":"info","message":"User 8lf09ip1l0o disconnecting","timestamp":"2025-12-08T16:42:43.304Z"}
+{"level":"info","message":"User 8lf09ip1l0o disconnected and cleaned up","timestamp":"2025-12-08T16:42:43.308Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:42:43.314Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:42:43.341Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:42:43.354Z"}
+{"level":"info","message":"Received from xek44knqxu: identify","timestamp":"2025-12-08T16:42:43.358Z"}
+{"level":"info","message":"User xek44knqxu identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:42:43.359Z"}
+{"level":"info","message":"Received from xek44knqxu: join-voice","timestamp":"2025-12-08T16:42:45.211Z"}
+{"level":"info","message":"User xek44knqxu joining voice chat","timestamp":"2025-12-08T16:42:45.211Z"}
+{"level":"info","message":"User xek44knqxu added to voice chat queue","timestamp":"2025-12-08T16:42:45.212Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:43:11.229Z"}
+{"level":"info","message":"User xek44knqxu disconnecting","timestamp":"2025-12-08T16:43:11.235Z"}
+{"level":"info","message":"User xek44knqxu disconnected and cleaned up","timestamp":"2025-12-08T16:43:11.236Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:43:11.237Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:43:11.272Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:43:11.288Z"}
+{"level":"info","message":"Received from rqpxwby9xn: identify","timestamp":"2025-12-08T16:43:11.294Z"}
+{"level":"info","message":"User rqpxwby9xn identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:43:11.295Z"}
+{"level":"info","message":"Received from rqpxwby9xn: join-text","timestamp":"2025-12-08T16:43:15.662Z"}
+{"level":"info","message":"User rqpxwby9xn joining text chat","timestamp":"2025-12-08T16:43:15.662Z"}
+{"level":"info","message":"User rqpxwby9xn added to text chat queue","timestamp":"2025-12-08T16:43:15.663Z"}
+{"level":"info","message":"Received from rqpxwby9xn: disconnect","timestamp":"2025-12-08T16:43:17.217Z"}
+{"level":"info","message":"User rqpxwby9xn disconnecting","timestamp":"2025-12-08T16:43:17.217Z"}
+{"level":"info","message":"Removed rqpxwby9xn from text chat queue","timestamp":"2025-12-08T16:43:17.218Z"}
+{"level":"info","message":"User rqpxwby9xn disconnected and cleaned up","timestamp":"2025-12-08T16:43:17.218Z"}
+{"level":"info","message":"Received from rqpxwby9xn: disconnect","timestamp":"2025-12-08T16:43:24.673Z"}
+{"level":"info","message":"User rqpxwby9xn disconnecting","timestamp":"2025-12-08T16:43:24.673Z"}
+{"level":"info","message":"User rqpxwby9xn disconnected and cleaned up","timestamp":"2025-12-08T16:43:24.674Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:47:29.872Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:47:29.875Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:47:29.903Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:47:29.938Z"}
+{"level":"info","message":"Received from odkmr2n76p: identify","timestamp":"2025-12-08T16:47:29.940Z"}
+{"level":"info","message":"User odkmr2n76p identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:47:29.941Z"}
+{"level":"info","message":"Received from odkmr2n76p: join-text","timestamp":"2025-12-08T16:47:43.609Z"}
+{"level":"info","message":"User odkmr2n76p joining text chat","timestamp":"2025-12-08T16:47:43.609Z"}
+{"level":"info","message":"User odkmr2n76p added to text chat queue","timestamp":"2025-12-08T16:47:43.610Z"}
+{"level":"info","message":"Received from odkmr2n76p: disconnect","timestamp":"2025-12-08T16:48:01.747Z"}
+{"level":"info","message":"User odkmr2n76p disconnecting","timestamp":"2025-12-08T16:48:01.747Z"}
+{"level":"info","message":"Removed odkmr2n76p from text chat queue","timestamp":"2025-12-08T16:48:01.747Z"}
+{"level":"info","message":"User odkmr2n76p disconnected and cleaned up","timestamp":"2025-12-08T16:48:01.748Z"}
+{"level":"info","message":"Received from odkmr2n76p: join-video","timestamp":"2025-12-08T16:48:05.292Z"}
+{"level":"info","message":"User odkmr2n76p joining video chat","timestamp":"2025-12-08T16:48:05.292Z"}
+{"level":"info","message":"User odkmr2n76p added to video chat queue","timestamp":"2025-12-08T16:48:05.293Z"}
+{"level":"info","message":"Received from odkmr2n76p: disconnect","timestamp":"2025-12-08T16:48:18.305Z"}
+{"level":"info","message":"User odkmr2n76p disconnecting","timestamp":"2025-12-08T16:48:18.307Z"}
+{"level":"info","message":"Removed odkmr2n76p from video chat queue","timestamp":"2025-12-08T16:48:18.311Z"}
+{"level":"info","message":"User odkmr2n76p disconnected and cleaned up","timestamp":"2025-12-08T16:48:18.319Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:48:31.263Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:48:31.276Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: identify","timestamp":"2025-12-08T16:48:31.281Z"}
+{"level":"info","message":"User 8dj0w8ujwx5 identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:48:31.282Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: join-text","timestamp":"2025-12-08T16:48:40.527Z"}
+{"level":"info","message":"User 8dj0w8ujwx5 joining text chat","timestamp":"2025-12-08T16:48:40.527Z"}
+{"level":"info","message":"User 8dj0w8ujwx5 added to text chat queue","timestamp":"2025-12-08T16:48:40.528Z"}
+{"level":"info","message":"Received from odkmr2n76p: join-text","timestamp":"2025-12-08T16:48:42.696Z"}
+{"level":"info","message":"User odkmr2n76p joining text chat","timestamp":"2025-12-08T16:48:42.697Z"}
+{"level":"info","message":"Paired text chat users: odkmr2n76p and 8dj0w8ujwx5","timestamp":"2025-12-08T16:48:42.698Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:48:46.324Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-stop","timestamp":"2025-12-08T16:48:48.337Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:48:49.737Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-stop","timestamp":"2025-12-08T16:48:51.745Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:03.553Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:03.554Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:03.768Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:03.786Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:03.940Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.001Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.131Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.207Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.326Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.359Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.495Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.574Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-start","timestamp":"2025-12-08T16:49:04.683Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: typing-stop","timestamp":"2025-12-08T16:49:06.685Z"}
+{"level":"info","message":"Received from 8dj0w8ujwx5: disconnect","timestamp":"2025-12-08T16:49:15.551Z"}
+{"level":"info","message":"User 8dj0w8ujwx5 disconnecting","timestamp":"2025-12-08T16:49:15.551Z"}
+{"level":"info","message":"Put odkmr2n76p back in text chat queue","timestamp":"2025-12-08T16:49:15.552Z"}
+{"level":"info","message":"User 8dj0w8ujwx5 disconnected and cleaned up","timestamp":"2025-12-08T16:49:15.552Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:49:17.566Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:49:17.571Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:56:12.383Z"}
+{"level":"info","message":"User odkmr2n76p disconnecting","timestamp":"2025-12-08T16:56:12.387Z"}
+{"level":"info","message":"Removed odkmr2n76p from text chat queue","timestamp":"2025-12-08T16:56:12.388Z"}
+{"level":"info","message":"User odkmr2n76p disconnected and cleaned up","timestamp":"2025-12-08T16:56:12.390Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:56:12.390Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:56:12.449Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:56:12.463Z"}
+{"level":"info","message":"Received from 5gvqbxtdo83: identify","timestamp":"2025-12-08T16:56:12.467Z"}
+{"level":"info","message":"User 5gvqbxtdo83 identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:56:12.467Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:56:23.361Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:56:23.386Z"}
+{"level":"info","message":"Received from wckd32xuord: identify","timestamp":"2025-12-08T16:56:23.389Z"}
+{"level":"info","message":"User wckd32xuord identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:56:23.390Z"}
+{"level":"info","message":"Received from 5gvqbxtdo83: join-text","timestamp":"2025-12-08T16:56:31.013Z"}
+{"level":"info","message":"User 5gvqbxtdo83 joining text chat","timestamp":"2025-12-08T16:56:31.014Z"}
+{"level":"info","message":"User 5gvqbxtdo83 added to text chat queue","timestamp":"2025-12-08T16:56:31.016Z"}
+{"level":"info","message":"Received from wckd32xuord: join-text","timestamp":"2025-12-08T16:56:32.268Z"}
+{"level":"info","message":"User wckd32xuord joining text chat","timestamp":"2025-12-08T16:56:32.269Z"}
+{"level":"info","message":"Paired text chat users: wckd32xuord and 5gvqbxtdo83","timestamp":"2025-12-08T16:56:32.270Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:34.677Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:56:36.683Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.437Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.474Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.550Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.672Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.700Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.759Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.912Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:39.924Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:40.044Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:40.162Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:56:42.170Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:42.556Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:42.696Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:42.804Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:42.821Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:42.916Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:56:44.918Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.548Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.562Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.656Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.825Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.827Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:47.979Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.112Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.357Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.470Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.577Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.708Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.819Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:48.930Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:49.106Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:49.221Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:56:51.233Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:51.691Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:51.704Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:51.845Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.009Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.214Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.278Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.390Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.506Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.610Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.726Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.900Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:53.976Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:54.916Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.184Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.199Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.367Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.419Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.560Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.746Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:55.949Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.000Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.118Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.209Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.295Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.430Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.602Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.743Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.797Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.912Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:56:56.982Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:56:58.986Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:51.478Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:51.722Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:51.968Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.104Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.183Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.295Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.381Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.498Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.500Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.502Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.624Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.748Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.826Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.955Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:52.973Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.071Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.174Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.190Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.267Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.380Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.452Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.576Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:57:53.664Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:57:55.665Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:47.854Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:47.878Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:47.991Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.102Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.331Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.546Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.707Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.711Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.800Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.896Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.914Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:48.984Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.082Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.162Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.265Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.339Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.439Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.535Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.634Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.735Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:49.831Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:50.008Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:50.156Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:50.297Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-start","timestamp":"2025-12-08T16:58:50.416Z"}
+{"level":"info","message":"Received from wckd32xuord: typing-stop","timestamp":"2025-12-08T16:58:52.417Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:59:26.384Z"}
+{"level":"info","message":"User wckd32xuord disconnecting","timestamp":"2025-12-08T16:59:26.386Z"}
+{"level":"info","message":"Put 5gvqbxtdo83 back in text chat queue","timestamp":"2025-12-08T16:59:26.392Z"}
+{"level":"info","message":"User wckd32xuord disconnected and cleaned up","timestamp":"2025-12-08T16:59:26.400Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:59:26.403Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:59:26.459Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:59:26.478Z"}
+{"level":"info","message":"Received from pcuf0s18za: identify","timestamp":"2025-12-08T16:59:26.494Z"}
+{"level":"info","message":"User pcuf0s18za identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:59:26.498Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:59:27.755Z"}
+{"level":"info","message":"User 5gvqbxtdo83 disconnecting","timestamp":"2025-12-08T16:59:27.759Z"}
+{"level":"info","message":"Removed 5gvqbxtdo83 from text chat queue","timestamp":"2025-12-08T16:59:27.766Z"}
+{"level":"info","message":"User 5gvqbxtdo83 disconnected and cleaned up","timestamp":"2025-12-08T16:59:27.768Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T16:59:27.773Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:59:27.837Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T16:59:27.854Z"}
+{"level":"info","message":"Received from jeomhwvnud: identify","timestamp":"2025-12-08T16:59:27.864Z"}
+{"level":"info","message":"User jeomhwvnud identified with fingerprint: nvgatq","timestamp":"2025-12-08T16:59:27.865Z"}
+{"level":"info","message":"Received from pcuf0s18za: join-text","timestamp":"2025-12-08T16:59:31.799Z"}
+{"level":"info","message":"User pcuf0s18za joining text chat","timestamp":"2025-12-08T16:59:31.800Z"}
+{"level":"info","message":"User pcuf0s18za added to text chat queue","timestamp":"2025-12-08T16:59:31.802Z"}
+{"level":"info","message":"Received from jeomhwvnud: join-text","timestamp":"2025-12-08T16:59:33.357Z"}
+{"level":"info","message":"User jeomhwvnud joining text chat","timestamp":"2025-12-08T16:59:33.362Z"}
+{"level":"info","message":"Paired text chat users: jeomhwvnud and pcuf0s18za","timestamp":"2025-12-08T16:59:33.365Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:35.420Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:35.435Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:35.611Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:35.704Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:36.526Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:36.663Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:36.763Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:36.889Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:36.995Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.100Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.199Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.279Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.398Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.470Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.586Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.697Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.787Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.867Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:37.967Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.065Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.179Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.298Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.393Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.495Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.603Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.692Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.800Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:38.893Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-stop","timestamp":"2025-12-08T16:59:40.894Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.390Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.549Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.689Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.831Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.875Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:42.968Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.099Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.157Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.286Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.350Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.489Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.523Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.626Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.718Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-start","timestamp":"2025-12-08T16:59:43.810Z"}
+{"level":"info","message":"Received from pcuf0s18za: typing-stop","timestamp":"2025-12-08T16:59:45.810Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:01:03.569Z"}
+{"level":"info","message":"User pcuf0s18za disconnecting","timestamp":"2025-12-08T17:01:03.574Z"}
+{"level":"info","message":"Put jeomhwvnud back in text chat queue","timestamp":"2025-12-08T17:01:03.579Z"}
+{"level":"info","message":"User pcuf0s18za disconnected and cleaned up","timestamp":"2025-12-08T17:01:03.585Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:01:03.587Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:01:03.650Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:01:03.669Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: identify","timestamp":"2025-12-08T17:01:03.689Z"}
+{"level":"info","message":"User 8xsq8uvfnn identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:01:03.690Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:01:04.659Z"}
+{"level":"info","message":"User jeomhwvnud disconnecting","timestamp":"2025-12-08T17:01:04.689Z"}
+{"level":"info","message":"Removed jeomhwvnud from text chat queue","timestamp":"2025-12-08T17:01:04.694Z"}
+{"level":"info","message":"User jeomhwvnud disconnected and cleaned up","timestamp":"2025-12-08T17:01:04.696Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:01:04.707Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:01:04.777Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:01:04.823Z"}
+{"level":"info","message":"Received from bkjbvarnm9j: identify","timestamp":"2025-12-08T17:01:04.849Z"}
+{"level":"info","message":"User bkjbvarnm9j identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:01:04.864Z"}
+{"level":"info","message":"Received from bkjbvarnm9j: join-text","timestamp":"2025-12-08T17:01:09.103Z"}
+{"level":"info","message":"User bkjbvarnm9j joining text chat","timestamp":"2025-12-08T17:01:09.104Z"}
+{"level":"info","message":"User bkjbvarnm9j added to text chat queue","timestamp":"2025-12-08T17:01:09.105Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: join-text","timestamp":"2025-12-08T17:01:10.660Z"}
+{"level":"info","message":"User 8xsq8uvfnn joining text chat","timestamp":"2025-12-08T17:01:10.661Z"}
+{"level":"info","message":"Paired text chat users: 8xsq8uvfnn and bkjbvarnm9j","timestamp":"2025-12-08T17:01:10.664Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:12.323Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:12.594Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:12.754Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:14.403Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:14.602Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:14.717Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:14.811Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:14.911Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:15.045Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:15.110Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:15.416Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: text-message","timestamp":"2025-12-08T17:01:15.615Z"}
+{"level":"info","message":"Text message from 8xsq8uvfnn to bkjbvarnm9j: vvccvcvcvcc...","timestamp":"2025-12-08T17:01:15.618Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:15.840Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:16.144Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:16.301Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:16.433Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:16.496Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-stop","timestamp":"2025-12-08T17:01:18.503Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: text-message","timestamp":"2025-12-08T17:01:20.955Z"}
+{"level":"info","message":"Text message from 8xsq8uvfnn to bkjbvarnm9j: cvcvc...","timestamp":"2025-12-08T17:01:20.958Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:22.821Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:22.928Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.130Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.207Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.303Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.415Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.526Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.603Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.801Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:23.873Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-start","timestamp":"2025-12-08T17:01:24.031Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: text-message","timestamp":"2025-12-08T17:01:24.948Z"}
+{"level":"info","message":"Text message from 8xsq8uvfnn to bkjbvarnm9j: vcvcvcvccvc...","timestamp":"2025-12-08T17:01:24.950Z"}
+{"level":"info","message":"Received from 8xsq8uvfnn: typing-stop","timestamp":"2025-12-08T17:01:26.030Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:02:52.791Z"}
+{"level":"info","message":"User 8xsq8uvfnn disconnecting","timestamp":"2025-12-08T17:02:52.819Z"}
+{"level":"info","message":"Put bkjbvarnm9j back in text chat queue","timestamp":"2025-12-08T17:02:52.823Z"}
+{"level":"info","message":"User 8xsq8uvfnn disconnected and cleaned up","timestamp":"2025-12-08T17:02:52.825Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:02:52.829Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:02:52.868Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:02:52.891Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: identify","timestamp":"2025-12-08T17:02:52.902Z"}
+{"level":"info","message":"User 5orq4gddu8q identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:02:52.904Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:02:54.132Z"}
+{"level":"info","message":"User bkjbvarnm9j disconnecting","timestamp":"2025-12-08T17:02:54.145Z"}
+{"level":"info","message":"Removed bkjbvarnm9j from text chat queue","timestamp":"2025-12-08T17:02:54.151Z"}
+{"level":"info","message":"User bkjbvarnm9j disconnected and cleaned up","timestamp":"2025-12-08T17:02:54.155Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:02:54.162Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:02:54.251Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:02:54.291Z"}
+{"level":"info","message":"Received from k93dw6d43dk: identify","timestamp":"2025-12-08T17:02:54.311Z"}
+{"level":"info","message":"User k93dw6d43dk identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:02:54.315Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: join-text","timestamp":"2025-12-08T17:02:57.069Z"}
+{"level":"info","message":"User 5orq4gddu8q joining text chat","timestamp":"2025-12-08T17:02:57.070Z"}
+{"level":"info","message":"User 5orq4gddu8q added to text chat queue","timestamp":"2025-12-08T17:02:57.071Z"}
+{"level":"info","message":"Received from k93dw6d43dk: join-text","timestamp":"2025-12-08T17:02:59.481Z"}
+{"level":"info","message":"User k93dw6d43dk joining text chat","timestamp":"2025-12-08T17:02:59.504Z"}
+{"level":"info","message":"Paired text chat users: k93dw6d43dk and 5orq4gddu8q","timestamp":"2025-12-08T17:02:59.520Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:01.439Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:01.442Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:01.483Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-stop","timestamp":"2025-12-08T17:03:03.489Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:05.434Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:05.540Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:05.678Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:05.826Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:05.888Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:06.015Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:06.117Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:06.203Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:06.336Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-stop","timestamp":"2025-12-08T17:03:08.337Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: text-message","timestamp":"2025-12-08T17:03:09.517Z"}
+{"level":"info","message":"Text message from 5orq4gddu8q to k93dw6d43dk: fdgfgfgfgfgf...","timestamp":"2025-12-08T17:03:09.518Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:10.820Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:10.934Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.062Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.227Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.279Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.430Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.499Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:11.609Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:12.802Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:13.013Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:13.130Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:13.276Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-start","timestamp":"2025-12-08T17:03:13.382Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.091Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.198Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.285Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.403Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.509Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.511Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.604Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.716Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.731Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.813Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.920Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:14.972Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.124Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.141Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.212Z"}
+{"level":"info","message":"Received from 5orq4gddu8q: typing-stop","timestamp":"2025-12-08T17:03:15.389Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.575Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.679Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.818Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.820Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:15.916Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:16.006Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:16.023Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:16.342Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:16.515Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-start","timestamp":"2025-12-08T17:03:16.518Z"}
+{"level":"info","message":"Received from k93dw6d43dk: typing-stop","timestamp":"2025-12-08T17:03:18.529Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:03:39.162Z"}
+{"level":"info","message":"User 5orq4gddu8q disconnecting","timestamp":"2025-12-08T17:03:39.165Z"}
+{"level":"info","message":"Put k93dw6d43dk back in text chat queue","timestamp":"2025-12-08T17:03:39.167Z"}
+{"level":"info","message":"User 5orq4gddu8q disconnected and cleaned up","timestamp":"2025-12-08T17:03:39.168Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:03:39.171Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:03:39.232Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:39.248Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:03:40.614Z"}
+{"level":"info","message":"User k93dw6d43dk disconnecting","timestamp":"2025-12-08T17:03:40.617Z"}
+{"level":"info","message":"Removed k93dw6d43dk from text chat queue","timestamp":"2025-12-08T17:03:40.619Z"}
+{"level":"info","message":"User k93dw6d43dk disconnected and cleaned up","timestamp":"2025-12-08T17:03:40.621Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:03:40.622Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:40.693Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:40.719Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:44.278Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:45.751Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:49.300Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T17:03:50.782Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:03:54.320Z"}
+{"level":"info","message":"Received from obkkijagyr: identify","timestamp":"2025-12-08T17:03:54.328Z"}
+{"level":"info","message":"User obkkijagyr identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:03:54.328Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:03:55.817Z"}
+{"level":"info","message":"Received from f3j16g8etw: identify","timestamp":"2025-12-08T17:03:55.825Z"}
+{"level":"info","message":"User f3j16g8etw identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:03:55.832Z"}
+{"level":"info","message":"Received from obkkijagyr: join-text","timestamp":"2025-12-08T17:03:59.742Z"}
+{"level":"info","message":"User obkkijagyr joining text chat","timestamp":"2025-12-08T17:03:59.743Z"}
+{"level":"info","message":"User obkkijagyr added to text chat queue","timestamp":"2025-12-08T17:03:59.744Z"}
+{"level":"info","message":"Received from f3j16g8etw: join-text","timestamp":"2025-12-08T17:04:02.362Z"}
+{"level":"info","message":"User f3j16g8etw joining text chat","timestamp":"2025-12-08T17:04:02.363Z"}
+{"level":"info","message":"Paired text chat users: f3j16g8etw and obkkijagyr","timestamp":"2025-12-08T17:04:02.364Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:04.809Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:04.945Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.107Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.237Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.316Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.450Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.537Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.682Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.760Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.853Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:05.918Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:06.030Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:06.160Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:06.233Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:06.358Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:04:06.435Z"}
+{"level":"info","message":"Received from f3j16g8etw: text-message","timestamp":"2025-12-08T17:04:06.996Z"}
+{"level":"info","message":"Text message from f3j16g8etw to obkkijagyr: fgfgfgfgfgfgfgfg...","timestamp":"2025-12-08T17:04:07.026Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-stop","timestamp":"2025-12-08T17:04:08.437Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.176Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.288Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.402Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.519Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.574Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.676Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.761Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.864Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:09.959Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.069Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.151Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.238Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.339Z"}
+{"level":"info","message":"Received from obkkijagyr: text-message","timestamp":"2025-12-08T17:04:10.452Z"}
+{"level":"info","message":"Text message from obkkijagyr to f3j16g8etw: fgfgfgfgfgfgf...","timestamp":"2025-12-08T17:04:10.453Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.513Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-start","timestamp":"2025-12-08T17:04:10.599Z"}
+{"level":"info","message":"Received from obkkijagyr: typing-stop","timestamp":"2025-12-08T17:04:12.614Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:03.814Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:03.976Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:04.108Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:04.914Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:04.931Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.056Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.166Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.185Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.279Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.377Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.404Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.477Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.564Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.593Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.653Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.762Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.765Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.840Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.948Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:05.950Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.048Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.138Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.209Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.343Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.406Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:06.520Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-stop","timestamp":"2025-12-08T17:05:09.103Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:13.748Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:13.849Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:13.971Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:14.062Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:14.139Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:14.231Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-start","timestamp":"2025-12-08T17:05:14.321Z"}
+{"level":"info","message":"Received from f3j16g8etw: typing-stop","timestamp":"2025-12-08T17:05:16.322Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:06:09.797Z"}
+{"level":"info","message":"User obkkijagyr disconnecting","timestamp":"2025-12-08T17:06:09.805Z"}
+{"level":"info","message":"Put f3j16g8etw back in text chat queue","timestamp":"2025-12-08T17:06:09.807Z"}
+{"level":"info","message":"User obkkijagyr disconnected and cleaned up","timestamp":"2025-12-08T17:06:09.811Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:06:09.815Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:06:09.868Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:06:09.890Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: identify","timestamp":"2025-12-08T17:06:09.903Z"}
+{"level":"info","message":"User 5qfr03mq7o8 identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:06:09.908Z"}
+{"level":"info","message":"User f3j16g8etw disconnecting","timestamp":"2025-12-08T17:06:11.169Z"}
+{"level":"info","message":"Removed f3j16g8etw from text chat queue","timestamp":"2025-12-08T17:06:11.172Z"}
+{"level":"info","message":"User f3j16g8etw disconnected and cleaned up","timestamp":"2025-12-08T17:06:11.181Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:06:11.182Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:06:11.409Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:06:11.429Z"}
+{"level":"info","message":"Received from t0m7tfmzt7n: identify","timestamp":"2025-12-08T17:06:11.457Z"}
+{"level":"info","message":"User t0m7tfmzt7n identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:06:11.458Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: join-text","timestamp":"2025-12-08T17:06:14.823Z"}
+{"level":"info","message":"User 5qfr03mq7o8 joining text chat","timestamp":"2025-12-08T17:06:14.824Z"}
+{"level":"info","message":"User 5qfr03mq7o8 added to text chat queue","timestamp":"2025-12-08T17:06:14.825Z"}
+{"level":"info","message":"Received from t0m7tfmzt7n: join-text","timestamp":"2025-12-08T17:06:16.020Z"}
+{"level":"info","message":"User t0m7tfmzt7n joining text chat","timestamp":"2025-12-08T17:06:16.021Z"}
+{"level":"info","message":"Paired text chat users: t0m7tfmzt7n and 5qfr03mq7o8","timestamp":"2025-12-08T17:06:16.022Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:17.422Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:17.607Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:17.633Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:17.746Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-stop","timestamp":"2025-12-08T17:06:19.750Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:21.702Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:21.827Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:21.851Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:21.972Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.097Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.110Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.246Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.253Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.328Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.454Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.456Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.534Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.663Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.719Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.845Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:22.918Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.047Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.095Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.228Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.304Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.438Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.546Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.663Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.746Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.815Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:23.930Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.073Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.234Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.236Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.361Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.500Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.502Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.562Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.686Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.706Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.795Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.923Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:24.936Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.013Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.119Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.136Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.208Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.307Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.405Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.492Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.579Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-start","timestamp":"2025-12-08T17:06:25.683Z"}
+{"level":"info","message":"Received from 5qfr03mq7o8: typing-stop","timestamp":"2025-12-08T17:06:27.691Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:07:28.425Z"}
+{"level":"info","message":"User 5qfr03mq7o8 disconnecting","timestamp":"2025-12-08T17:07:28.435Z"}
+{"level":"info","message":"Put t0m7tfmzt7n back in text chat queue","timestamp":"2025-12-08T17:07:28.437Z"}
+{"level":"info","message":"User 5qfr03mq7o8 disconnected and cleaned up","timestamp":"2025-12-08T17:07:28.451Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:07:28.454Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:07:28.509Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:07:28.528Z"}
+{"level":"info","message":"Received from 657tznd3u74: identify","timestamp":"2025-12-08T17:07:28.537Z"}
+{"level":"info","message":"User 657tznd3u74 identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:07:28.543Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:07:30.460Z"}
+{"level":"info","message":"User t0m7tfmzt7n disconnecting","timestamp":"2025-12-08T17:07:30.468Z"}
+{"level":"info","message":"Removed t0m7tfmzt7n from text chat queue","timestamp":"2025-12-08T17:07:30.469Z"}
+{"level":"info","message":"User t0m7tfmzt7n disconnected and cleaned up","timestamp":"2025-12-08T17:07:30.470Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T17:07:30.477Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:07:30.543Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T17:07:30.561Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: identify","timestamp":"2025-12-08T17:07:30.574Z"}
+{"level":"info","message":"User 0tu3o26kewjf identified with fingerprint: nvgatq","timestamp":"2025-12-08T17:07:30.582Z"}
+{"level":"info","message":"Received from 657tznd3u74: join-text","timestamp":"2025-12-08T17:07:33.617Z"}
+{"level":"info","message":"User 657tznd3u74 joining text chat","timestamp":"2025-12-08T17:07:33.618Z"}
+{"level":"info","message":"User 657tznd3u74 added to text chat queue","timestamp":"2025-12-08T17:07:33.618Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: join-text","timestamp":"2025-12-08T17:07:35.628Z"}
+{"level":"info","message":"User 0tu3o26kewjf joining text chat","timestamp":"2025-12-08T17:07:35.629Z"}
+{"level":"info","message":"Paired text chat users: 0tu3o26kewjf and 657tznd3u74","timestamp":"2025-12-08T17:07:35.630Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.113Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.220Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.344Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.485Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.507Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.627Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.765Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.768Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.893Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.970Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:40.985Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.072Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.181Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.184Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.295Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.403Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.431Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.566Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.635Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.640Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.782Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.851Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.871Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:41.997Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.071Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.088Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.194Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.380Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.383Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.475Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.565Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.702Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.809Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.812Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:42.916Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:43.045Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-start","timestamp":"2025-12-08T17:07:43.133Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: text-message","timestamp":"2025-12-08T17:07:44.039Z"}
+{"level":"info","message":"Text message from 0tu3o26kewjf to 657tznd3u74: fdgdfgdfgfdgdfgfdgdfgfdgfdgdfg...","timestamp":"2025-12-08T17:07:44.040Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: typing-stop","timestamp":"2025-12-08T17:07:45.137Z"}
+{"level":"info","message":"Received from 657tznd3u74: disconnect","timestamp":"2025-12-08T17:07:47.897Z"}
+{"level":"info","message":"User 657tznd3u74 disconnecting","timestamp":"2025-12-08T17:07:47.899Z"}
+{"level":"info","message":"Put 0tu3o26kewjf back in text chat queue","timestamp":"2025-12-08T17:07:47.901Z"}
+{"level":"info","message":"User 657tznd3u74 disconnected and cleaned up","timestamp":"2025-12-08T17:07:47.907Z"}
+{"level":"info","message":"Received from 0tu3o26kewjf: disconnect","timestamp":"2025-12-08T17:07:49.733Z"}
+{"level":"info","message":"User 0tu3o26kewjf disconnecting","timestamp":"2025-12-08T17:07:49.734Z"}
+{"level":"info","message":"Removed 0tu3o26kewjf from text chat queue","timestamp":"2025-12-08T17:07:49.736Z"}
+{"level":"info","message":"User 0tu3o26kewjf disconnected and cleaned up","timestamp":"2025-12-08T17:07:49.737Z"}

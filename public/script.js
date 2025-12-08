@@ -180,7 +180,7 @@ function connectWebSocket() {
         userCount.textContent = `🟢 ${data.count} users online`;
         break;
       case "typing-start":
-        if (currentMode === "text") typingIndicator.style.display = "flex";
+        if (currentMode === "text") typingIndicator.style.display = "block";
         break;
       case "typing-stop":
         if (currentMode === "text") typingIndicator.style.display = "none";
@@ -486,7 +486,7 @@ function startWebRTC() {
       };
       updateStatus(videoStatus, "Connecting video...");
     } else {
-        updateStatus(videoStatus, "No video stream from partner.");
+      updateStatus(videoStatus, "No video stream from partner.");
     }
   };
   peerConnection.onicecandidate = (event) => {
@@ -500,7 +500,7 @@ function startWebRTC() {
       updateStatus(videoStatus, "Connection failed. Please try again.", true);
       toggleVideoSpinner(false);
     }
-     if (peerConnection.connectionState === 'disconnected') {
+    if (peerConnection.connectionState === 'disconnected') {
       handlePartnerDisconnect();
     }
   };
@@ -516,7 +516,7 @@ function startWebRTC() {
 
 function handleOffer(data) {
   console.log("Received offer");
-  if (!peerConnection) startWebRTC(); 
+  if (!peerConnection) startWebRTC();
   partnerId = data.from;
   peerConnection.setRemoteDescription(data.offer)
     .then(() => {
@@ -533,7 +533,7 @@ function handleOffer(data) {
 function handleAnswer(data) {
   console.log("Received answer");
   peerConnection.setRemoteDescription(data.answer)
-      .catch(e => console.error("Error in handleAnswer:", e));
+    .catch(e => console.error("Error in handleAnswer:", e));
 }
 
 function handleIceCandidate(data) {
@@ -560,7 +560,7 @@ function handlePartnerDisconnect() {
     partnerId = null;
     iceCandidatesBuffer = [];
     toggleVideoSpinner(true); // Show spinner while waiting
-     // The server should automatically requeue us, no need to send join-video again unless specified by server logic.
+    // The server should automatically requeue us, no need to send join-video again unless specified by server logic.
   } else {
     messageInput.disabled = true;
     sendBtn.disabled = true;
@@ -570,6 +570,6 @@ function handlePartnerDisconnect() {
 
 // Initial setup
 document.addEventListener('DOMContentLoaded', () => {
-    updateMuteButton();
-    connectWebSocket();
+  updateMuteButton();
+  connectWebSocket();
 });
