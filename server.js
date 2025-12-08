@@ -1056,6 +1056,29 @@ function handleModeSwitchToVideo(data) {
   // Verify they are actually paired
   if (pairs.get(userId) !== partnerId) {
     logger.warn(`Invalid mode switch: ${userId} and ${partnerId} are not paired`);
+    const ws = connections.get(userId);
+    if (ws) {
+      ws.send(JSON.stringify({
+        type: "error",
+        message: "Partner disconnected. Cannot switch to video mode."
+      }));
+    }
+    return;
+  }
+
+  // Verify partner is still connected
+  const partnerWs = connections.get(partnerId);
+  if (!partnerWs) {
+    logger.warn(`Partner ${partnerId} not connected`);
+    const ws = connections.get(userId);
+    if (ws) {
+      ws.send(JSON.stringify({
+        type: "error",
+        message: "Partner disconnected. Cannot switch to video mode."
+      }));
+    }
+    // Clean up stale entry
+    videoModeSwitchers.delete(partnerId);
     return;
   }
 
@@ -1067,6 +1090,12 @@ function handleModeSwitchToVideo(data) {
     // Partner already requested - this user is the answerer
     const initiatorId = videoModeSwitchers.get(userId);
     videoModeSwitchers.delete(userId);
+
+    // Double-check they're still paired
+    if (pairs.get(initiatorId) !== userId) {
+      logger.warn(`Pairing changed during mode switch: ${initiatorId} and ${userId}`);
+      return;
+    }
 
     logger.info(`Both users ready for video. ${initiatorId} is offerer, ${userId} is answerer`);
 
@@ -1093,6 +1122,14 @@ function handleModeSwitchToVideo(data) {
     // This user is first to request - mark as potential offerer
     videoModeSwitchers.set(partnerId, userId);
     logger.info(`User ${userId} waiting for partner ${partnerId} to accept video mode`);
+
+    // Set timeout to clean up if partner doesn't respond in 30 seconds
+    setTimeout(() => {
+      if (videoModeSwitchers.get(partnerId) === userId) {
+        logger.info(`Cleaning up stale video mode switch request from ${userId}`);
+        videoModeSwitchers.delete(partnerId);
+      }
+    }, 30000);
   }
 }
 

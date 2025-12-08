@@ -1499,3 +1499,117 @@
 {"level":"info","message":"User 1ahg6gknjz1 disconnecting","timestamp":"2025-12-08T20:01:19.755Z"}
 {"level":"info","message":"Removed 1ahg6gknjz1 from video chat queue","timestamp":"2025-12-08T20:01:19.758Z"}
 {"level":"info","message":"User 1ahg6gknjz1 disconnected and cleaned up","timestamp":"2025-12-08T20:01:19.759Z"}
+{"level":"info","message":"Server running on http://localhost:3000","timestamp":"2025-12-08T20:20:59.477Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:21:02.438Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:21:02.440Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:21:02.440Z"}
+{"level":"info","message":"Received from q8sogvwhi4p: identify","timestamp":"2025-12-08T20:21:02.444Z"}
+{"level":"info","message":"User q8sogvwhi4p identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:21:02.445Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:21:02.455Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:21:02.455Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:21:02.456Z"}
+{"level":"info","message":"Received from 1ahg6gknjz1: identify","timestamp":"2025-12-08T20:21:02.458Z"}
+{"level":"info","message":"User 1ahg6gknjz1 identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:21:02.459Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:55.747Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:25:55.748Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:25:55.748Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:25:55.778Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:55.779Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:25:55.780Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:25:55.792Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:55.792Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:25:55.793Z"}
+{"level":"info","message":"Received from o1wr1x6w9cr: identify","timestamp":"2025-12-08T20:25:55.796Z"}
+{"level":"info","message":"User o1wr1x6w9cr identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:25:55.796Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:57.440Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:25:57.441Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:25:57.442Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:57.446Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:25:57.448Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:25:57.449Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:25:57.467Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:57.469Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:25:57.471Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:25:57.481Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:57.482Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:25:57.482Z"}
+{"level":"info","message":"Received from l7tc3qt064r: identify","timestamp":"2025-12-08T20:25:57.486Z"}
+{"level":"info","message":"User l7tc3qt064r identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:25:57.486Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:58.656Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:25:58.657Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:25:58.658Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:58.660Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:25:58.661Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:25:58.662Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:25:58.685Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:25:58.685Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:25:58.687Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:25:58.697Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:04.423Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:10.424Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:26:14.079Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:26:14.079Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:26:14.080Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:16.436Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:22.421Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:28.434Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:34.426Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:40.428Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:46.430Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:26:52.435Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:26:58.434Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:26:58.434Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:26:58.434Z"}
+{"level":"info","message":"Received from sb2o7d8ydf: identify","timestamp":"2025-12-08T20:26:58.435Z"}
+{"level":"info","message":"User sb2o7d8ydf identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:26:58.436Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:32:27.694Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:32:27.694Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:32:27.695Z"}
+{"level":"info","message":"Received from test-user: identify","timestamp":"2025-12-08T20:32:27.705Z"}
+{"level":"info","message":"User test-user identified with fingerprint: test-fingerprint","timestamp":"2025-12-08T20:32:27.705Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:32:27.714Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:32:27.715Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:32:27.716Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:36:08.732Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:36:08.733Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:36:08.733Z"}
+{"level":"info","message":"Received from test-user: identify","timestamp":"2025-12-08T20:36:08.740Z"}
+{"level":"info","message":"User test-user identified with fingerprint: test-fingerprint","timestamp":"2025-12-08T20:36:08.741Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:36:08.751Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:36:08.751Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:36:08.752Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:29.416Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:37:29.417Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:37:29.418Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:29.419Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-08T20:37:29.420Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:37:29.420Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:37:29.451Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:29.451Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:37:29.452Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:37:29.465Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:29.465Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:37:29.466Z"}
+{"level":"info","message":"Received from glontyweic6: identify","timestamp":"2025-12-08T20:37:29.469Z"}
+{"level":"info","message":"User glontyweic6 identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:37:29.469Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:41.876Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:37:41.876Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:37:41.877Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:41.878Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-08T20:37:41.878Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:37:41.879Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:37:41.915Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:41.916Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:37:41.916Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:37:41.927Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:37:41.928Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:37:41.928Z"}
+{"level":"info","message":"Received from smm95x9noh: identify","timestamp":"2025-12-08T20:37:41.933Z"}
+{"level":"info","message":"User smm95x9noh identified with fingerprint: img3qb","timestamp":"2025-12-08T20:37:41.934Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:38:10.324Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:38:10.325Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:38:10.326Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:10.349Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:15.411Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:21.419Z"}
+{"level":"warn","message":"Connection rate limit exceeded for IP: ::1","timestamp":"2025-12-08T20:38:27.411Z"}

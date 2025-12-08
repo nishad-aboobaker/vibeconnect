@@ -81,6 +81,7 @@ let isOfferer = false;
 let iceCandidatesBuffer = [];
 let currentMode = null;
 let pendingMode = null;
+let connectionTimeout = null; // Track WebRTC connection timeout
 
 // WebRTC configuration
 const rtcConfig = {
@@ -153,6 +154,11 @@ function connectWebSocket() {
     videoChatBtn.disabled = false;
 
     sendWsMessage({ type: "identify", userId, fingerprint });
+
+    // Update user count status
+    if (userCount) {
+      userCount.textContent = "🟢 Connecting...";
+    }
   };
 
   ws.onmessage = (event) => {
@@ -198,7 +204,16 @@ function connectWebSocket() {
         handlePartnerDisconnect();
         break;
       case "user-count":
-        userCount.textContent = `🟢 ${data.count} users online`;
+        console.log("Received user count:", data.count);
+        try {
+          if (userCount) {
+            userCount.textContent = `🟢 ${data.count !== undefined ? data.count : '?'} users online`;
+          } else {
+            console.error("userCount element not found in DOM");
+          }
+        } catch (e) {
+          console.error("Error updating user count:", e);
+        }
         break;
       case "typing-start":
         if (currentMode === "text") typingIndicator.style.display = "block";
@@ -535,14 +550,53 @@ function startWebRTC() {
   };
   peerConnection.onconnectionstatechange = () => {
     console.log(`Peer connection state: ${peerConnection.connectionState}`);
-    if (peerConnection.connectionState === "failed") {
+
+    if (peerConnection.connectionState === "connected") {
+      // Clear timeout on successful connection
+      if (connectionTimeout) {
+        clearTimeout(connectionTimeout);
+        connectionTimeout = null;
+      }
+      updateStatus(videoStatus, "Video chat active!");
+      toggleVideoSpinner(false);
+    } else if (peerConnection.connectionState === "connecting") {
+      updateStatus(videoStatus, "Connecting video...");
+    } else if (peerConnection.connectionState === "failed") {
+      // Clear timeout
+      if (connectionTimeout) {
+        clearTimeout(connectionTimeout);
+        connectionTimeout = null;
+      }
       updateStatus(videoStatus, "Connection failed. Please try again.", true);
       toggleVideoSpinner(false);
-    }
-    if (peerConnection.connectionState === 'disconnected') {
+    } else if (peerConnection.connectionState === 'disconnected') {
+      // Clear timeout
+      if (connectionTimeout) {
+        clearTimeout(connectionTimeout);
+        connectionTimeout = null;
+      }
       handlePartnerDisconnect();
     }
   };
+
+  // Set 15-second timeout for connection
+  connectionTimeout = setTimeout(() => {
+    if (peerConnection && peerConnection.connectionState !== 'connected') {
+      console.error("WebRTC connection timeout");
+      updateStatus(videoStatus, "Connection timeout. Please try again.", true);
+      toggleVideoSpinner(false);
+
+      // Close peer connection
+      if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+      }
+
+      // Enable retry
+      nextBtn.disabled = false;
+      reportBtn.disabled = false;
+    }
+  }, 15000);
   if (isOfferer) {
     peerConnection.createOffer()
       .then(offer => peerConnection.setLocalDescription(offer))
@@ -719,6 +773,16 @@ async function switchToVideoMode() {
   try {
     console.log("Switching to video mode...");
 
+    // CRITICAL: Store original partner ID to ensure same partner after switch
+    const originalPartnerId = partnerId;
+
+    // Validate partner is still connected
+    if (!originalPartnerId) {
+      throw new Error("No partner connected");
+    }
+
+    console.log(`Preserving partner ID: ${originalPartnerId}`);
+
     // Update current mode BEFORE getting media
     currentMode = "video";
 
@@ -747,7 +811,7 @@ async function switchToVideoMode() {
     sendWsMessage({
       type: "mode-switch-to-video",
       userId: userId,
-      partnerId: partnerId
+      partnerId: originalPartnerId  // Use preserved partner ID
     });
 
     // Enable video controls
@@ -758,7 +822,9 @@ async function switchToVideoMode() {
     console.error("Failed to switch to video:", error);
 
     let errorMsg = "Failed to access camera/microphone.";
-    if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
+    if (error.message === "No partner connected") {
+      errorMsg = "Partner disconnected. Cannot switch to video.";
+    } else if (error.name === "NotAllowedError" || error.name === "PermissionDeniedError") {
       errorMsg = "Camera/microphone permission denied.";
     } else if (error.name === "NotFoundError" || error.name === "DevicesNotFoundError") {
       errorMsg = "No camera or microphone found.";
@@ -792,6 +858,30 @@ function displaySystemMessage(message) {
 
 function handleVideoModeReady(data) {
   console.log("Video mode ready:", data);
+
+  // CRITICAL: Validate partner ID matches to prevent connecting to wrong user
+  if (partnerId && data.partnerId !== partnerId) {
+    console.error(`Partner mismatch! Expected: ${partnerId}, Got: ${data.partnerId}`);
+    updateStatus(videoStatus, "Partner mismatch detected. Returning to text chat...", true);
+
+    // Revert to text chat
+    setTimeout(() => {
+      currentMode = "text";
+      textChatView.style.display = "block";
+      videoChatView.style.display = "none";
+      toggleVideoSpinner(false);
+
+      // Stop media tracks
+      if (localStream) {
+        localStream.getTracks().forEach(track => track.stop());
+        localStream = null;
+      }
+    }, 2000);
+    return;
+  }
+
+  console.log(`Partner verified: ${data.partnerId}, isOfferer: ${data.isOfferer}`);
+
   isOfferer = data.isOfferer;
   partnerId = data.partnerId;
 
