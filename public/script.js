@@ -579,6 +579,12 @@ function stopVideoChat() {
   }
 
   if (peerConnection) {
+    // Remove event handlers before closing to prevent errors
+    peerConnection.onicecandidate = null;
+    peerConnection.ontrack = null;
+    peerConnection.onconnectionstatechange = null;
+    peerConnection.oniceconnectionstatechange = null;
+
     peerConnection.close();
     peerConnection = null;
   }
@@ -628,6 +634,11 @@ function startWebRTC() {
   };
 
   peerConnection.onconnectionstatechange = () => {
+    // Check if peerConnection still exists (might be cleaned up)
+    if (!peerConnection) {
+      return;
+    }
+
     console.log(`Peer connection state: ${peerConnection.connectionState}`);
 
     if (peerConnection.connectionState === 'connected') {
@@ -661,6 +672,12 @@ function startWebRTC() {
       toggleVideoSpinner(false);
 
       if (peerConnection) {
+        // Remove event handlers before closing
+        peerConnection.onicecandidate = null;
+        peerConnection.ontrack = null;
+        peerConnection.onconnectionstatechange = null;
+        peerConnection.oniceconnectionstatechange = null;
+
         peerConnection.close();
         peerConnection = null;
       }
@@ -733,6 +750,12 @@ function handlePartnerDisconnect() {
 
   if (mode === 'video') {
     if (peerConnection) {
+      // Remove event handlers before closing
+      peerConnection.onicecandidate = null;
+      peerConnection.ontrack = null;
+      peerConnection.onconnectionstatechange = null;
+      peerConnection.oniceconnectionstatechange = null;
+
       peerConnection.close();
       peerConnection = null;
     }
