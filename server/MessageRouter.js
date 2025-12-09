@@ -449,6 +449,19 @@ class MessageRouter {
                 });
             }
         });
+
+        // Ping/heartbeat handler
+        this.registerHandler('ping', (message, ws) => {
+            const userId = this.connectionManager.getUserIdByWs(ws);
+            if (userId) {
+                this.connectionManager.sendToUser(userId, { type: 'pong' });
+            }
+        });
+
+        // Waiting message handler
+        this.registerHandler('waiting', (message, ws) => {
+            // Server-to-client message, just acknowledge silently
+        });
     }
 
     /**
@@ -485,9 +498,12 @@ class MessageRouter {
      */
     _sendError(ws, message) {
         try {
-            ws.send(JSON.stringify({ type: 'error', message }));
+            ws.send(JSON.stringify({
+                type: 'error',
+                message
+            }));
         } catch (error) {
-            this.logger.error('Error sending error message:', error);
+            this.logger.error('Failed to send error message:', error);
         }
     }
 }
