@@ -697,14 +697,21 @@ function startWebRTC() {
 
 
   if (isOfferer) {
-    peerConnection.createOffer()
+    console.log('User is offerer, creating offer...');
+    peerConnection.createOffer({
+      offerToReceiveAudio: true,
+      offerToReceiveVideo: true
+    })
       .then(offer => peerConnection.setLocalDescription(offer))
-      .then(() => wsManager.send({
-        type: 'offer',
-        userId: stateManager.get('userId'),
-        targetId: stateManager.get('partnerId'),
-        offer: peerConnection.localDescription
-      }))
+      .then(() => {
+        console.log('Sending offer...');
+        wsManager.send({
+          type: 'offer',
+          userId: stateManager.get('userId'),
+          targetId: stateManager.get('partnerId'),
+          offer: peerConnection.localDescription
+        });
+      })
       .catch(e => console.error('Offer creation failed:', e));
   }
 }
@@ -723,12 +730,15 @@ function handleOffer(data) {
       return peerConnection.createAnswer();
     })
     .then(answer => peerConnection.setLocalDescription(answer))
-    .then(() => wsManager.send({
-      type: 'answer',
-      userId: stateManager.get('userId'),
-      targetId: stateManager.get('partnerId'),
-      answer: peerConnection.localDescription
-    }))
+    .then(() => {
+      console.log('Sending answer...');
+      wsManager.send({
+        type: 'answer',
+        userId: stateManager.get('userId'),
+        targetId: stateManager.get('partnerId'),
+        answer: peerConnection.localDescription
+      });
+    })
     .catch(e => console.error('Error in handleOffer:', e));
 }
 
