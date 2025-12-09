@@ -13,7 +13,6 @@
  */
 
 const crypto = require('crypto');
-const BadWordsFilter = require('bad-words');
 const CONSTANTS = require('./constants');
 
 class SecurityManager {
@@ -62,8 +61,19 @@ class SecurityManager {
         // Abuse tracking
         this.abuseTracking = new Map(); // userId -> { messageCount, skipCount, reportCount, violations: [], startTime }
 
-        // Profanity filter - using bad-words library
-        this.profanityFilter = new BadWordsFilter();
+        // Profanity filter - custom implementation
+        this.badWords = [
+            'fuck', 'shit', 'bitch', 'ass', 'bastard', 'dick', 'pussy', 'cock',
+            'cunt', 'whore', 'slut', 'fag', 'faggot', 'nigger', 'nigga', 'retard',
+            'damn', 'hell', 'crap', 'piss', 'asshole', 'motherfucker', 'fucker'
+        ];
+
+        // Create regex patterns for better detection (catches variations)
+        this.profanityPatterns = this.badWords.map(word => {
+            // Match word with optional characters between letters (e.g., f.u.c.k, f u c k)
+            const pattern = word.split('').join('[\\s\\._-]*');
+            return new RegExp(`\\b${pattern}\\b`, 'gi');
+        });
 
         // Dangerous patterns for XSS/injection
         this.dangerousPatterns = [
@@ -300,12 +310,14 @@ class SecurityManager {
      * @returns {string} Filtered message
      */
     filterProfanity(message) {
-        try {
-            return this.profanityFilter.clean(message);
-        } catch (error) {
-            console.error('Error filtering profanity:', error);
-            return message; // Return original if filtering fails
+        let filtered = message;
+
+        // Use regex patterns to catch variations
+        for (const pattern of this.profanityPatterns) {
+            filtered = filtered.replace(pattern, (match) => '*'.repeat(match.length));
         }
+
+        return filtered;
     }
 
     /**
