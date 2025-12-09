@@ -41,6 +41,7 @@ class MessageRouter {
             'video-request-decline': { required: ['to', 'from'] },
             'video-request-cancel': { required: ['to', 'from'] },
             'mode-switch-to-video': { required: ['userId', 'partnerId'] },
+            'waiting': {}, // Server-sent status message
             'ping': {} // Heartbeat message, no required fields
         };
 
