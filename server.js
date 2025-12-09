@@ -12,8 +12,11 @@
  * - Comprehensive metrics and monitoring
  */
 
-// Load environment variables FIRST
-require('dotenv').config();
+// Load environment variables from .env file (development only)
+// In production (Render), environment variables are set directly
+if (process.env.NODE_ENV !== 'production') {
+  require('dotenv').config();
+}
 
 const express = require('express');
 const WebSocket = require('ws');
@@ -31,16 +34,27 @@ const PairingManager = require('./server/PairingManager');
 const CONSTANTS = require('./server/constants');
 
 // Validate critical environment variables
+console.log('🔍 Checking environment variables...');
+console.log(`NODE_ENV: ${process.env.NODE_ENV || 'not set'}`);
+console.log(`JWT_SECRET: ${process.env.JWT_SECRET ? '✅ Set (' + process.env.JWT_SECRET.length + ' chars)' : '❌ Not set'}`);
+
 if (!process.env.JWT_SECRET) {
   console.error('❌ CRITICAL ERROR: JWT_SECRET environment variable is not set!');
   console.error('Generate a secure secret with: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"');
+  console.error('\nFor Render deployment:');
+  console.error('1. Go to your service dashboard');
+  console.error('2. Navigate to Environment tab');
+  console.error('3. Add JWT_SECRET with a secure random value');
   process.exit(1);
 }
 
 if (process.env.JWT_SECRET.length < CONSTANTS.MIN_JWT_SECRET_LENGTH) {
   console.error(`❌ CRITICAL ERROR: JWT_SECRET must be at least ${CONSTANTS.MIN_JWT_SECRET_LENGTH} characters long!`);
+  console.error(`Current length: ${process.env.JWT_SECRET.length}`);
   process.exit(1);
 }
+
+console.log('✅ Environment variables validated successfully');
 
 // Initialize Express app
 const app = express();
