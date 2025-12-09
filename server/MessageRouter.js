@@ -475,6 +475,10 @@ class MessageRouter {
         // Track skip
         this.securityManager.trackUserAction(userId, 'skip');
 
+        // Get partner info BEFORE breaking pair (breakPair deletes the mode)
+        const partnerId = this.pairingManager.getPair(userId);
+        const partnerMode = partnerId ? this.pairingManager.getUserMode(partnerId) : null;
+
         // Break pair if exists
         const result = this.pairingManager.breakPair(userId);
         if (result.success) {
@@ -483,11 +487,12 @@ class MessageRouter {
                 type: 'partner-disconnected'
             });
 
-            // Re-queue partner based on their mode
-            const partnerMode = this.pairingManager.getUserMode(result.partnerId);
+            // Re-queue partner based on their mode (retrieved before breakPair)
             if (partnerMode) {
                 this.queueManager.addToQueue(result.partnerId, partnerMode);
                 this.connectionManager.sendToUser(result.partnerId, { type: 'waiting' });
+            } else {
+                this.logger.warn(`Could not re-queue partner ${result.partnerId} - mode not found`);
             }
         }
     }
