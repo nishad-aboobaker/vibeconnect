@@ -13,7 +13,7 @@
  */
 
 const crypto = require('crypto');
-const Filter = require('bad-words');
+const BadWordsFilter = require('bad-words');
 const CONSTANTS = require('./constants');
 
 class SecurityManager {
@@ -63,7 +63,7 @@ class SecurityManager {
         this.abuseTracking = new Map(); // userId -> { messageCount, skipCount, reportCount, violations: [], startTime }
 
         // Profanity filter - using bad-words library
-        this.profanityFilter = new Filter();
+        this.profanityFilter = new BadWordsFilter();
 
         // Dangerous patterns for XSS/injection
         this.dangerousPatterns = [
