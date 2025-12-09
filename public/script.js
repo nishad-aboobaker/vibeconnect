@@ -363,6 +363,21 @@ function skipPartner() {
     elements.nextBtn.disabled = true;
     elements.reportBtn.disabled = true;
     toggleVideoSpinner(true);
+
+    // Explicitly close peer connection when skipping
+    if (peerConnection) {
+      console.log('Closing peer connection due to skip');
+      peerConnection.onicecandidate = null;
+      peerConnection.ontrack = null;
+      peerConnection.onconnectionstatechange = null;
+      peerConnection.oniceconnectionstatechange = null;
+      peerConnection.close();
+      peerConnection = null;
+    }
+
+    // Clear remote video
+    elements.remoteVideo.srcObject = null;
+    iceCandidatesBuffer = [];
   } else {
     elements.textNextBtn.disabled = true;
     elements.textReportBtn.disabled = true;
@@ -611,8 +626,24 @@ function stopVideoChat() {
   elements.reportBtn.disabled = true;
 }
 
+
 function startWebRTC() {
   console.log('Starting WebRTC connection...');
+
+  // Cleanup any existing connection first
+  if (peerConnection) {
+    console.log('Closing existing peer connection before starting new one');
+    peerConnection.onicecandidate = null;
+    peerConnection.ontrack = null;
+    peerConnection.onconnectionstatechange = null;
+    peerConnection.oniceconnectionstatechange = null;
+    peerConnection.close();
+    peerConnection = null;
+  }
+
+  // Ensure buffer is initialized if undefined, but don't clear it as it may contain early candidates
+  if (!iceCandidatesBuffer) iceCandidatesBuffer = [];
+
   peerConnection = new RTCPeerConnection(rtcConfig);
 
   if (localStream) {
@@ -712,7 +743,10 @@ function startWebRTC() {
           offer: peerConnection.localDescription
         });
       })
-      .catch(e => console.error('Offer creation failed:', e));
+      .catch(e => {
+        console.error('Offer creation failed:', e);
+        updateStatus(elements.videoStatus, 'Connection error. Please skip.', true);
+      });
   }
 }
 
@@ -739,13 +773,19 @@ function handleOffer(data) {
         answer: peerConnection.localDescription
       });
     })
-    .catch(e => console.error('Error in handleOffer:', e));
+    .catch(e => {
+      console.error('Error in handleOffer:', e);
+      updateStatus(elements.videoStatus, 'Connection error. Please skip.', true);
+    });
 }
 
 function handleAnswer(data) {
   console.log('Received answer');
   peerConnection.setRemoteDescription(data.answer)
-    .catch(e => console.error('Error in handleAnswer:', e));
+    .catch(e => {
+      console.error('Error in handleAnswer:', e);
+      updateStatus(elements.videoStatus, 'Connection error. Please skip.', true);
+    });
 }
 
 function handleIceCandidate(data) {
