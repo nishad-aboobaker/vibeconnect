@@ -452,7 +452,7 @@ class MessageRouter {
 
         // Ping/heartbeat handler
         this.registerHandler('ping', (message, ws) => {
-            const userId = this.connectionManager.getUserIdByWs(ws);
+            const userId = this.connectionManager.getUserId(ws);
             if (userId) {
                 this.connectionManager.sendToUser(userId, { type: 'pong' });
             }
