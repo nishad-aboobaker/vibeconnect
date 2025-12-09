@@ -10,18 +10,9 @@
  * - Connection state machine
  */
 
-// Import constants if available
-if (typeof CONSTANTS === 'undefined') {
-    var CONSTANTS = {
-        WS_RECONNECT_DELAY_MS: 1000,
-        WS_MAX_RECONNECT_DELAY_MS: 30000,
-        WS_RECONNECT_DECAY: 1.5,
-        WS_HEARTBEAT_INTERVAL_MS: 30000,
-        WS_MESSAGE_TIMEOUT_MS: 5000,
-        WS_PRODUCTION_URL: `wss://${window.location.host}/`,
-        WS_LOCAL_URL: 'ws://localhost:3000'
-    };
-}
+// CONSTANTS is loaded from constants.js (loaded before this file)
+// No need to declare it here - just use the global CONSTANTS object
+
 
 class WebSocketManager {
     constructor(stateManager, options = {}) {
