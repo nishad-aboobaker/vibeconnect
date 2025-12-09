@@ -108,9 +108,17 @@ let peerConnection = null;
 let iceCandidatesBuffer = [];
 let isOfferer = false;
 
-// WebRTC configuration
+// WebRTC configuration - Multiple STUN servers for better connectivity
 const rtcConfig = {
-  iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
+  iceServers: [
+    { urls: 'stun:stun.l.google.com:19302' },
+    { urls: 'stun:stun1.l.google.com:19302' },
+    { urls: 'stun:stun2.l.google.com:19302' },
+    { urls: 'stun:stun.services.mozilla.com' }
+  ],
+  iceCandidatePoolSize: 10, // Pre-gather ICE candidates for faster connection
+  bundlePolicy: 'max-bundle',
+  rtcpMuxPolicy: 'require'
 };
 
 // Typing timeout
@@ -664,7 +672,7 @@ function startWebRTC() {
     }
   };
 
-  // Set 15-second timeout for connection
+  // Set 10-second timeout for connection (reduced from 15s for faster feedback)
   window.connectionTimeout = setTimeout(() => {
     if (peerConnection && peerConnection.connectionState !== 'connected') {
       console.error('WebRTC connection timeout');
@@ -685,7 +693,7 @@ function startWebRTC() {
       elements.nextBtn.disabled = false;
       elements.reportBtn.disabled = false;
     }
-  }, 15000);
+  }, 10000); // 10 second timeout (reduced from 15s)
 
 
   if (isOfferer) {
