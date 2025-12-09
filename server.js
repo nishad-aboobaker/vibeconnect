@@ -1,1135 +1,329 @@
-const express = require("express");
-const WebSocket = require("ws");
-const path = require("path");
+/**
+ * VibeConnect Server - Refactored with Modular Architecture
+ * 
+ * High-performance anonymous chat server with enterprise-grade security
+ * 
+ * Features:
+ * - O(1) user matching with priority queues
+ * - JWT authentication and advanced fingerprinting
+ * - Token bucket rate limiting
+ * - DDoS protection and IP banning
+ * - WebRTC signaling for video/voice chat
+ * - Comprehensive metrics and monitoring
+ */
 
-// Security packages
-const winston = require("winston");
+const express = require('express');
+const WebSocket = require('ws');
+const path = require('path');
+const winston = require('winston');
 
+// Import custom modules
+const QueueManager = require('./server/QueueManager');
+const SecurityManager = require('./server/SecurityManager');
+const ConnectionManager = require('./server/ConnectionManager');
+const MessageRouter = require('./server/MessageRouter');
+const PairingManager = require('./server/PairingManager');
+
+// Initialize Express app
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Initialize profanity filter (custom implementation to avoid ES module issues)
-const badWordsList = ['damn', 'hell', 'crap', 'fuck', 'shit', 'bitch', 'ass', 'bastard'];
-const profanityFilter = {
-  isProfane: (text) => {
-    const lowerText = text.toLowerCase();
-    return badWordsList.some(word => new RegExp(`\\b${word}\\b`, 'i').test(lowerText));
-  },
-  clean: (text) => {
-    let cleaned = text;
-    badWordsList.forEach(word => {
-      const regex = new RegExp(`\\b${word}\\b`, 'gi');
-      cleaned = cleaned.replace(regex, '*'.repeat(word.length));
-    });
-    return cleaned;
-  }
-};
-
 // Configure logging
 const logger = winston.createLogger({
-  level: "info",
+  level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
     winston.format.timestamp(),
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: "error.log", level: "error" }),
-    new winston.transports.File({ filename: "combined.log" }),
-    new winston.transports.Console({ format: winston.format.simple() })
+    new winston.transports.File({ filename: 'error.log', level: 'error' }),
+    new winston.transports.File({ filename: 'combined.log' }),
+    new winston.transports.Console({
+      format: winston.format.combine(
+        winston.format.colorize(),
+        winston.format.simple()
+      )
+    })
   ]
 });
 
-// Serve static files from 'public' directory
-app.use(express.static(path.join(__dirname, "public")));
+// Serve static files
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Health check endpoint
+app.get('/health', (req, res) => {
+  res.json({
+    status: 'healthy',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    connections: connectionManager.getConnectionCount(),
+    queues: queueManager.getQueueStats(),
+    memory: process.memoryUsage()
+  });
+});
+
+// Metrics endpoint (optional - for monitoring)
+app.get('/metrics', (req, res) => {
+  res.json({
+    connections: connectionManager.getMetrics(),
+    queues: queueManager.getQueueStats(),
+    security: securityManager.getSecurityStats(),
+    pairing: pairingManager.getMetrics(),
+    routing: messageRouter.getMetrics()
+  });
+});
 
 // Start HTTP server
 const server = app.listen(port, () => {
-  logger.info(`Server running on http://localhost:${port}`);
+  logger.info(`🚀 VibeConnect server running on port ${port}`);
+  logger.info(`📊 Health check: http://localhost:${port}/health`);
+  logger.info(`📈 Metrics: http://localhost:${port}/metrics`);
 });
 
-// WebSocket server
+// Initialize WebSocket server
 const wss = new WebSocket.Server({ noServer: true });
 
-// Separate queues for different modes
-let textWaitingQueue = [];
-let voiceWaitingQueue = [];
-let videoWaitingQueue = [];
+// Initialize managers
+const queueManager = new QueueManager({
+  queueTimeout: 300000, // 5 minutes
+  maxQueueSize: 10000,
+  enablePriority: true
+});
 
-// Map of user IDs to WebSocket connections
-let connections = new Map();
+const securityManager = new SecurityManager({
+  jwtSecret: process.env.JWT_SECRET,
+  maxConnectionsPerIP: 20,
+  banDuration: 86400000 // 24 hours
+});
 
-// Map of paired users (userId -> partnerId)
-let pairs = new Map();
+const connectionManager = new ConnectionManager({
+  heartbeatInterval: 30000, // 30 seconds
+  connectionTimeout: 60000, // 1 minute
+  maxConnectionsPerUser: 1
+});
 
-// Map of user IDs to their chat mode
-let userModes = new Map();
+const pairingManager = new PairingManager({
+  enableMetrics: true,
+  modeSwitchTimeout: 30000
+});
 
-// Track total users
-// Track total users - Now using wss.clients.size
-// let totalUsers = 0; // Removed manual tracking
+const messageRouter = new MessageRouter({
+  connectionManager,
+  securityManager,
+  queueManager,
+  pairingManager,
+  logger
+});
 
-// Store reports
-let reports = [];
-
-// Security: Rate limiting
-const rateLimits = new Map(); // userId -> { messages: [], skips: [], reports: [] }
-
-// Security: IP tracking and banning
-const ipConnections = new Map(); // IP -> { connections: [], lastConnection: timestamp }
-const bannedIPs = new Map(); // IP -> { until: timestamp, reason: string }
-const userIPs = new Map(); // userId -> IP
-
-// Security: Session fingerprinting
-const fingerprints = new Map(); // fingerprint -> { userIds: Set, reports: 0, bans: 0, firstSeen: timestamp }
-
-// Security: Abuse tracking
-const abuseTracking = new Map(); // userId -> { messageCount, skipCount, reportCount, violations: [] }
-
-// ===== Security Helper Functions =====
-
-// Get real client IP (supports proxies)
+// Get client IP helper
 function getClientIP(request) {
   return (
-    request.headers["x-forwarded-for"]?.split(",")[0] ||
-    request.headers["x-real-ip"] ||
+    request.headers['x-forwarded-for']?.split(',')[0] ||
+    request.headers['x-real-ip'] ||
     request.socket.remoteAddress ||
     request.connection.remoteAddress
   );
 }
 
-// Check if IP is banned
-function isIPBanned(ip) {
-  const ban = bannedIPs.get(ip);
-  if (!ban) return false;
-
-  if (Date.now() > ban.until) {
-    bannedIPs.delete(ip);
-    logger.info(`Ban expired for IP: ${ip}`);
-    return false;
-  }
-  return true;
-}
-
-// Ban an IP address
-function banIP(ip, durationMs, reason) {
-  bannedIPs.set(ip, {
-    until: Date.now() + durationMs,
-    reason
-  });
-  logger.warn(`Banned IP ${ip} for ${durationMs}ms: ${reason}`);
-}
-
-// Check rate limit
-function checkRateLimit(userId, action, maxPerMinute) {
-  const now = Date.now();
-
-  if (!rateLimits.has(userId)) {
-    rateLimits.set(userId, { messages: [], skips: [], reports: [] });
-  }
-
-  const userLimits = rateLimits.get(userId);
-  const actionArray = userLimits[action] || [];
-
-  // Remove entries older than 1 minute
-  const recentActions = actionArray.filter(time => now - time < 60000);
-  userLimits[action] = recentActions;
-
-  if (recentActions.length >= maxPerMinute) {
-    logger.warn(`Rate limit exceeded for user ${userId}, action: ${action}`);
-    return false;
-  }
-
-  recentActions.push(now);
-  return true;
-}
-
-// Validate message content
-function validateMessage(message) {
-  if (typeof message !== "string") return { valid: false, reason: "Invalid type" };
-  if (message.length === 0) return { valid: false, reason: "Empty message" };
-  if (message.length > 500) return { valid: false, reason: "Message too long" };
-
-  // Block dangerous patterns
-  const dangerousPatterns = [
-    /<script/i,
-    /javascript:/i,
-    /on\w+=/i,
-    /<iframe/i,
-    /eval\(/i,
-    /<object/i,
-    /<embed/i
-  ];
-
-  for (const pattern of dangerousPatterns) {
-    if (pattern.test(message)) {
-      return { valid: false, reason: "Dangerous content detected" };
-    }
-  }
-
-  return { valid: true };
-}
-
-// Filter profanity
-function filterProfanity(message) {
-  try {
-    if (profanityFilter.isProfane(message)) {
-      logger.info(`Profanity detected in message: ${message.substring(0, 20)}...`);
-      return profanityFilter.clean(message);
-    }
-    return message;
-  } catch (e) {
-    logger.error(`Error filtering profanity: ${e.message}`);
-    return message;
-  }
-}
-
-// Track user fingerprint
-function trackFingerprint(fingerprint, userId) {
-  if (!fingerprints.has(fingerprint)) {
-    fingerprints.set(fingerprint, {
-      userIds: new Set(),
-      reports: 0,
-      bans: 0,
-      firstSeen: Date.now()
-    });
-  }
-
-  const session = fingerprints.get(fingerprint);
-  session.userIds.add(userId);
-
-  // Check if fingerprint has too many reports/bans
-  if (session.reports >= 5 || session.bans >= 3) {
-    logger.warn(`Suspicious fingerprint detected: ${fingerprint}`);
-    return { suspicious: true, reason: "Multiple violations" };
-  }
-
-  return { suspicious: false };
-}
-
-// Detect abuse patterns
-function detectAbusePatterns(userId) {
-  if (!abuseTracking.has(userId)) {
-    abuseTracking.set(userId, {
-      messageCount: 0,
-      skipCount: 0,
-      reportCount: 0,
-      violations: [],
-      startTime: Date.now()
-    });
-  }
-
-  const tracking = abuseTracking.get(userId);
-  const sessionDuration = (Date.now() - tracking.startTime) / 1000; // seconds
-  const patterns = [];
-
-  // Detect spammer (high message rate)
-  if (sessionDuration > 10 && tracking.messageCount / sessionDuration > 2) {
-    patterns.push("spammer");
-  }
-
-  // Detect skip abuser
-  if (tracking.skipCount > 15) {
-    patterns.push("skip_abuser");
-  }
-
-  // Detect harasser (reported multiple times)
-  if (tracking.reportCount >= 3) {
-    patterns.push("harasser");
-  }
-
-  return patterns;
-}
-
-// Handle abuse detection
-function handleAbuseDetection(userId, ip, patterns) {
-  if (patterns.length === 0) return;
-
-  logger.warn(`Abuse patterns detected for user ${userId}: ${patterns.join(", ")}`);
-
-  if (patterns.includes("harasser")) {
-    banIP(ip, 24 * 60 * 60 * 1000, "Multiple reports");
-    handleDisconnect(userId);
-  } else if (patterns.includes("spammer")) {
-    banIP(ip, 60 * 60 * 1000, "Spamming");
-    handleDisconnect(userId);
-  } else if (patterns.includes("skip_abuser")) {
-    // Warn user
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "warning",
-        message: "Excessive skipping detected. Please use the app responsibly."
-      }));
-    }
-  }
-}
-
-// WebSocket upgrade handler with IP check
-server.on("upgrade", (request, socket, head) => {
+// WebSocket upgrade handler
+server.on('upgrade', (request, socket, head) => {
   const ip = getClientIP(request);
 
   // Check if IP is banned
-  if (isIPBanned(ip)) {
-    logger.warn(`Rejected connection from banned IP: ${ip}`);
-    socket.write("HTTP/1.1 403 Forbidden\r\n\r\n");
+  if (securityManager.isIPBanned(ip)) {
+    logger.warn(`🚫 Rejected connection from banned IP: ${ip}`);
+    socket.write('HTTP/1.1 403 Forbidden\r\n\r\n');
     socket.destroy();
     return;
   }
 
-  // Check connection rate limit (max 5 connections per minute per IP)
-  const now = Date.now();
-  if (!ipConnections.has(ip)) {
-    ipConnections.set(ip, { connections: [], lastConnection: now });
-  }
-
-  const ipData = ipConnections.get(ip);
-  ipData.connections = ipData.connections.filter(time => now - time < 60000);
-
-  if (ipData.connections.length >= 5) {
-    logger.warn(`Connection rate limit exceeded for IP: ${ip}`);
-    socket.write("HTTP/1.1 429 Too Many Requests\r\n\r\n");
+  // Check connection rate limit
+  if (!securityManager.trackIPConnection(ip)) {
+    logger.warn(`⚠️ Connection rate limit exceeded for IP: ${ip}`);
+    socket.write('HTTP/1.1 429 Too Many Requests\r\n\r\n');
     socket.destroy();
     return;
   }
 
-  ipData.connections.push(now);
-  ipData.lastConnection = now;
-
-  // Continue with WebSocket upgrade
+  // Upgrade to WebSocket
   wss.handleUpgrade(request, socket, head, (ws) => {
     ws.ip = ip;
-    wss.emit("connection", ws, request);
+    wss.emit('connection', ws, request);
   });
 });
 
-wss.on("connection", (ws) => {
-  logger.info(`New WebSocket connection from IP: ${ws.ip}`);
-  // totalUsers++; // Removed manual tracking
+// WebSocket connection handler
+wss.on('connection', (ws) => {
+  logger.info(`✅ New WebSocket connection from IP: ${ws.ip}`);
+
+  let userId = null;
+
+  // Broadcast user count
   broadcastUserCount();
 
-  ws.on("message", (message) => {
+  // Message handler
+  ws.on('message', async (data) => {
     // Security: Check message size (max 10KB)
-    if (message.length > 10240) {
-      logger.warn(`Oversized message from IP ${ws.ip}: ${message.length} bytes`);
+    if (data.length > 10240) {
+      logger.warn(`⚠️ Oversized message from IP ${ws.ip}: ${data.length} bytes`);
       ws.send(JSON.stringify({
-        type: "error",
-        message: "Message too large"
+        type: 'error',
+        message: 'Message too large'
       }));
       return;
     }
 
-    // Parse message
-    let data;
     try {
-      data = JSON.parse(message.toString());
-    } catch (e) {
-      logger.error(`Invalid JSON from IP ${ws.ip}: ${e.message}`);
-      ws.close(1003, "Invalid message format");
-      return;
-    }
+      // Parse message to extract userId
+      const message = JSON.parse(data.toString());
 
-    logger.info(`Received from ${data.userId}: ${data.type}`);
+      // If this is an identify message, register the connection
+      if (message.type === 'identify' && message.userId) {
+        userId = message.userId;
+        connectionManager.addConnection(userId, ws, { ip: ws.ip });
+        logger.info(`👤 User ${userId} identified from IP: ${ws.ip}`);
+      }
 
-    switch (data.type) {
-      case "identify":
-        handleIdentify(ws, data);
-        break;
-      case "join-text":
-        handleTextJoin(ws, data.userId);
-        break;
-      case "join-voice":
-        handleVoiceJoin(ws, data.userId);
-        break;
-      case "join-video":
-        handleVideoJoin(ws, data.userId);
-        break;
-      case "text-message":
-        handleTextMessage(data);
-        break;
-      case "offer":
-      case "answer":
-      case "ice-candidate":
-        handleSignaling(data);
-        break;
-      case "disconnect":
-        handleDisconnect(data.userId);
-        break;
-      case "typing-start":
-      case "typing-stop":
-        handleTyping(data);
-        break;
-      case "report-user":
-        handleReport(data);
-        break;
-      case "video-request":
-        handleVideoRequest(data);
-        break;
-      case "video-request-accept":
-        handleVideoRequestAccept(data);
-        break;
-      case "video-request-decline":
-        handleVideoRequestDecline(data);
-        break;
-      case "video-request-cancel":
-        handleVideoRequestCancel(data);
-        break;
-      case "mode-switch":
-        handleModeSwitch(data);
-        break;
-      case "mode-switch-to-video":
-        handleModeSwitchToVideo(data);
-        break;
+      // Route message
+      await messageRouter.route(data, ws);
+
+    } catch (error) {
+      logger.error(`❌ Error processing message from IP ${ws.ip}:`, error);
+      ws.send(JSON.stringify({
+        type: 'error',
+        message: 'Invalid message format'
+      }));
     }
   });
 
-  ws.on("close", () => {
-    // Find and remove the user from connections
-    for (let [userId, conn] of connections) {
-      if (conn === ws) {
-        handleDisconnect(userId);
-        break;
-      }
+  // Close handler
+  ws.on('close', () => {
+    if (userId) {
+      logger.info(`👋 User ${userId} disconnected from IP: ${ws.ip}`);
+
+      // Handle disconnect
+      handleUserDisconnect(userId);
+
+      // Remove connection
+      connectionManager.removeConnection(userId);
     }
-    // totalUsers--; // Removed manual tracking
+
+    // Broadcast updated user count
     broadcastUserCount();
-    logger.info(`WebSocket connection closed from IP: ${ws.ip}`);
+  });
+
+  // Error handler
+  ws.on('error', (error) => {
+    logger.error(`❌ WebSocket error for IP ${ws.ip}:`, error);
   });
 });
 
-function handleTextJoin(ws, userId) {
-  logger.info(`User ${userId} joining text chat`);
-  connections.set(userId, ws);
-  userModes.set(userId, "text");
+/**
+ * Handle user disconnect
+ */
+function handleUserDisconnect(userId) {
+  // Remove from queue
+  queueManager.removeFromQueue(userId);
 
-  // Track user IP
-  userIPs.set(userId, ws.ip);
-
-  // Remove from queue if already there to prevent self-matching
-  const existingIndex = textWaitingQueue.indexOf(userId);
-  if (existingIndex !== -1) {
-    textWaitingQueue.splice(existingIndex, 1);
-  }
-
-  if (textWaitingQueue.length > 0) {
-    // Pair with waiting user
-    const partnerId = textWaitingQueue.shift();
-
-    // Final safety check
-    if (partnerId === userId) {
-      textWaitingQueue.push(userId);
-      ws.send(JSON.stringify({ type: "waiting" }));
-      return;
-    }
-
-    pairs.set(userId, partnerId);
-    pairs.set(partnerId, userId);
-
-    // Notify both users
-    const partnerWs = connections.get(partnerId);
-    ws.send(JSON.stringify({ type: "paired", partnerId }));
-    if (partnerWs) {
-      partnerWs.send(JSON.stringify({ type: "paired", partnerId: userId }));
-    }
-
-    logger.info(`Paired text chat users: ${userId} and ${partnerId}`);
-  } else {
-    // Add to queue
-    textWaitingQueue.push(userId);
-    ws.send(JSON.stringify({ type: "waiting" }));
-    logger.info(`User ${userId} added to text chat queue`);
-  }
-}
-
-function handleVoiceJoin(ws, userId) {
-  logger.info(`User ${userId} joining voice chat`);
-  connections.set(userId, ws);
-  userModes.set(userId, "voice");
-
-  // Track user IP
-  userIPs.set(userId, ws.ip);
-
-  // Remove from queue if already there to prevent self-matching
-  const existingIndex = voiceWaitingQueue.indexOf(userId);
-  if (existingIndex !== -1) {
-    voiceWaitingQueue.splice(existingIndex, 1);
-  }
-
-  if (voiceWaitingQueue.length > 0) {
-    // Pair with waiting user - the waiting user is the offerer
-    const partnerId = voiceWaitingQueue.shift();
-
-    // Final safety check
-    if (partnerId === userId) {
-      voiceWaitingQueue.push(userId);
-      ws.send(JSON.stringify({ type: "waiting" }));
-      return;
-    }
-
-    pairs.set(userId, partnerId);
-    pairs.set(partnerId, userId);
-
-    // Notify both users
-    const partnerWs = connections.get(partnerId);
-    ws.send(JSON.stringify({ type: "paired", partnerId, isOfferer: false }));
-    if (partnerWs) {
-      partnerWs.send(
-        JSON.stringify({ type: "paired", partnerId: userId, isOfferer: true })
-      );
-    }
-
-    logger.info(`Paired voice chat users: ${userId} and ${partnerId}`);
-  } else {
-    // Add to queue
-    voiceWaitingQueue.push(userId);
-    ws.send(JSON.stringify({ type: "waiting" }));
-    logger.info(`User ${userId} added to voice chat queue`);
-  }
-}
-
-function handleVideoJoin(ws, userId) {
-  logger.info(`User ${userId} joining video chat`);
-  connections.set(userId, ws);
-  userModes.set(userId, "video");
-
-  // Track user IP
-  userIPs.set(userId, ws.ip);
-
-  // Remove from queue if already there to prevent self-matching
-  const existingIndex = videoWaitingQueue.indexOf(userId);
-  if (existingIndex !== -1) {
-    videoWaitingQueue.splice(existingIndex, 1);
-  }
-
-  if (videoWaitingQueue.length > 0) {
-    // Pair with waiting user - the waiting user is the offerer
-    const partnerId = videoWaitingQueue.shift();
-
-    // Final safety check
-    if (partnerId === userId) {
-      videoWaitingQueue.push(userId);
-      ws.send(JSON.stringify({ type: "waiting" }));
-      return;
-    }
-
-    pairs.set(userId, partnerId);
-    pairs.set(partnerId, userId);
-
-    // Notify both users
-    const partnerWs = connections.get(partnerId);
-    ws.send(JSON.stringify({ type: "paired", partnerId, isOfferer: false }));
-    if (partnerWs) {
-      partnerWs.send(
-        JSON.stringify({ type: "paired", partnerId: userId, isOfferer: true })
-      );
-    }
-
-    logger.info(`Paired video chat users: ${userId} and ${partnerId}`);
-  } else {
-    // Add to queue
-    videoWaitingQueue.push(userId);
-    ws.send(JSON.stringify({ type: "waiting" }));
-    logger.info(`User ${userId} added to video chat queue`);
-  }
-}
-
-function handleIdentify(ws, data) {
-  const { userId, fingerprint } = data;
-
-  if (!fingerprint) return;
-
-  logger.info(`User ${userId} identified with fingerprint: ${fingerprint}`);
-
-  // Track fingerprint
-  const fingerprintCheck = trackFingerprint(fingerprint, userId);
-
-  if (fingerprintCheck.suspicious) {
-    logger.warn(`Suspicious user ${userId}: ${fingerprintCheck.reason}`);
-    ws.send(JSON.stringify({
-      type: "warning",
-      message: "Your account has been flagged. Please use the app responsibly."
-    }));
-  }
-}
-
-function handleTextMessage(data) {
-  const { userId, targetId, message } = data;
-
-  // Security: Check rate limit (30 messages per minute)
-  if (!checkRateLimit(userId, "messages", 30)) {
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: "Slow down! You're sending messages too quickly."
-      }));
-    }
-    return;
-  }
-
-  // Security: Validate message
-  const validation = validateMessage(message);
-  if (!validation.valid) {
-    logger.warn(`Invalid message from ${userId}: ${validation.reason}`);
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: `Message rejected: ${validation.reason}`
-      }));
-    }
-    return;
-  }
-
-  // Security: Filter profanity
-  const filteredMessage = filterProfanity(message);
-
-  // Track abuse
-  if (!abuseTracking.has(userId)) {
-    abuseTracking.set(userId, {
-      messageCount: 0,
-      skipCount: 0,
-      reportCount: 0,
-      violations: [],
-      startTime: Date.now()
-    });
-  }
-  abuseTracking.get(userId).messageCount++;
+  // Track skip action
+  securityManager.trackUserAction(userId, 'skip');
 
   // Check for abuse patterns
-  const ip = userIPs.get(userId);
-  const patterns = detectAbusePatterns(userId);
+  const patterns = securityManager.detectAbusePatterns(userId);
   if (patterns.length > 0) {
-    handleAbuseDetection(userId, ip, patterns);
-    return;
-  }
+    logger.warn(`⚠️ Abuse patterns detected for user ${userId}: ${patterns.join(', ')}`);
 
-  logger.info(`Text message from ${userId} to ${targetId}: ${message.substring(0, 30)}...`);
-
-  const targetWs = connections.get(targetId);
-  if (targetWs) {
-    targetWs.send(
-      JSON.stringify({
-        type: "text-message",
-        from: userId,
-        message: filteredMessage,
-      })
-    );
-  } else {
-    logger.warn(`Target user ${targetId} not found`);
-  }
-}
-
-function handleSignaling(data) {
-  const { userId, targetId, ...signalData } = data;
-  const targetWs = connections.get(targetId);
-  if (targetWs) {
-    targetWs.send(
-      JSON.stringify({ type: data.type, from: userId, ...signalData })
-    );
-  }
-}
-
-function handleDisconnect(userId) {
-  logger.info(`User ${userId} disconnecting`);
-
-  // Security: Track skip count
-  if (pairs.has(userId)) {
-    if (!abuseTracking.has(userId)) {
-      abuseTracking.set(userId, {
-        messageCount: 0,
-        skipCount: 0,
-        reportCount: 0,
-        violations: [],
-        startTime: Date.now()
-      });
-    }
-    abuseTracking.get(userId).skipCount++;
-
-    // Check for skip abuse
-    const ip = userIPs.get(userId);
-    const patterns = detectAbusePatterns(userId);
-    if (patterns.includes("skip_abuser")) {
-      handleAbuseDetection(userId, ip, patterns);
-    }
-  }
-
-  const userMode = userModes.get(userId);
-
-  connections.delete(userId);
-  userModes.delete(userId);
-
-  // Remove from appropriate queue if waiting
-  if (userMode === "text") {
-    const index = textWaitingQueue.indexOf(userId);
-    if (index !== -1) {
-      textWaitingQueue.splice(index, 1);
-      logger.info(`Removed ${userId} from text chat queue`);
-    }
-  } else if (userMode === "video") {
-    const index = videoWaitingQueue.indexOf(userId);
-    if (index !== -1) {
-      videoWaitingQueue.splice(index, 1);
-      logger.info(`Removed ${userId} from video chat queue`);
-    }
-  }
-
-  // Handle pairing
-  const partnerId = pairs.get(userId);
-  if (partnerId) {
-    pairs.delete(userId);
-    pairs.delete(partnerId);
-
-    const partnerWs = connections.get(partnerId);
-    const partnerMode = userModes.get(partnerId);
-
-    if (partnerWs) {
-      partnerWs.send(JSON.stringify({ type: "partner-disconnected" }));
-
-      // Put partner back in appropriate queue
-      if (partnerMode === "text") {
-        textWaitingQueue.push(partnerId);
-        partnerWs.send(JSON.stringify({ type: "waiting" }));
-        logger.info(`Put ${partnerId} back in text chat queue`);
-      } else if (partnerMode === "video") {
-        videoWaitingQueue.push(partnerId);
-        partnerWs.send(JSON.stringify({ type: "waiting" }));
-        logger.info(`Put ${partnerId} back in video chat queue`);
+    // Handle abuse (ban if harasser)
+    if (patterns.includes('harasser')) {
+      const ip = connectionManager.getConnection(userId)?.metadata?.ip;
+      if (ip) {
+        securityManager.banIP(ip, 86400000, 'Multiple reports');
+        logger.warn(`🚫 Banned IP ${ip} for harassment`);
       }
     }
   }
 
-  logger.info(`User ${userId} disconnected and cleaned up`);
+  // Break pair if exists
+  const result = pairingManager.breakPair(userId);
+  if (result.success) {
+    const partnerId = result.partnerId;
+
+    // Notify partner
+    connectionManager.sendToUser(partnerId, {
+      type: 'partner-disconnected'
+    });
+
+    // Get partner's mode
+    const partnerMode = result.sessionData?.mode;
+    if (partnerMode) {
+      // Re-queue partner
+      queueManager.addToQueue(partnerId, partnerMode);
+      connectionManager.sendToUser(partnerId, { type: 'waiting' });
+
+      logger.info(`🔄 Re-queued user ${partnerId} in ${partnerMode} mode`);
+    }
+  }
 }
 
+/**
+ * Broadcast user count to all connected clients
+ */
 function broadcastUserCount() {
   try {
-    logger.info("Entering broadcastUserCount");
-    // Use wss.clients to get the accurate count of ALL connected sockets
-    if (!wss || !wss.clients) {
-      logger.error("wss or wss.clients is undefined");
-      return;
-    }
+    const count = connectionManager.getConnectionCount();
+    const message = JSON.stringify({ type: 'user-count', count });
 
-    const count = wss.clients.size;
-    const message = JSON.stringify({ type: "user-count", count: count });
+    connectionManager.broadcastToAll(message);
 
-    logger.info(`Broadcasting user count: ${count}`);
-
-    // Broadcast to ALL connected clients, not just those in chat modes
-    wss.clients.forEach((client) => {
-      if (client.readyState === WebSocket.OPEN) {
-        client.send(message);
-      }
-    });
+    logger.debug(`📊 Broadcasted user count: ${count}`);
   } catch (error) {
-    logger.error(`Error in broadcastUserCount: ${error.message}`);
-    console.error(error);
+    logger.error('❌ Error broadcasting user count:', error);
   }
 }
 
-function handleTyping(data) {
-  const { userId, targetId, type } = data;
-  const targetWs = connections.get(targetId);
+// Periodic cleanup tasks
+setInterval(() => {
+  logger.debug('🧹 Running periodic cleanup...');
 
-  if (targetWs) {
-    targetWs.send(JSON.stringify({ type, from: userId }));
-  }
+  // Clean up security data
+  securityManager.cleanup();
+
+  // Broadcast user count
+  broadcastUserCount();
+}, 60000); // Every minute
+
+// Graceful shutdown
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);
+
+function shutdown() {
+  logger.info('🛑 Shutting down gracefully...');
+
+  // Stop accepting new connections
+  server.close(() => {
+    logger.info('✅ HTTP server closed');
+  });
+
+  // Close all WebSocket connections
+  connectionManager.closeAll();
+
+  // Shutdown managers
+  queueManager.shutdown();
+  connectionManager.shutdown();
+  pairingManager.shutdown();
+
+  logger.info('👋 Shutdown complete');
+  process.exit(0);
 }
 
+// Handle uncaught exceptions
+process.on('uncaughtException', (error) => {
+  logger.error('❌ Uncaught Exception:', error);
+  shutdown();
+});
 
-function handleIdentify(ws, data) {
-  const { userId, fingerprint } = data;
+process.on('unhandledRejection', (reason, promise) => {
+  logger.error('❌ Unhandled Rejection at:', promise, 'reason:', reason);
+});
 
-  if (!fingerprint) return;
-
-  logger.info(`User ${userId} identified with fingerprint: ${fingerprint}`);
-
-  // Track fingerprint
-  const fingerprintCheck = trackFingerprint(fingerprint, userId);
-
-  if (fingerprintCheck.suspicious) {
-    logger.warn(`Suspicious user ${userId}: ${fingerprintCheck.reason}`);
-    ws.send(JSON.stringify({
-      type: "warning",
-      message: "Your account has been flagged. Please use the app responsibly."
-    }));
-  }
-}
-
-function handleTextMessage(data) {
-  const { userId, targetId, message } = data;
-
-  // Security: Check rate limit (30 messages per minute)
-  if (!checkRateLimit(userId, "messages", 30)) {
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: "Slow down! You're sending messages too quickly."
-      }));
-    }
-    return;
-  }
-
-  // Security: Validate message
-  const validation = validateMessage(message);
-  if (!validation.valid) {
-    logger.warn(`Invalid message from ${userId}: ${validation.reason}`);
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: `Message rejected: ${validation.reason}`
-      }));
-    }
-    return;
-  }
-
-  // Security: Filter profanity
-  const filteredMessage = filterProfanity(message);
-
-  // Track abuse
-  if (!abuseTracking.has(userId)) {
-    abuseTracking.set(userId, {
-      messageCount: 0,
-      skipCount: 0,
-      reportCount: 0,
-      violations: [],
-      startTime: Date.now()
-    });
-  }
-  abuseTracking.get(userId).messageCount++;
-
-  // Check for abuse patterns
-  const ip = userIPs.get(userId);
-  const patterns = detectAbusePatterns(userId);
-  if (patterns.length > 0) {
-    handleAbuseDetection(userId, ip, patterns);
-    return;
-  }
-
-  logger.info(`Text message from ${userId} to ${targetId}: ${message.substring(0, 30)}...`);
-
-  const targetWs = connections.get(targetId);
-  if (targetWs) {
-    targetWs.send(
-      JSON.stringify({
-        type: "text-message",
-        from: userId,
-        message: filteredMessage,
-      })
-    );
-  } else {
-    logger.warn(`Target user ${targetId} not found`);
-  }
-}
-
-function handleSignaling(data) {
-  const { userId, targetId, ...signalData } = data;
-  const targetWs = connections.get(targetId);
-  if (targetWs) {
-    targetWs.send(
-      JSON.stringify({ type: data.type, from: userId, ...signalData })
-    );
-  }
-}
-
-function handleDisconnect(userId) {
-  logger.info(`User ${userId} disconnecting`);
-
-  // Security: Track skip count
-  if (pairs.has(userId)) {
-    if (!abuseTracking.has(userId)) {
-      abuseTracking.set(userId, {
-        messageCount: 0,
-        skipCount: 0,
-        reportCount: 0,
-        violations: [],
-        startTime: Date.now()
-      });
-    }
-    abuseTracking.get(userId).skipCount++;
-
-    // Check for skip abuse
-    const ip = userIPs.get(userId);
-    const patterns = detectAbusePatterns(userId);
-    if (patterns.includes("skip_abuser")) {
-      handleAbuseDetection(userId, ip, patterns);
-    }
-  }
-
-  const userMode = userModes.get(userId);
-
-  connections.delete(userId);
-  userModes.delete(userId);
-
-  // Remove from appropriate queue if waiting
-  if (userMode === "text") {
-    const index = textWaitingQueue.indexOf(userId);
-    if (index !== -1) {
-      textWaitingQueue.splice(index, 1);
-      logger.info(`Removed ${userId} from text chat queue`);
-    }
-  } else if (userMode === "video") {
-    const index = videoWaitingQueue.indexOf(userId);
-    if (index !== -1) {
-      videoWaitingQueue.splice(index, 1);
-      logger.info(`Removed ${userId} from video chat queue`);
-    }
-  }
-
-  // Handle pairing
-  const partnerId = pairs.get(userId);
-  if (partnerId) {
-    pairs.delete(userId);
-    pairs.delete(partnerId);
-
-    const partnerWs = connections.get(partnerId);
-    const partnerMode = userModes.get(partnerId);
-
-    if (partnerWs) {
-      partnerWs.send(JSON.stringify({ type: "partner-disconnected" }));
-
-      // Put partner back in appropriate queue
-      if (partnerMode === "text") {
-        textWaitingQueue.push(partnerId);
-        partnerWs.send(JSON.stringify({ type: "waiting" }));
-        logger.info(`Put ${partnerId} back in text chat queue`);
-      } else if (partnerMode === "video") {
-        videoWaitingQueue.push(partnerId);
-        partnerWs.send(JSON.stringify({ type: "waiting" }));
-        logger.info(`Put ${partnerId} back in video chat queue`);
-      }
-    }
-  }
-
-  logger.info(`User ${userId} disconnected and cleaned up`);
-}
-
-
-
-function handleTyping(data) {
-  const { userId, targetId, type } = data;
-  const targetWs = connections.get(targetId);
-
-  if (targetWs) {
-    targetWs.send(JSON.stringify({ type, from: userId }));
-  }
-}
-
-function handleReport(data) {
-  const { userId, reportedId, reason } = data;
-
-  // Security: Check rate limit (3 reports per hour)
-  if (!checkRateLimit(userId, "reports", 3)) {
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: "You've reported too many users. Please wait before reporting again."
-      }));
-    }
-    return;
-  }
-
-  const report = {
-    timestamp: new Date().toISOString(),
-    reporter: userId,
-    reported: reportedId,
-    reason: reason || "other"
-  };
-
-  reports.push(report);
-  logger.warn(`User reported: ${JSON.stringify(report)}`);
-
-  // Track reported user
-  if (!abuseTracking.has(reportedId)) {
-    abuseTracking.set(reportedId, {
-      messageCount: 0,
-      skipCount: 0,
-      reportCount: 0,
-      violations: [],
-      startTime: Date.now()
-    });
-  }
-  abuseTracking.get(reportedId).reportCount++;
-
-  // Update fingerprint report count
-  for (const [fingerprint, session] of fingerprints) {
-    if (session.userIds.has(reportedId)) {
-      session.reports++;
-      logger.info(`Fingerprint ${fingerprint} now has ${session.reports} reports`);
-    }
-  }
-
-  // Auto-ban after 5 reports
-  const reportCount = reports.filter(r => r.reported === reportedId).length;
-  if (reportCount >= 5) {
-    const ip = userIPs.get(reportedId);
-    if (ip) {
-      banIP(ip, 24 * 60 * 60 * 1000, "Multiple user reports");
-      logger.warn(`Auto-banned user ${reportedId} (IP: ${ip}) after ${reportCount} reports`);
-      handleDisconnect(reportedId);
-    }
-  }
-
-  // Optional: Auto-disconnect reported user
-  // handleDisconnect(reportedId);
-}
-
-// ===== Video Request Handlers =====
-function handleVideoRequest(data) {
-  const { to, from } = data;
-  const targetWs = connections.get(to);
-  const senderWs = connections.get(from);
-
-  // Verify both users are connected and paired
-  if (targetWs && senderWs && pairs.get(from) === to) {
-    targetWs.send(JSON.stringify({
-      type: "video-request",
-      from: from
-    }));
-    logger.info(`Video request from ${from} to ${to}`);
-  } else {
-    logger.warn(`Invalid video request from ${from} to ${to}`);
-  }
-}
-
-function handleVideoRequestAccept(data) {
-  const { to, from } = data;
-  const targetWs = connections.get(to);
-
-  if (targetWs && pairs.get(from) === to) {
-    targetWs.send(JSON.stringify({
-      type: "video-request-accept",
-      from: from
-    }));
-    logger.info(`Video request accepted: ${from} <-> ${to}`);
-  }
-}
-
-function handleVideoRequestDecline(data) {
-  const { to, from } = data;
-  const targetWs = connections.get(to);
-
-  if (targetWs && pairs.get(from) === to) {
-    targetWs.send(JSON.stringify({
-      type: "video-request-decline",
-      from: from
-    }));
-    logger.info(`Video request declined: ${from} -> ${to}`);
-  }
-}
-
-function handleVideoRequestCancel(data) {
-  const { to, from } = data;
-  const targetWs = connections.get(to);
-
-  if (targetWs && pairs.get(from) === to) {
-    targetWs.send(JSON.stringify({
-      type: "video-request-cancel",
-      from: from
-    }));
-    logger.info(`Video request cancelled: ${from} -> ${to}`);
-  }
-}
-
-function handleModeSwitch(data) {
-  const { mode, partnerId } = data;
-  const userId = data.userId || data.from;
-
-  // Update user mode
-  if (userModes.has(userId)) {
-    userModes.set(userId, mode);
-    logger.info(`User ${userId} switched to ${mode} mode with partner ${partnerId}`);
-  }
-}
-
-// Track users who are switching to video mode
-const videoModeSwitchers = new Map(); // partnerId -> userId who initiated
-
-function handleModeSwitchToVideo(data) {
-  const { userId, partnerId } = data;
-
-  logger.info(`User ${userId} requesting video mode switch with partner ${partnerId}`);
-
-  // Verify they are actually paired
-  if (pairs.get(userId) !== partnerId) {
-    logger.warn(`Invalid mode switch: ${userId} and ${partnerId} are not paired`);
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: "Partner disconnected. Cannot switch to video mode."
-      }));
-    }
-    return;
-  }
-
-  // Verify partner is still connected
-  const partnerWs = connections.get(partnerId);
-  if (!partnerWs) {
-    logger.warn(`Partner ${partnerId} not connected`);
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "error",
-        message: "Partner disconnected. Cannot switch to video mode."
-      }));
-    }
-    // Clean up stale entry
-    videoModeSwitchers.delete(partnerId);
-    return;
-  }
-
-  // Update user mode
-  userModes.set(userId, "video");
-
-  // Check if partner has also requested the switch
-  if (videoModeSwitchers.has(userId)) {
-    // Partner already requested - this user is the answerer
-    const initiatorId = videoModeSwitchers.get(userId);
-    videoModeSwitchers.delete(userId);
-
-    // Double-check they're still paired
-    if (pairs.get(initiatorId) !== userId) {
-      logger.warn(`Pairing changed during mode switch: ${initiatorId} and ${userId}`);
-      return;
-    }
-
-    logger.info(`Both users ready for video. ${initiatorId} is offerer, ${userId} is answerer`);
-
-    // Tell this user (answerer) to wait for offer
-    const ws = connections.get(userId);
-    if (ws) {
-      ws.send(JSON.stringify({
-        type: "video-mode-ready",
-        isOfferer: false,
-        partnerId: initiatorId
-      }));
-    }
-
-    // Tell partner (offerer) to initiate
-    const partnerWs = connections.get(initiatorId);
-    if (partnerWs) {
-      partnerWs.send(JSON.stringify({
-        type: "video-mode-ready",
-        isOfferer: true,
-        partnerId: userId
-      }));
-    }
-  } else {
-    // This user is first to request - mark as potential offerer
-    videoModeSwitchers.set(partnerId, userId);
-    logger.info(`User ${userId} waiting for partner ${partnerId} to accept video mode`);
-
-    // Set timeout to clean up if partner doesn't respond in 30 seconds
-    setTimeout(() => {
-      if (videoModeSwitchers.get(partnerId) === userId) {
-        logger.info(`Cleaning up stale video mode switch request from ${userId}`);
-        videoModeSwitchers.delete(partnerId);
-      }
-    }, 30000);
-  }
-}
-
+logger.info('✨ VibeConnect server initialized successfully');

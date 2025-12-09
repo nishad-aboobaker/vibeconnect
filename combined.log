@@ -1618,3 +1618,132 @@
 {"level":"info","message":"Broadcasting user count: 4","timestamp":"2025-12-08T20:38:33.405Z"}
 {"level":"info","message":"Received from 4khyx0dyk85: identify","timestamp":"2025-12-08T20:38:33.407Z"}
 {"level":"info","message":"User 4khyx0dyk85 identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:38:33.407Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:25.466Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:41:25.466Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:41:25.467Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:25.468Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:41:25.468Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:41:25.469Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:26.787Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:41:26.787Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:41:26.789Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:26.791Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-08T20:41:26.792Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:41:26.792Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:41:37.343Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:37.346Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:41:37.347Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:41:37.359Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:41:37.360Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:41:37.362Z"}
+{"level":"info","message":"Received from 8fd1txw8n3a: identify","timestamp":"2025-12-08T20:41:37.363Z"}
+{"level":"info","message":"User 8fd1txw8n3a identified with fingerprint: nvgatq","timestamp":"2025-12-08T20:41:37.364Z"}
+{"level":"info","message":"Received from 8fd1txw8n3a: join-text","timestamp":"2025-12-08T20:41:45.462Z"}
+{"level":"info","message":"User 8fd1txw8n3a joining text chat","timestamp":"2025-12-08T20:41:45.463Z"}
+{"level":"info","message":"User 8fd1txw8n3a added to text chat queue","timestamp":"2025-12-08T20:41:45.464Z"}
+{"level":"info","message":"Received from 8fd1txw8n3a: disconnect","timestamp":"2025-12-08T20:41:55.961Z"}
+{"level":"info","message":"User 8fd1txw8n3a disconnecting","timestamp":"2025-12-08T20:41:55.961Z"}
+{"level":"info","message":"Removed 8fd1txw8n3a from text chat queue","timestamp":"2025-12-08T20:41:55.962Z"}
+{"level":"info","message":"User 8fd1txw8n3a disconnected and cleaned up","timestamp":"2025-12-08T20:41:55.962Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-08T20:52:12.866Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:52:12.866Z"}
+{"level":"info","message":"Broadcasting user count: 3","timestamp":"2025-12-08T20:52:12.867Z"}
+{"level":"info","message":"Received from verify-user: identify","timestamp":"2025-12-08T20:52:12.876Z"}
+{"level":"info","message":"User verify-user identified with fingerprint: verify-fp","timestamp":"2025-12-08T20:52:12.876Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:52:47.866Z"}
+{"level":"info","message":"Broadcasting user count: 2","timestamp":"2025-12-08T20:52:47.866Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:52:47.867Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:58:43.247Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-08T20:58:43.272Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:58:43.282Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-08T20:58:43.291Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-08T20:58:43.296Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-08T20:58:43.299Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-09T03:28:16.092Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-09T03:28:16.095Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-09T03:28:16.096Z"}
+{"level":"info","message":"Received from 8fd1txw8n3a: identify","timestamp":"2025-12-09T03:28:16.224Z"}
+{"level":"info","message":"User 8fd1txw8n3a identified with fingerprint: nvgatq","timestamp":"2025-12-09T03:28:16.225Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-09T03:42:04.196Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-09T03:42:04.207Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-09T03:42:04.215Z"}
+{"level":"info","message":"New WebSocket connection from IP: ::1","timestamp":"2025-12-09T03:46:45.483Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-09T03:46:45.484Z"}
+{"level":"info","message":"Broadcasting user count: 1","timestamp":"2025-12-09T03:46:45.484Z"}
+{"level":"info","message":"Received from 8fd1txw8n3a: identify","timestamp":"2025-12-09T03:46:45.489Z"}
+{"level":"info","message":"User 8fd1txw8n3a identified with fingerprint: nvgatq","timestamp":"2025-12-09T03:46:45.490Z"}
+{"level":"info","message":"Entering broadcastUserCount","timestamp":"2025-12-09T04:12:15.140Z"}
+{"level":"info","message":"Broadcasting user count: 0","timestamp":"2025-12-09T04:12:15.141Z"}
+{"level":"info","message":"WebSocket connection closed from IP: ::1","timestamp":"2025-12-09T04:12:15.141Z"}
+{"level":"info","message":"✨ VibeConnect server initialized successfully","timestamp":"2025-12-09T11:00:58.807Z"}
+{"level":"info","message":"🚀 VibeConnect server running on port 3000","timestamp":"2025-12-09T11:00:58.815Z"}
+{"level":"info","message":"📊 Health check: http://localhost:3000/health","timestamp":"2025-12-09T11:00:58.817Z"}
+{"level":"info","message":"📈 Metrics: http://localhost:3000/metrics","timestamp":"2025-12-09T11:00:58.817Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:05:04.656Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:05:04.665Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:05:04.667Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:05:19.378Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:05:19.387Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:05:19.391Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:05:19.400Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:05:19.409Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:00.221Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:00.243Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:00.248Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:06:05.285Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:05.330Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:05.337Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:05.339Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:16.929Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:16.936Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:16.937Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:06:16.941Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:06:16.945Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:34.645Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:34.649Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:34.650Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:50.821Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:50.831Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:50.832Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:06:50.836Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:06:50.844Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:06:58.381Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:06:58.387Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:06:58.389Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:02.623Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:02.629Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:02.630Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:02.635Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:02.642Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:04.321Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:04.326Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:04.327Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:08.924Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:08.930Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:08.931Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:08.939Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:08.944Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:10.906Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:10.911Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:10.912Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:25.696Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:25.704Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:25.706Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:25.714Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:25.721Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:27.838Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:27.845Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:27.846Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:33.713Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:33.723Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:33.724Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:33.731Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:07:33.742Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:07:36.606Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:07:36.612Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:07:36.613Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:08:05.726Z"}
+{"level":"warn","message":"⚠️ Abuse patterns detected for user 2c1v7pegg2ga2uekoe6vp4: skip_abuser","timestamp":"2025-12-09T11:08:05.727Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:08:12.623Z"}
+{"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:08:12.628Z"}
+{"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:08:12.629Z"}
