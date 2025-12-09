@@ -48,6 +48,9 @@ class MessageRouter {
         // Failed message queue
         this.deadLetterQueue = [];
 
+        // Track users who recently skipped (for priority matching)
+        this.recentSkips = new Map(); // userId -> timestamp
+
         // Metrics
         this.metrics = {
             messagesRouted: 0,
@@ -209,8 +212,15 @@ class MessageRouter {
         this.registerHandler('join-text', (message, ws) => {
             const { userId } = message;
 
-            // Add to queue
-            const added = this.queueManager.addToQueue(userId, 'text');
+            // Check if user recently skipped (within last 5 seconds)
+            const recentSkip = this.recentSkips.get(userId);
+            const priority = (recentSkip && Date.now() - recentSkip < 5000) ? 1 : 0;
+            if (recentSkip) {
+                this.recentSkips.delete(userId); // Clear after use
+            }
+
+            // Add to queue with priority if they just skipped
+            const added = this.queueManager.addToQueue(userId, 'text', priority);
             if (!added) {
                 this.connectionManager.sendToUser(userId, {
                     type: 'error',
@@ -246,8 +256,15 @@ class MessageRouter {
         this.registerHandler('join-video', (message, ws) => {
             const { userId } = message;
 
-            // Add to queue
-            const added = this.queueManager.addToQueue(userId, 'video');
+            // Check if user recently skipped (within last 5 seconds)
+            const recentSkip = this.recentSkips.get(userId);
+            const priority = (recentSkip && Date.now() - recentSkip < 5000) ? 1 : 0;
+            if (recentSkip) {
+                this.recentSkips.delete(userId); // Clear after use
+            }
+
+            // Add to queue with priority if they just skipped
+            const added = this.queueManager.addToQueue(userId, 'video', priority);
             if (!added) {
                 this.connectionManager.sendToUser(userId, {
                     type: 'error',
@@ -474,6 +491,9 @@ class MessageRouter {
 
         // Track skip
         this.securityManager.trackUserAction(userId, 'skip');
+
+        // Mark this user as recently skipped (for priority matching)
+        this.recentSkips.set(userId, Date.now());
 
         // Get partner info BEFORE breaking pair (breakPair deletes the mode)
         const partnerId = this.pairingManager.getPair(userId);
