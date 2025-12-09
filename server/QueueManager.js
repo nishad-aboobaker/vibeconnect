@@ -8,7 +8,10 @@
  * - Automatic timeout management
  * - Separate queues for text/video/voice modes
  * - Real-time metrics tracking
+ * - Mutex locking to prevent race conditions
  */
+
+const CONSTANTS = require('./constants');
 
 class QueueManager {
     constructor(options = {}) {
@@ -27,6 +30,12 @@ class QueueManager {
 
         // Track queue entry timestamps for timeout management
         this.queueTimestamps = new Map(); // userId -> { mode, timestamp, priority }
+
+        // Fast lookup: userId -> { mode, isPriority }
+        this.userQueueMap = new Map();
+
+        // Mutex lock for matching to prevent race conditions
+        this.matchingLock = false;
 
         // Configuration
         this.config = {
@@ -77,6 +86,12 @@ class QueueManager {
 
         targetQueue.push(userId);
 
+        // Track in fast lookup map
+        this.userQueueMap.set(userId, {
+            mode,
+            isPriority: priority > 0 && this.config.enablePriority
+        });
+
         // Track timestamp
         this.queueTimestamps.set(userId, {
             mode,
@@ -91,7 +106,7 @@ class QueueManager {
     }
 
     /**
-     * Match two users from queue - O(1) operation
+     * Match two users from queue - O(1) operation with mutex lock
      * @param {string} mode - Chat mode to match from
      * @returns {Object|null} Match result { user1, user2, waitTime } or null
      */
@@ -100,102 +115,111 @@ class QueueManager {
             throw new Error(`Invalid mode: ${mode}`);
         }
 
-        const startTime = Date.now();
-        let user1, user2, queue1, queue2;
-
-        // Priority: Try to match priority queue first
-        if (this.priorityQueues[mode].length >= 2) {
-            queue1 = queue2 = this.priorityQueues[mode];
-            user1 = queue1.shift();
-            user2 = queue2.shift();
-        }
-        // Mix: Match priority with normal queue
-        else if (this.priorityQueues[mode].length >= 1 && this.queues[mode].length >= 1) {
-            user1 = this.priorityQueues[mode].shift();
-            user2 = this.queues[mode].shift();
-        }
-        // Normal: Match from normal queue
-        else if (this.queues[mode].length >= 2) {
-            queue1 = queue2 = this.queues[mode];
-            user1 = queue1.shift();
-            user2 = queue2.shift();
-        }
-        else {
-            return null; // Not enough users to match
+        // Acquire lock to prevent race conditions
+        if (this.matchingLock) {
+            return null; // Another match is in progress
         }
 
-        // Safety check: Prevent self-matching
-        if (user1 === user2) {
-            // Put user back and return null
-            this.queues[mode].unshift(user1);
-            return null;
+        this.matchingLock = true;
+
+        try {
+            const startTime = Date.now();
+            let user1, user2;
+
+            // Priority: Try to match priority queue first
+            if (this.priorityQueues[mode].length >= 2) {
+                user1 = this.priorityQueues[mode].shift();
+                user2 = this.priorityQueues[mode].shift();
+            }
+            // Mix: Match priority with normal queue
+            else if (this.priorityQueues[mode].length >= 1 && this.queues[mode].length >= 1) {
+                user1 = this.priorityQueues[mode].shift();
+                user2 = this.queues[mode].shift();
+            }
+            // Normal: Match from normal queue
+            else if (this.queues[mode].length >= 2) {
+                user1 = this.queues[mode].shift();
+                user2 = this.queues[mode].shift();
+            }
+            else {
+                return null; // Not enough users to match
+            }
+
+            // Safety check: Prevent self-matching
+            if (user1 === user2) {
+                // Put user back and return null
+                this.queues[mode].unshift(user1);
+                this.userQueueMap.set(user1, { mode, isPriority: false });
+                return null;
+            }
+
+            // Calculate wait time
+            const timestamp1 = this.queueTimestamps.get(user1);
+            const timestamp2 = this.queueTimestamps.get(user2);
+            const waitTime = timestamp1 && timestamp2
+                ? Math.max(Date.now() - timestamp1.timestamp, Date.now() - timestamp2.timestamp)
+                : 0;
+
+            // Clean up timestamps and user map
+            this.queueTimestamps.delete(user1);
+            this.queueTimestamps.delete(user2);
+            this.userQueueMap.delete(user1);
+            this.userQueueMap.delete(user2);
+
+            // Update metrics
+            this.metrics.totalMatches++;
+            const matchTime = Date.now() - startTime;
+            this.metrics.matchTimes.push(matchTime);
+            if (this.metrics.matchTimes.length > 100) {
+                this.metrics.matchTimes.shift();
+            }
+            this.updateQueueSizeMetrics();
+
+            return {
+                user1,
+                user2,
+                waitTime,
+                matchTime,
+                mode
+            };
+        } finally {
+            // Always release lock
+            this.matchingLock = false;
         }
-
-        // Calculate wait time
-        const timestamp1 = this.queueTimestamps.get(user1);
-        const timestamp2 = this.queueTimestamps.get(user2);
-        const waitTime = timestamp1 && timestamp2
-            ? Math.max(Date.now() - timestamp1.timestamp, Date.now() - timestamp2.timestamp)
-            : 0;
-
-        // Clean up timestamps
-        this.queueTimestamps.delete(user1);
-        this.queueTimestamps.delete(user2);
-
-        // Update metrics
-        this.metrics.totalMatches++;
-        const matchTime = Date.now() - startTime;
-        this.metrics.matchTimes.push(matchTime);
-        if (this.metrics.matchTimes.length > 100) {
-            this.metrics.matchTimes.shift();
-        }
-        this.updateQueueSizeMetrics();
-
-        return {
-            user1,
-            user2,
-            waitTime,
-            matchTime,
-            mode
-        };
     }
 
     /**
-     * Remove user from all queues
+     * Remove user from all queues - O(1) operation with fast lookup
      * @param {string} userId - User identifier
      * @returns {boolean} True if user was in a queue
      */
     removeFromQueue(userId) {
-        let found = false;
+        // Fast lookup
+        const queueInfo = this.userQueueMap.get(userId);
 
-        // Check all queues
-        for (const mode of ['text', 'video', 'voice']) {
-            // Check normal queue
-            const normalIndex = this.queues[mode].indexOf(userId);
-            if (normalIndex !== -1) {
-                this.queues[mode].splice(normalIndex, 1);
-                found = true;
+        if (!queueInfo) {
+            // Also check timestamps for cleanup
+            if (this.queueTimestamps.has(userId)) {
+                this.queueTimestamps.delete(userId);
             }
-
-            // Check priority queue
-            const priorityIndex = this.priorityQueues[mode].indexOf(userId);
-            if (priorityIndex !== -1) {
-                this.priorityQueues[mode].splice(priorityIndex, 1);
-                found = true;
-            }
+            return false;
         }
 
-        // Clean up timestamp
-        if (this.queueTimestamps.has(userId)) {
-            this.queueTimestamps.delete(userId);
-            found = true;
+        const { mode, isPriority } = queueInfo;
+        const targetQueue = isPriority ? this.priorityQueues[mode] : this.queues[mode];
+
+        // Remove from queue
+        const index = targetQueue.indexOf(userId);
+        if (index !== -1) {
+            targetQueue.splice(index, 1);
         }
 
-        if (found) {
-            this.updateQueueSizeMetrics();
-        }
+        // Clean up maps
+        this.userQueueMap.delete(userId);
+        this.queueTimestamps.delete(userId);
+        this.updateQueueSizeMetrics();
 
-        return found;
+        return true;
     }
 
     /**
@@ -317,6 +341,7 @@ class QueueManager {
             this.priorityQueues[mode] = [];
         }
         this.queueTimestamps.clear();
+        this.userQueueMap.clear();
         this.updateQueueSizeMetrics();
     }
 

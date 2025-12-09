@@ -40,7 +40,8 @@ class MessageRouter {
             'video-request-accept': { required: ['to', 'from'] },
             'video-request-decline': { required: ['to', 'from'] },
             'video-request-cancel': { required: ['to', 'from'] },
-            'mode-switch-to-video': { required: ['userId', 'partnerId'] }
+            'mode-switch-to-video': { required: ['userId', 'partnerId'] },
+            'ping': {} // Heartbeat message, no required fields
         };
 
         // Failed message queue

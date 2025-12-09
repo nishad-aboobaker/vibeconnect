@@ -13,12 +13,19 @@
  */
 
 const crypto = require('crypto');
+const Filter = require('bad-words');
+const CONSTANTS = require('./constants');
 
 class SecurityManager {
     constructor(options = {}) {
+        // Validate required options
+        if (!options.jwtSecret) {
+            throw new Error('JWT secret is required for SecurityManager');
+        }
+
         // Configuration
         this.config = {
-            jwtSecret: options.jwtSecret || crypto.randomBytes(32).toString('hex'),
+            jwtSecret: options.jwtSecret,
             tokenExpiry: options.tokenExpiry || 900000, // 15 minutes
             refreshTokenExpiry: options.refreshTokenExpiry || 604800000, // 7 days
             maxConnectionsPerIP: options.maxConnectionsPerIP || 20,
@@ -30,9 +37,18 @@ class SecurityManager {
         // Rate limiting - Token bucket algorithm
         this.rateLimits = new Map(); // userId -> { messages: [], skips: [], reports: [] }
         this.rateLimitConfig = {
-            messages: { limit: 30, window: 60000 }, // 30 per minute
-            skips: { limit: 10, window: 60000 }, // 10 per minute
-            reports: { limit: 3, window: 3600000 } // 3 per hour
+            messages: {
+                limit: parseInt(process.env.RATE_LIMIT_MESSAGES_PER_MINUTE) || CONSTANTS.DEFAULT_RATE_LIMIT_MESSAGES,
+                window: CONSTANTS.DEFAULT_RATE_LIMIT_WINDOW_MS
+            },
+            skips: {
+                limit: parseInt(process.env.RATE_LIMIT_SKIPS_PER_MINUTE) || CONSTANTS.DEFAULT_RATE_LIMIT_SKIPS,
+                window: CONSTANTS.DEFAULT_RATE_LIMIT_WINDOW_MS
+            },
+            reports: {
+                limit: parseInt(process.env.RATE_LIMIT_REPORTS_PER_HOUR) || CONSTANTS.DEFAULT_RATE_LIMIT_REPORTS,
+                window: CONSTANTS.DEFAULT_RATE_LIMIT_REPORTS_WINDOW_MS
+            }
         };
 
         // IP tracking and banning
@@ -46,11 +62,8 @@ class SecurityManager {
         // Abuse tracking
         this.abuseTracking = new Map(); // userId -> { messageCount, skipCount, reportCount, violations: [], startTime }
 
-        // Profanity filter
-        this.badWords = [
-            'damn', 'hell', 'crap', 'fuck', 'shit', 'bitch', 'ass', 'bastard',
-            'dick', 'pussy', 'cock', 'cunt', 'whore', 'slut', 'fag', 'nigger'
-        ];
+        // Profanity filter - using bad-words library
+        this.profanityFilter = new Filter();
 
         // Dangerous patterns for XSS/injection
         this.dangerousPatterns = [
@@ -264,7 +277,7 @@ class SecurityManager {
             return { valid: false, reason: 'Empty message', filtered: '' };
         }
 
-        if (message.length > 500) {
+        if (message.length > CONSTANTS.MAX_MESSAGE_LENGTH) {
             return { valid: false, reason: 'Message too long', filtered: '' };
         }
 
@@ -287,14 +300,12 @@ class SecurityManager {
      * @returns {string} Filtered message
      */
     filterProfanity(message) {
-        let filtered = message;
-
-        for (const word of this.badWords) {
-            const regex = new RegExp(`\\b${word}\\b`, 'gi');
-            filtered = filtered.replace(regex, '*'.repeat(word.length));
+        try {
+            return this.profanityFilter.clean(message);
+        } catch (error) {
+            console.error('Error filtering profanity:', error);
+            return message; // Return original if filtering fails
         }
-
-        return filtered;
     }
 
     /**
@@ -312,17 +323,18 @@ class SecurityManager {
         const patterns = [];
 
         // Detect spammer (high message rate)
-        if (sessionDuration > 10 && tracking.messageCount / sessionDuration > 2) {
+        if (sessionDuration > CONSTANTS.ABUSE_SESSION_MIN_DURATION_SEC &&
+            tracking.messageCount / sessionDuration > CONSTANTS.ABUSE_MESSAGE_RATE_THRESHOLD) {
             patterns.push('spammer');
         }
 
         // Detect skip abuser
-        if (tracking.skipCount > 15) {
+        if (tracking.skipCount > CONSTANTS.ABUSE_SKIP_COUNT_THRESHOLD) {
             patterns.push('skip_abuser');
         }
 
         // Detect harasser (reported multiple times)
-        if (tracking.reportCount >= 3) {
+        if (tracking.reportCount >= CONSTANTS.ABUSE_REPORT_COUNT_THRESHOLD) {
             patterns.push('harasser');
         }
 

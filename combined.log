@@ -1747,3 +1747,39 @@
 {"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:08:12.623Z"}
 {"level":"info","message":"👤 User 2c1v7pegg2ga2uekoe6vp4 identified from IP: ::1","timestamp":"2025-12-09T11:08:12.628Z"}
 {"level":"info","message":"User 2c1v7pegg2ga2uekoe6vp4 identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:08:12.629Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:08:42.638Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:09:12.988Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:09:42.983Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:10:12.991Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:10:42.990Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:11:12.992Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:11:42.989Z"}
+{"level":"info","message":"👋 User 2c1v7pegg2ga2uekoe6vp4 disconnected from IP: ::1","timestamp":"2025-12-09T11:11:52.311Z"}
+{"level":"warn","message":"⚠️ Abuse patterns detected for user 2c1v7pegg2ga2uekoe6vp4: skip_abuser","timestamp":"2025-12-09T11:11:52.312Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:17:25.433Z"}
+{"level":"info","message":"👤 User jqvvuoochrnplrxm727v identified from IP: ::1","timestamp":"2025-12-09T11:17:25.487Z"}
+{"level":"info","message":"User jqvvuoochrnplrxm727v identified with fingerprint: zhkm12","timestamp":"2025-12-09T11:17:25.516Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:17:47.737Z"}
+{"level":"info","message":"👤 User jmywqdg2aw9der2x20znk4 identified from IP: ::1","timestamp":"2025-12-09T11:17:47.783Z"}
+{"level":"info","message":"User jmywqdg2aw9der2x20znk4 identified with fingerprint: pfu4cd","timestamp":"2025-12-09T11:17:47.785Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:17:55.590Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:18:17.748Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:18:25.488Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:18:47.758Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:18:55.487Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:19:17.749Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:19:25.486Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:19:47.750Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:19:55.500Z"}
+{"level":"info","message":"👋 User jmywqdg2aw9der2x20znk4 disconnected from IP: ::1","timestamp":"2025-12-09T11:20:09.395Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:20:25.487Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:20:28.718Z"}
+{"level":"info","message":"👤 User jmywqdg2aw9der2x20znk4 identified from IP: ::1","timestamp":"2025-12-09T11:20:28.738Z"}
+{"level":"info","message":"User jmywqdg2aw9der2x20znk4 identified with fingerprint: pfu4cd","timestamp":"2025-12-09T11:20:28.755Z"}
+{"level":"info","message":"👋 User jqvvuoochrnplrxm727v disconnected from IP: ::1","timestamp":"2025-12-09T11:20:45.083Z"}
+{"level":"warn","message":"No handler for message type: ping","timestamp":"2025-12-09T11:20:58.733Z"}
+{"level":"info","message":"✅ New WebSocket connection from IP: ::1","timestamp":"2025-12-09T11:21:01.543Z"}
+{"level":"info","message":"👤 User jmywqdg2aw9der2x20znk4 identified from IP: ::1","timestamp":"2025-12-09T11:21:01.569Z"}
+{"level":"info","message":"User jmywqdg2aw9der2x20znk4 identified with fingerprint: pfu4cd","timestamp":"2025-12-09T11:21:01.582Z"}
+{"level":"info","message":"👋 User jmywqdg2aw9der2x20znk4 disconnected from IP: ::1","timestamp":"2025-12-09T11:21:01.598Z"}
+{"level":"info","message":"👋 User jmywqdg2aw9der2x20znk4 disconnected from IP: ::1","timestamp":"2025-12-09T11:21:01.612Z"}

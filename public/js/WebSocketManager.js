@@ -10,6 +10,23 @@
  * - Connection state machine
  */
 
+// Import constants if available
+let CONSTANTS;
+try {
+    CONSTANTS = typeof module !== 'undefined' && require ? require('./constants') : window.CONSTANTS;
+} catch (e) {
+    // Fallback constants if module not available
+    CONSTANTS = {
+        WS_RECONNECT_DELAY_MS: 1000,
+        WS_MAX_RECONNECT_DELAY_MS: 30000,
+        WS_RECONNECT_DECAY: 1.5,
+        WS_HEARTBEAT_INTERVAL_MS: 30000,
+        WS_MESSAGE_TIMEOUT_MS: 5000,
+        WS_PRODUCTION_URL: `wss://${window.location.host}/`,
+        WS_LOCAL_URL: 'ws://localhost:3000'
+    };
+}
+
 class WebSocketManager {
     constructor(stateManager, options = {}) {
         this.stateManager = stateManager;
@@ -17,11 +34,11 @@ class WebSocketManager {
         // Configuration
         this.config = {
             url: this.getWebSocketUrl(),
-            reconnectDelay: options.reconnectDelay || 1000,
-            maxReconnectDelay: options.maxReconnectDelay || 30000,
-            reconnectDecay: options.reconnectDecay || 1.5,
-            heartbeatInterval: options.heartbeatInterval || 30000,
-            messageTimeout: options.messageTimeout || 5000
+            reconnectDelay: options.reconnectDelay || CONSTANTS.WS_RECONNECT_DELAY_MS,
+            maxReconnectDelay: options.maxReconnectDelay || CONSTANTS.WS_MAX_RECONNECT_DELAY_MS,
+            reconnectDecay: options.reconnectDecay || CONSTANTS.WS_RECONNECT_DECAY,
+            heartbeatInterval: options.heartbeatInterval || CONSTANTS.WS_HEARTBEAT_INTERVAL_MS,
+            messageTimeout: options.messageTimeout || CONSTANTS.WS_MESSAGE_TIMEOUT_MS
         };
 
         // Connection state
@@ -48,10 +65,22 @@ class WebSocketManager {
      * @private
      */
     getWebSocketUrl() {
-        if (window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1') {
-            return 'wss://vibeconnect-4crg.onrender.com/';
+        // Check if we're on localhost
+        const isLocal = window.location.hostname === 'localhost' ||
+            window.location.hostname === '127.0.0.1';
+
+        if (isLocal) {
+            return CONSTANTS.WS_LOCAL_URL;
         }
-        return 'ws://localhost:3000';
+
+        // Production: Use WSS for security
+        // Check if page is served over HTTPS
+        if (window.location.protocol === 'https:') {
+            return CONSTANTS.WS_PRODUCTION_URL;
+        }
+
+        // Fallback to production URL
+        return CONSTANTS.WS_PRODUCTION_URL;
     }
 
     /**

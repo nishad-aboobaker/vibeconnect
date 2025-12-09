@@ -60,7 +60,25 @@ class ConnectionManager {
             }
         }
 
-        // Store connection
+        // Create handler references for cleanup
+        const pongHandler = () => {
+            const connection = this.connections.get(userId);
+            if (connection) {
+                connection.isAlive = true;
+                connection.lastPing = Date.now();
+            }
+        };
+
+        const messageHandler = (data) => {
+            const connection = this.connections.get(userId);
+            if (connection) {
+                connection.bytesReceived += data.length;
+                this.metrics.messagesReceived++;
+                this.metrics.bytesReceived += data.length;
+            }
+        };
+
+        // Store connection with handler references
         this.connections.set(userId, {
             ws,
             metadata: {
@@ -72,14 +90,20 @@ class ConnectionManager {
             isAlive: true,
             messageCount: 0,
             bytesSent: 0,
-            bytesReceived: 0
+            bytesReceived: 0,
+            // Store handlers for cleanup
+            handlers: {
+                pong: pongHandler,
+                message: messageHandler
+            }
         });
 
         // Reverse lookup
         this.wsToUserId.set(ws, userId);
 
         // Setup WebSocket event handlers
-        this._setupWebSocketHandlers(userId, ws);
+        ws.on('pong', pongHandler);
+        ws.on('message', messageHandler);
 
         // Update metrics
         this.metrics.totalConnections++;
@@ -97,12 +121,19 @@ class ConnectionManager {
         const connection = this.connections.get(userId);
         if (!connection) return false;
 
+        // Remove event listeners to prevent memory leak
+        if (connection.handlers) {
+            connection.ws.removeListener('pong', connection.handlers.pong);
+            connection.ws.removeListener('message', connection.handlers.message);
+        }
+
         // Close WebSocket if still open
         if (connection.ws.readyState === 1) { // OPEN
             connection.ws.close(1000, 'Normal closure');
         }
 
         // Remove from maps
+        this.wsToUserId.delete(connection.ws);
         this.connections.delete(userId);
 
         // Update metrics

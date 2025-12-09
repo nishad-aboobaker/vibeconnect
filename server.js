@@ -12,10 +12,15 @@
  * - Comprehensive metrics and monitoring
  */
 
+// Load environment variables FIRST
+require('dotenv').config();
+
 const express = require('express');
 const WebSocket = require('ws');
 const path = require('path');
 const winston = require('winston');
+const DailyRotateFile = require('winston-daily-rotate-file');
+const crypto = require('crypto');
 
 // Import custom modules
 const QueueManager = require('./server/QueueManager');
@@ -23,12 +28,25 @@ const SecurityManager = require('./server/SecurityManager');
 const ConnectionManager = require('./server/ConnectionManager');
 const MessageRouter = require('./server/MessageRouter');
 const PairingManager = require('./server/PairingManager');
+const CONSTANTS = require('./server/constants');
+
+// Validate critical environment variables
+if (!process.env.JWT_SECRET) {
+  console.error('❌ CRITICAL ERROR: JWT_SECRET environment variable is not set!');
+  console.error('Generate a secure secret with: node -e "console.log(require(\'crypto\').randomBytes(32).toString(\'hex\'))"');
+  process.exit(1);
+}
+
+if (process.env.JWT_SECRET.length < CONSTANTS.MIN_JWT_SECRET_LENGTH) {
+  console.error(`❌ CRITICAL ERROR: JWT_SECRET must be at least ${CONSTANTS.MIN_JWT_SECRET_LENGTH} characters long!`);
+  process.exit(1);
+}
 
 // Initialize Express app
 const app = express();
 const port = process.env.PORT || 3000;
 
-// Configure logging
+// Configure logging with rotation
 const logger = winston.createLogger({
   level: process.env.LOG_LEVEL || 'info',
   format: winston.format.combine(
@@ -36,8 +54,24 @@ const logger = winston.createLogger({
     winston.format.json()
   ),
   transports: [
-    new winston.transports.File({ filename: 'error.log', level: 'error' }),
-    new winston.transports.File({ filename: 'combined.log' }),
+    // Error log with rotation
+    new DailyRotateFile({
+      filename: 'logs/error-%DATE%.log',
+      datePattern: 'YYYY-MM-DD',
+      level: 'error',
+      maxSize: '20m',
+      maxFiles: '14d',
+      zippedArchive: true
+    }),
+    // Combined log with rotation
+    new DailyRotateFile({
+      filename: 'logs/combined-%DATE%.log',
+      datePattern: 'YYYY-MM-DD',
+      maxSize: '20m',
+      maxFiles: '14d',
+      zippedArchive: true
+    }),
+    // Console output
     new winston.transports.Console({
       format: winston.format.combine(
         winston.format.colorize(),
@@ -45,6 +79,37 @@ const logger = winston.createLogger({
       )
     })
   ]
+});
+
+// Security Middleware
+
+// HTTPS Enforcement (only in production)
+if (process.env.NODE_ENV === 'production') {
+  app.use((req, res, next) => {
+    if (req.headers['x-forwarded-proto'] !== 'https') {
+      return res.redirect(301, `https://${req.headers.host}${req.url}`);
+    }
+    next();
+  });
+}
+
+// Content Security Policy Headers
+app.use((req, res, next) => {
+  res.setHeader(
+    'Content-Security-Policy',
+    "default-src 'self'; " +
+    "script-src 'self' 'unsafe-inline'; " +
+    "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; " +
+    "font-src 'self' https://fonts.gstatic.com; " +
+    "connect-src 'self' ws: wss:; " +
+    "img-src 'self' data:; " +
+    "media-src 'self'"
+  );
+  res.setHeader('X-Content-Type-Options', 'nosniff');
+  res.setHeader('X-Frame-Options', 'DENY');
+  res.setHeader('X-XSS-Protection', '1; mode=block');
+  res.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  next();
 });
 
 // Serve static files
@@ -85,20 +150,20 @@ const wss = new WebSocket.Server({ noServer: true });
 
 // Initialize managers
 const queueManager = new QueueManager({
-  queueTimeout: 300000, // 5 minutes
-  maxQueueSize: 10000,
+  queueTimeout: parseInt(process.env.QUEUE_TIMEOUT_MS) || CONSTANTS.DEFAULT_QUEUE_TIMEOUT,
+  maxQueueSize: parseInt(process.env.MAX_QUEUE_SIZE) || CONSTANTS.DEFAULT_MAX_QUEUE_SIZE,
   enablePriority: true
 });
 
 const securityManager = new SecurityManager({
-  jwtSecret: process.env.JWT_SECRET,
-  maxConnectionsPerIP: 20,
-  banDuration: 86400000 // 24 hours
+  jwtSecret: process.env.JWT_SECRET, // Now guaranteed to exist
+  maxConnectionsPerIP: parseInt(process.env.MAX_CONNECTIONS_PER_IP) || 20,
+  banDuration: parseInt(process.env.BAN_DURATION_MS) || CONSTANTS.DEFAULT_BAN_DURATION
 });
 
 const connectionManager = new ConnectionManager({
-  heartbeatInterval: 30000, // 30 seconds
-  connectionTimeout: 60000, // 1 minute
+  heartbeatInterval: parseInt(process.env.HEARTBEAT_INTERVAL_MS) || CONSTANTS.DEFAULT_HEARTBEAT_INTERVAL,
+  connectionTimeout: parseInt(process.env.CONNECTION_TIMEOUT_MS) || CONSTANTS.DEFAULT_CONNECTION_TIMEOUT,
   maxConnectionsPerUser: 1
 });
 
@@ -164,7 +229,7 @@ wss.on('connection', (ws) => {
   // Message handler
   ws.on('message', async (data) => {
     // Security: Check message size (max 10KB)
-    if (data.length > 10240) {
+    if (data.length > CONSTANTS.MAX_MESSAGE_SIZE) {
       logger.warn(`⚠️ Oversized message from IP ${ws.ip}: ${data.length} bytes`);
       ws.send(JSON.stringify({
         type: 'error',
@@ -237,7 +302,7 @@ function handleUserDisconnect(userId) {
     if (patterns.includes('harasser')) {
       const ip = connectionManager.getConnection(userId)?.metadata?.ip;
       if (ip) {
-        securityManager.banIP(ip, 86400000, 'Multiple reports');
+        securityManager.banIP(ip, CONSTANTS.DEFAULT_BAN_DURATION, 'Multiple reports');
         logger.warn(`🚫 Banned IP ${ip} for harassment`);
       }
     }
@@ -290,7 +355,7 @@ setInterval(() => {
 
   // Broadcast user count
   broadcastUserCount();
-}, 60000); // Every minute
+}, CONSTANTS.CLEANUP_INTERVAL_MS); // Every minute
 
 // Graceful shutdown
 process.on('SIGTERM', shutdown);

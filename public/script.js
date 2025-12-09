@@ -6,7 +6,40 @@
  * - Robust WebSocket handling with auto-reconnect
  * - Enhanced security features
  * - Performance optimizations
+ * - Global error handling
  */
+
+// Global Error Handler
+window.addEventListener('error', (event) => {
+  console.error('Global error:', {
+    message: event.error?.message || event.message,
+    stack: event.error?.stack,
+    filename: event.filename,
+    lineno: event.lineno,
+    colno: event.colno,
+    timestamp: new Date().toISOString()
+  });
+
+  // Show user-friendly error notification
+  const errorMsg = event.error?.message || 'An unexpected error occurred';
+  console.warn('User-facing error:', errorMsg);
+
+  // Could send to error reporting service here
+  // Example: sendToErrorService({ error: event.error, context: {...} });
+});
+
+window.addEventListener('unhandledrejection', (event) => {
+  console.error('Unhandled promise rejection:', {
+    reason: event.reason,
+    promise: event.promise,
+    timestamp: new Date().toISOString()
+  });
+
+  // Prevent default to avoid console noise
+  event.preventDefault();
+
+  // Could send to error reporting service here
+});
 
 // Initialize managers
 const stateManager = new StateManager();
@@ -352,7 +385,7 @@ function skipPartner() {
         userId: stateManager.get('userId')
       });
     }
-  }, 300);
+  }, CONSTANTS.SKIP_DELAY_MS);
 }
 
 function reportUser() {
@@ -598,15 +631,45 @@ function startWebRTC() {
     console.log(`Peer connection state: ${peerConnection.connectionState}`);
 
     if (peerConnection.connectionState === 'connected') {
+      if (window.connectionTimeout) {
+        clearTimeout(window.connectionTimeout);
+        window.connectionTimeout = null;
+      }
       updateStatus(elements.videoStatus, 'Video chat active!');
       toggleVideoSpinner(false);
     } else if (peerConnection.connectionState === 'failed') {
+      if (window.connectionTimeout) {
+        clearTimeout(window.connectionTimeout);
+        window.connectionTimeout = null;
+      }
       updateStatus(elements.videoStatus, 'Connection failed. Please try again.', true);
       toggleVideoSpinner(false);
     } else if (peerConnection.connectionState === 'disconnected') {
+      if (window.connectionTimeout) {
+        clearTimeout(window.connectionTimeout);
+        window.connectionTimeout = null;
+      }
       handlePartnerDisconnect();
     }
   };
+
+  // Set 15-second timeout for connection
+  window.connectionTimeout = setTimeout(() => {
+    if (peerConnection && peerConnection.connectionState !== 'connected') {
+      console.error('WebRTC connection timeout');
+      updateStatus(elements.videoStatus, 'Connection timeout. Please try again.', true);
+      toggleVideoSpinner(false);
+
+      if (peerConnection) {
+        peerConnection.close();
+        peerConnection = null;
+      }
+
+      elements.nextBtn.disabled = false;
+      elements.reportBtn.disabled = false;
+    }
+  }, 15000);
+
 
   if (isOfferer) {
     peerConnection.createOffer()
