@@ -11,12 +11,8 @@
  */
 
 // Import constants if available
-let CONSTANTS;
-try {
-    CONSTANTS = typeof module !== 'undefined' && require ? require('./constants') : window.CONSTANTS;
-} catch (e) {
-    // Fallback constants if module not available
-    CONSTANTS = {
+if (typeof CONSTANTS === 'undefined') {
+    var CONSTANTS = {
         WS_RECONNECT_DELAY_MS: 1000,
         WS_MAX_RECONNECT_DELAY_MS: 30000,
         WS_RECONNECT_DECAY: 1.5,
